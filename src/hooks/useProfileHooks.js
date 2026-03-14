@@ -3,11 +3,11 @@ import { getProfileSiswaApi } from "../services/profile";
 
 
 export function useProfileHook() {
-  const {data: getProfile, isPending, isError} = useQuery({
+  const {data: getProfileSiswa, isPending, isError} = useQuery({
     queryKey: ['profile-siswa'],
     queryFn: getProfileSiswaApi,
-    staleTime: 1000 * 60 * 5, // cache 5 menit
+    retry: false, // Jangan refresh halaman otomatis
   });
 
-  return {getProfile, isPending, isError};
+  return {getProfileSiswa, isPending, isError};
 }

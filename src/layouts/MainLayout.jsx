@@ -3,6 +3,7 @@ import { NavLink, Outlet } from "react-router";
 import { Avatar, Box, Container, Flex, IconButton, Heading, Drawer, List, Image, HStack, Separator, Link } from "@chakra-ui/react";
 import { TextAlignJustify, X, House, Users, GraduationCap, Layers, AlertTriangle, ClipboardList } from "lucide-react";
 import IconWeb from "../assets/icon/illegal.png";
+import { useProfileHook } from "../hooks/useProfileHooks";
 
 const sidebarList = [
   { icon: <House size={27} />, title: "Dashboard", url: "/dashboard" },
@@ -15,6 +16,7 @@ const sidebarList = [
 
 export default function MainLayout() {
   const [isOpen, setIsOpen] = useState(false);
+  const {getProfileSiswa} = useProfileHook();
 
   return (
     <>
@@ -86,16 +88,16 @@ export default function MainLayout() {
                         >
                           <Box>
                             <Heading unstyled as="h3">
-                              Satya Wiguna
+                              {getProfileSiswa?.data?.users?.username}
                             </Heading>
                             <Heading unstyled as="h3">
-                              satya01@gmail.com
+                              {getProfileSiswa?.data?.users?.email}
                             </Heading>
                           </Box>
 
                           <Avatar.Root size={{ base: "lg", sm: "xl" }}>
-                            <Avatar.Fallback name="Ahmad Subarjo" />
-                            <Avatar.Image src="https://bit.ly/sage-adebayo" />
+                            <Avatar.Fallback name={getProfileSiswa?.data?.users?.username} />
+                            <Avatar.Image src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${getProfileSiswa?.data?.users?.id}&backgroundType=gradientLinear&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffeaa7`} />
                           </Avatar.Root>
                         </HStack>
                       </Link>
@@ -116,7 +118,7 @@ export default function MainLayout() {
                   width={{ base: "53px", sm: "70px" }}
                 />
                 <Heading as="h1">
-                  Pelanggaran <span style={{ display: "block" }}>Siswa</span>
+                  Pelanggaran <br /> Siswa
                 </Heading>
               </HStack>
             </HStack>
@@ -127,10 +129,10 @@ export default function MainLayout() {
               <HStack gap="3" alignItems="center">
                 <Box display={{ base: "none", md: "block" }} textAlign="end">
                   <Heading unstyled as="h3">
-                    Satya Wiguna
+                    {getProfileSiswa?.data?.users?.username}
                   </Heading>
                   <Heading unstyled as="h3">
-                    satya01@gmail.com
+                    {getProfileSiswa?.data?.users?.email}
                   </Heading>
                 </Box>
 
@@ -140,7 +142,7 @@ export default function MainLayout() {
                   display={{ base: "none", sm: "block" }}
                 >
                   <Avatar.Fallback name="Ahmad Subarjo" />
-                  <Avatar.Image src="https://bit.ly/sage-adebayo" />
+                  <Avatar.Image src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${getProfileSiswa?.data?.users?.id}&backgroundType=gradientLinear&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffeaa7`} />
                 </Avatar.Root>
               </HStack>
             </Link>
