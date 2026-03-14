@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router";
-import { Avatar, Box, Container, Flex, IconButton, Heading, Drawer, List, Image, HStack, Separator, Link } from "@chakra-ui/react";
-import { TextAlignJustify, X, House, Users, GraduationCap, Layers, AlertTriangle, ClipboardList } from "lucide-react";
-import IconWeb from "../assets/icon/illegal.png";
+import { Box, Container, Flex, IconButton, Heading, Drawer, List, Image, HStack, Separator, Dialog, Text, CloseButton } from "@chakra-ui/react";
+import { TextAlignJustify, House, Users, GraduationCap, Layers, AlertTriangle, ClipboardList } from "lucide-react";
 import { useProfileHook } from "../hooks/useProfileHooks";
+import { Profile } from "../pages";
+import IconWeb from "../assets/icon/illegal.png";
 
 const sidebarList = [
   { icon: <House size={27} />, title: "Dashboard", url: "/dashboard" },
@@ -16,7 +17,8 @@ const sidebarList = [
 
 export default function MainLayout() {
   const [isOpen, setIsOpen] = useState(false);
-  const {getProfileSiswa} = useProfileHook();
+  const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
+  const { getProfileSiswa } = useProfileHook();
 
   return (
     <>
@@ -24,7 +26,6 @@ export default function MainLayout() {
         <Flex justifyContent="space-between" alignItems="center">
           <Box>
             <HStack gap="2" alignItems="center">
-              {/* Drawer */}
               <Drawer.Root
                 placement="start"
                 open={isOpen}
@@ -54,6 +55,7 @@ export default function MainLayout() {
                         </HStack>
                       </Drawer.Title>
                     </Drawer.Header>
+                    <Separator my="3" />
                     <Drawer.Body>
                       <List.Root variant="none" spaceY="6">
                         {sidebarList.map((list) => (
@@ -67,8 +69,8 @@ export default function MainLayout() {
                                 alignItems="center"
                                 p="2"
                                 rounded="md"
-                                _hover={{ bg: "gray.200" }}
-                                bg={isActive ? "gray.200" : "transparent"}
+                                _hover={{ bg: "gray.100" }}
+                                bg={isActive ? "gray.100" : "transparent"}
                                 color="gray.800"
                               >
                                 {list.icon}
@@ -78,39 +80,26 @@ export default function MainLayout() {
                           </NavLink>
                         ))}
                       </List.Root>
-                      <Separator my="3" display={{ sm: "none" }} />
-                      <Link href="/dashboard/profile">
-                        <HStack
-                          display={{ base: "flex", sm: "none" }}
-                          justifyContent="start"
-                          alignItems="center"
-                          flexDirection="row-reverse"
-                        >
-                          <Box>
-                            <Heading unstyled as="h3">
-                              {getProfileSiswa?.data?.users?.username}
-                            </Heading>
-                            <Heading unstyled as="h3">
-                              {getProfileSiswa?.data?.users?.email}
-                            </Heading>
-                          </Box>
 
-                          <Avatar.Root size={{ base: "lg", sm: "xl" }}>
-                            <Avatar.Fallback name={getProfileSiswa?.data?.users?.username} />
-                            <Avatar.Image src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${getProfileSiswa?.data?.users?.id}&backgroundType=gradientLinear&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffeaa7`} />
-                          </Avatar.Root>
-                        </HStack>
-                      </Link>
+                      <Separator my="3" display={{md: "none"}} />
+
+                      {/* Mobile Profile */}
+                      <Box mt="4" display={{md: "none"}}>
+                        <Profile
+                          getProfileSiswa={getProfileSiswa}
+                          setDrawerOpen={setIsOpen}
+                          onProfileClick={() => setIsProfileDialogOpen(true)}
+                        />
+                      </Box>
                     </Drawer.Body>
 
-                    {/* close trigger */}
                     <Drawer.CloseTrigger>
-                      <X />
+                      <CloseButton />
                     </Drawer.CloseTrigger>
                   </Drawer.Content>
                 </Drawer.Positioner>
               </Drawer.Root>
-              {/* title */}
+
               <HStack>
                 <Image
                   src={IconWeb}
@@ -124,31 +113,42 @@ export default function MainLayout() {
             </HStack>
           </Box>
 
-          <Box>
-            <Link href="/dashboard/profile">
-              <HStack gap="3" alignItems="center">
-                <Box display={{ base: "none", md: "block" }} textAlign="end">
-                  <Heading unstyled as="h3">
-                    {getProfileSiswa?.data?.users?.username}
-                  </Heading>
-                  <Heading unstyled as="h3">
-                    {getProfileSiswa?.data?.users?.email}
-                  </Heading>
-                </Box>
-
-                {/* avatar profile */}
-                <Avatar.Root
-                  size={{ base: "lg", sm: "xl" }}
-                  display={{ base: "none", sm: "block" }}
-                >
-                  <Avatar.Fallback name="Ahmad Subarjo" />
-                  <Avatar.Image src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${getProfileSiswa?.data?.users?.id}&backgroundType=gradientLinear&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffeaa7`} />
-                </Avatar.Root>
-              </HStack>
-            </Link>
+          {/* Desktop Profile */}
+          <Box display={{base: "none", md: "block"}}>
+            <Profile
+              getProfileSiswa={getProfileSiswa}
+              onProfileClick={() => setIsProfileDialogOpen(true)}
+            />
           </Box>
         </Flex>
       </Box>
+
+      {/* Dialog di Luar Drawer */}
+      <Dialog.Root
+        open={isProfileDialogOpen}
+        onOpenChange={(e) => setIsProfileDialogOpen(e.open)}
+        placement="center"
+      >
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Header>
+              <Dialog.Title>Profile</Dialog.Title>
+            </Dialog.Header>
+
+            <Dialog.Body>
+              <Text>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Est,
+                praesentium!
+              </Text>
+            </Dialog.Body>
+
+            <Dialog.CloseTrigger asChild>
+              <CloseButton size="sm" />
+            </Dialog.CloseTrigger>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Dialog.Root>
 
       {/* outlet */}
       <Container pt="3">

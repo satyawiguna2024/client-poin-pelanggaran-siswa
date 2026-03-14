@@ -26,8 +26,6 @@ export default function App() {
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
-
-          <Route path="/dashboard/profile" element={<Profile />} />
         </Route>
       </Routes>
     </>
