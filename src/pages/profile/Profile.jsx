@@ -36,11 +36,11 @@ export default function Profile({ getProfileSiswa, setDrawerOpen, onProfileClick
           <Menu.Item
             _hover={{ bg: "gray.100", rounded: "sm" }}
             onClick={() => {
-              onProfileClick(); // ✅ Buka dialog
-              setDrawerOpen(false); // ✅ Tutup drawer di mobile
+              onProfileClick(); // Buka dialog
+              setDrawerOpen(false); // Tutup drawer di mobile
             }}
           >
-            Profile
+            Profil
           </Menu.Item>
           <Menu.Item onClick={logout} color="red.500" _hover={{ bg: "gray.100", rounded: "sm" }}>
             Logout

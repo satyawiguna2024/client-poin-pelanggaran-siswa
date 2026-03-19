@@ -1,4 +1,4 @@
-import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react"
+import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 
 const config = defineConfig({
   theme: {
@@ -18,10 +18,14 @@ const config = defineConfig({
           200: { value: "#bfdeff" },
           300: { value: "#99caff" },
           950: { value: "#001a33" },
-        }
-      }
-    }
+        },
+      },
+      fonts: {
+        inter: { value: "'Inter', sans-serif" },
+        poppins: { value: "'Poppins', sans-serif" },
+      },
+    },
   },
-})
+});
 
 export default createSystem(defaultConfig, config);

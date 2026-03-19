@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router";
-import { Dashboard, Profile } from "./pages";
+import { Dashboard } from "./pages";
 import { ProtectedRouteDashboard, ProtectedRouteForm } from "./layouts/Protected";
 import Login from "./authentication/Login";
 import Register from "./authentication/Register";
@@ -25,6 +25,7 @@ export default function App() {
         <Route element={<ProtectedRouteDashboard />}>
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/pelanggaran-siswa" element={<Dashboard />} />
           </Route>
         </Route>
       </Routes>
