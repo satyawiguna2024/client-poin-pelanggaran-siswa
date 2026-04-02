@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { loginApi, registerApi } from "../services/authentication";
+import { loginApi } from "../services/authentication";
 import Swal from "sweetalert2";
 
 // login hooks
@@ -51,27 +51,4 @@ export function useLoginHook() {
   }
 
   return {register, handleSubmit, errors, onSubmit, isPending};
-}
-
-// register hooks
-export function useRegisterHook() {
-  const {register, handleSubmit, formState: {errors}} = useForm({mode: "onChange"});
-
-  const {mutate, isPending} = useMutation({
-    mutationKey: ['register'],
-    mutationFn: registerApi,
-    onSuccess: () => {
-      alert("Register Berhasil!");
-    },
-    onError: (err) => {
-      console.log("Error Register: ", err.message);
-      alert("Register Gagal");
-    }
-  });
-
-  const onSubmit = (formData) => {
-    mutate(formData);
-  }
-
-  return {register, handleSubmit, errors, isPending, onSubmit}
 }

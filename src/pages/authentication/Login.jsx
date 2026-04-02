@@ -1,5 +1,5 @@
 import { Box, Button, Container, Field, Input, InputGroup } from "@chakra-ui/react";
-import { useLoginHook } from "../hooks/useAuthenticationHook";
+import { useLoginHook } from "../../hooks/useAuthenticationHook";
 import { Lock, User } from "lucide-react";
 
 export default function Login() {
@@ -11,12 +11,13 @@ export default function Login() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDir="column" gap="5">
             <Field.Root invalid={!!errors.username}>
-              <Field.Label>Username</Field.Label>
+              <Field.Label color="text.primary">Username</Field.Label>
               <InputGroup startElement={<User size={15} />}>
                 <Input
                   type="text"
                   placeholder="Masukan Username"
                   variant="outline"
+                  borderColor="gray.200" color="text.primary"
                   {...register("username", {
                     required: "Wajib Memasukan Username!",
                     minLength: {
@@ -41,12 +42,13 @@ export default function Login() {
             </Field.Root>
 
             <Field.Root invalid={!!errors.password}>
-              <Field.Label>Password</Field.Label>
+              <Field.Label color="text.primary">Password</Field.Label>
               <InputGroup startElement={<Lock size={15} />}>
                 <Input
                   type="password"
                   placeholder="Masukan Password"
                   variant="outline"
+                  borderColor="gray.200" color="text.primary"
                   {...register("password", {
                     required: "Wajib Memasukan Password!",
                     minLength: {
@@ -64,11 +66,11 @@ export default function Login() {
 
             {isPending ? (
               <>
-                <Button disabled variant="outline" loading loadingText="Proses..." />
+                <Button disabled variant="outline" borderColor="gray.200" color="text.primary" loading loadingText="Proses..." />
               </>
             ) : (
               <>
-                <Button type="submit" variant="outline">
+                <Button type="submit" variant="outline" borderColor="gray.200" _hover={{bg: "gray.100"}} color="text.primary">
                   Login
                 </Button>
               </>

@@ -5,8 +5,8 @@ export default function Dashboard() {
 
   return (
     <>
-      <Heading>Dashboard</Heading>
-      <Text>Token Akun Ini: <Code colorPalette="red">{token}</Code></Text>
+      <Heading color="text.primary">Dashboard</Heading>
+      <Text color="text.primary">Token Akun Ini: <Code colorPalette={{base: "red", _dark: "purple"}}>{token}</Code></Text>
     </>
   )
 }

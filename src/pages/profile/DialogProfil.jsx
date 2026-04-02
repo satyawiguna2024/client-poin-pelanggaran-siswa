@@ -12,9 +12,9 @@ export default function DialogProfil({ openDialog, onOpenChangeDialog }) {
       >
         <Dialog.Backdrop />
         <Dialog.Positioner>
-          <Dialog.Content mx={{base: "1", sm: "0"}}>
+          <Dialog.Content mx={{base: "1", sm: "0"}} bg="white">
             <Dialog.Header>
-              <Dialog.Title unstyled fontFamily="poppins" fontSize={{base: "xl", xs: "2xl"}} fontWeight="medium">Profil</Dialog.Title>
+              <Dialog.Title unstyled fontFamily="poppins" fontSize={{base: "xl", xs: "2xl"}} fontWeight="medium" color="text.primary">Profil</Dialog.Title>
             </Dialog.Header>
 
             {/* content dialog */}
@@ -36,13 +36,13 @@ export default function DialogProfil({ openDialog, onOpenChangeDialog }) {
 
                 {/* text seperti: nama, email, umur */}
               <Box pt="8">
-                <Heading unstyled as="h3" fontFamily="poppins">cokda</Heading>
-                <Heading unstyled as="h4" fontFamily="poppins">cokda2026@gmail.com</Heading>
+                <Heading unstyled as="h3" fontFamily="poppins" color="text.primary">cokda</Heading>
+                <Heading unstyled as="h4" fontFamily="poppins" color="text.primary">cokda2026@gmail.com</Heading>
               </Box>
             </Dialog.Body>
 
             <Dialog.CloseTrigger asChild>
-              <CloseButton size="sm" />
+              <CloseButton size="sm" color="text.primary" _hover={{bg: 'gray.200'}} />
             </Dialog.CloseTrigger>
           </Dialog.Content>
         </Dialog.Positioner>

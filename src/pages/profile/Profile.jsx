@@ -1,6 +1,6 @@
 import { Avatar, Box, Heading, HStack, Menu } from "@chakra-ui/react";
 
-export default function Profile({ getProfileSiswa, setDrawerOpen, onProfileClick }) {
+export default function Profile({ setDrawerOpen, onProfileClick }) {
   const logout = () => {
     localStorage.removeItem("jwtToken");
     window.location.href = "/";
@@ -11,11 +11,11 @@ export default function Profile({ getProfileSiswa, setDrawerOpen, onProfileClick
       <Menu.Trigger>
         <HStack gap="3" flexDir={{base: "row-reverse", md: "row"}}>
           <Box textAlign={{base: "start", md: "end"}}>
-            <Heading unstyled as="h3">
-              {getProfileSiswa?.data?.users?.username}
+            <Heading unstyled as="h3" color="text.primary">
+              cokda
             </Heading>
-            <Heading unstyled as="h3">
-              {getProfileSiswa?.data?.users?.email}
+            <Heading unstyled as="h3" color="text.primary">
+              cokdaganteng01@gmail.com
             </Heading>
           </Box>
 
@@ -25,7 +25,7 @@ export default function Profile({ getProfileSiswa, setDrawerOpen, onProfileClick
           >
             <Avatar.Fallback name="Ahmad Subarjo" />
             <Avatar.Image
-              src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${getProfileSiswa?.data?.users?.id}&backgroundType=gradientLinear&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffeaa7`}
+              src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${1}&backgroundType=gradientLinear&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffeaa7`}
             />
           </Avatar.Root>
         </HStack>
@@ -34,7 +34,7 @@ export default function Profile({ getProfileSiswa, setDrawerOpen, onProfileClick
       <Menu.Positioner>
         <Menu.Content>
           <Menu.Item
-            _hover={{ bg: "gray.100", rounded: "sm" }}
+            _hover={{ bg: {base: "gray.100", _dark: "gray.500"}, rounded: "sm" }}
             onClick={() => {
               onProfileClick(); // Buka dialog
               setDrawerOpen(false); // Tutup drawer di mobile
@@ -42,7 +42,11 @@ export default function Profile({ getProfileSiswa, setDrawerOpen, onProfileClick
           >
             Profil
           </Menu.Item>
-          <Menu.Item onClick={logout} color="red.500" _hover={{ bg: "gray.100", rounded: "sm" }}>
+          <Menu.Item 
+            onClick={logout} 
+            color="red.500" 
+            _hover={{ bg: {base: "gray.100", _dark: "gray.600"}, rounded: "sm" }}
+          >
             Logout
           </Menu.Item>
         </Menu.Content>

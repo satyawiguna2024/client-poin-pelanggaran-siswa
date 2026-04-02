@@ -19,6 +19,10 @@ const config = defineConfig({
           300: { value: "#99caff" },
           950: { value: "#001a33" },
         },
+        text: {
+          primary: { value: "{colors.gray.800}" },
+          secondary: { value: "{colors.gray.700}" },
+        },
       },
       fonts: {
         inter: { value: "'Inter', sans-serif" },

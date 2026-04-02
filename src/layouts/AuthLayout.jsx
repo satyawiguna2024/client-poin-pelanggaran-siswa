@@ -16,17 +16,17 @@ export default function AuthLayout() {
       >
         {/* forms */}
         <Box w={{ base: "100%", md: "50%" }} maxW="500px" p={6}>
-          <Box w="full" bg="gray.50" shadow="lg" p="3" rounded="md">
+          <Box w="full" bg="gray.50" shadow="lg" boxShadow="0px 4px 10px var(--chakra-colors-gray-300)" p="5" rounded="md">
             <Box display="flex" flexDir="column" justifyContent="center" alignItems="center" textAlign="center">
               {/* avatar */}
-              <Avatar.Root size="2xl">
+              <Avatar.Root size="2xl" bg="gray.200">
                 <Avatar.Fallback name="Pelanggaran Siswa" />
                 <Avatar.Image src={icon} />
               </Avatar.Root>
 
-              <Heading>Pelanggaran Siswa</Heading>
-              <Text>
-                Jika anda belum memiliki akun silahkan <Link href="/auth/register" variant="plain" colorPalette="teal">Daftar</Link> terlebih dahulu. jika sudah kembali halaman <Link href="/auth/login" variant="plain" colorPalette="teal">Login</Link> dan masukan akun baru anda.
+              <Heading color="text.primary">Pelanggaran Siswa</Heading>
+              <Text color="text.primary" maxW='300px'>
+                Jika anda belum memiliki akun silahkan hubungi pihak sekolah.
               </Text>
             </Box>
 

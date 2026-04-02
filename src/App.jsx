@@ -1,8 +1,6 @@
 import { Routes, Route, Navigate } from "react-router";
-import { Dashboard } from "./pages";
+import { Dashboard, StudentViolations, Login } from "./pages";
 import { ProtectedRouteDashboard, ProtectedRouteForm } from "./layouts/Protected";
-import Login from "./authentication/Login";
-import Register from "./authentication/Register";
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
 
@@ -17,15 +15,15 @@ export default function App() {
         <Route element={<ProtectedRouteForm />}>
           <Route element={<AuthLayout />}>
             <Route path="/auth/login" element={<Login />} />
-            <Route path="/auth/register" element={<Register />} />
           </Route>
         </Route>
 
         {/* root pages */}
+        {/* protected root pages */}
         <Route element={<ProtectedRouteDashboard />}>
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/pelanggaran-siswa" element={<Dashboard />} />
+            <Route path="/pelanggaran-siswa" element={<StudentViolations />} />
           </Route>
         </Route>
       </Routes>

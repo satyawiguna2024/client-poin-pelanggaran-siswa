@@ -10,7 +10,7 @@ import DialogProfil from "../pages/profile/DialogProfil";
 
 const sidebarList = [
   { icon: <House size={27} />, title: "Dashboard", url: "/dashboard" },
-  { icon: <ClipboardList size={27} />, title: "Pelanggaran Siswa", url: "/" },
+  { icon: <ClipboardList size={27} />, title: "Pelanggaran Siswa", url: "/pelanggaran-siswa" },
 
   // submenu Master Data
   {
@@ -56,7 +56,7 @@ export default function MainLayout() {
 
   return (
     <>
-      <Box shadow="md" p="5">
+      <Box shadow="md" boxShadow="0px 4px 10px var(--chakra-colors-gray-200)" p="5" bg="white">
         <Flex justifyContent="space-between" alignItems="center">
           <Box>
             <HStack gap="2" alignItems="center">
@@ -66,14 +66,14 @@ export default function MainLayout() {
                 onOpenChange={(e) => setIsOpen(e.open)}
               >
                 <Drawer.Trigger>
-                  <IconButton size={{ base: "sm", sm: "md" }} variant="subtle">
+                  <IconButton size={{ base: "sm", sm: "md" }} color="text.primary" variant="ghost" _hover={{bg: 'gray.100'}}>
                     <TextAlignJustify />
                   </IconButton>
                 </Drawer.Trigger>
 
                 <Drawer.Backdrop />
                 <Drawer.Positioner>
-                  <Drawer.Content>
+                  <Drawer.Content bg="white">
                     <Drawer.Header>
                       <Drawer.Title>
                         <HStack>
@@ -82,11 +82,11 @@ export default function MainLayout() {
                             alt="Icon Website"
                             width="53px"
                           />
-                          <Heading as="h1" unstyled fontFamily="poppins" fontSize="lg">Pelanggaran <br/> Siswa</Heading>
+                          <Heading as="h1" unstyled fontFamily="poppins" fontSize="lg" color="text.primary">Pelanggaran <br/> Siswa</Heading>
                         </HStack>
                       </Drawer.Title>
                     </Drawer.Header>
-                    <Separator my="3" />
+                    <Separator my="3" borderColor="gray.200" />
                     <Drawer.Body>
                       <List.Root variant="none" spaceY="5">
                         {sidebarList.map((list) => {
@@ -130,6 +130,7 @@ export default function MainLayout() {
                                       <NavLink
                                         key={subitem.url}
                                         to={subitem.url}
+                                        onClick={() => setIsOpen(false)}
                                       >
                                         {({ isActive }) => (
                                           <List.Item
@@ -164,7 +165,7 @@ export default function MainLayout() {
 
                           // Menu regular tanpa submenu
                           return (
-                            <NavLink key={list.url} to={list.url}>
+                            <NavLink key={list.url} to={list.url} onClick={() => setIsOpen(false)}>
                               {({ isActive }) => (
                                 <List.Item
                                   unstyled
@@ -201,7 +202,7 @@ export default function MainLayout() {
                       </Box>
                     </Drawer.Body>
                     <Drawer.CloseTrigger>
-                      <CloseButton />
+                      <CloseButton color="text.primary" _hover={{bg: 'gray.100'}} />
                     </Drawer.CloseTrigger>
                   </Drawer.Content>
                 </Drawer.Positioner>
@@ -213,7 +214,7 @@ export default function MainLayout() {
                   alt="Icon Website"
                   width={{ base: "53px", sm: "70px" }}
                 />
-                <Heading as="h1">
+                <Heading as="h1" color="text.primary">
                   Pelanggaran <br /> Siswa
                 </Heading>
               </HStack>
