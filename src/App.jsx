@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router";
-import { Dashboard, StudentViolations, Login, DataSiswa, DataGuru } from "./pages";
+import { Dashboard, StudentViolations, Login, DataSiswa, DataGuru, DataKelas, DataJenisPelanggaran } from "./pages";
 import { ProtectedRouteDashboard, ProtectedRouteForm } from "./components/layouts/Protected";
 import MainLayout from "./components/layouts/MainLayout";
 import AuthLayout from "./components/layouts/AuthLayout";
@@ -28,8 +28,8 @@ export default function App() {
             {/* Khusus Role Admin -> master data */}
             <Route path="/siswa" element={<DataSiswa />} />
             <Route path="/guru" element={<DataGuru />} />
-            <Route path="/kelas" element={<h1>Data Kelas</h1>} />
-            <Route path="/jenis-pelanggaran" element={<h1>Data Jenis Pelanggaran</h1>} />
+            <Route path="/kelas" element={<DataKelas />} />
+            <Route path="/jenis-pelanggaran" element={<DataJenisPelanggaran />} />
           </Route>
         </Route>
       </Routes>

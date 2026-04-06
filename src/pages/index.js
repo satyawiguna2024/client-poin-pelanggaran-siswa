@@ -6,7 +6,9 @@ import StudentViolations from "./pelanggaran-siswa/PelanggaranSiswa";
 // master data
 import DataSiswa from "./master-data/siswa/DataSiswa";
 import DataGuru from "./master-data/guru/DataGuru";
+import DataKelas from "./master-data/kelas/DataKelas";
+import DataJenisPelanggaran from "./master-data/jenis-pelanggaran/DataJenisPelanggaran";
 
 export  {   Dashboard, Profile, StudentViolations, Login,
-            DataSiswa, DataGuru, 
+            DataSiswa, DataGuru, DataKelas, DataJenisPelanggaran,
         };
