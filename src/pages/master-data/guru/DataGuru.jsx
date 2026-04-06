@@ -1,111 +1,127 @@
-import { Box, Heading, Stack, Input, InputGroup, Table, Checkbox, Button, Pagination, IconButton, ButtonGroup } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Stack,
+  Input,
+  InputGroup,
+  Table,
+  Checkbox,
+  Button,
+  Pagination,
+  IconButton,
+  ButtonGroup,
+} from "@chakra-ui/react";
 import BaseDialog from "../../../components/dialogs/BaseDialog";
 import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
 import BaseButton from "../../../components/buttons/BaseButton";
 import { CiSearch } from "react-icons/ci";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-// import { useFindAllSiswa } from "../../../hooks/useDataUsers";
 
-// dummy data siswa
-const dataSiswa = [
+// dummy data guru
+const dataGuru = [
   {
-    nis: "1001",
-    nama_ortu: "Budi Santoso",
-    nama_kelas: "X IPA 1",
+    nuptk: "1234567890123456",
+    nama: "Ahmad Fauzi",
     alamat: "Jl. Merdeka No. 10, Jakarta",
-    tanggal_lahir: "2008-01-15",
+    tanggal_lahir: "1985-02-12",
+    jenis_kelamin: "Laki-laki",
     agama: "Islam",
-    telepon: "081234567890",
+    telepon: "081234567800",
+    jabatan: "Guru Matematika",
   },
   {
-    nis: "1002",
-    nama_ortu: "Siti Aminah",
-    nama_kelas: "X IPA 2",
+    nuptk: "1234567890123457",
+    nama: "Siti Rahmawati",
     alamat: "Jl. Sudirman No. 21, Bandung",
-    tanggal_lahir: "2008-03-22",
+    tanggal_lahir: "1987-05-23",
+    jenis_kelamin: "Perempuan",
     agama: "Islam",
-    telepon: "081234567891",
+    telepon: "081234567801",
+    jabatan: "Guru Bahasa Indonesia",
   },
   {
-    nis: "1003",
-    nama_ortu: "Agus Salim",
-    nama_kelas: "X IPS 1",
+    nuptk: "1234567890123458",
+    nama: "Budi Santoso",
     alamat: "Jl. Diponegoro No. 5, Surabaya",
-    tanggal_lahir: "2008-05-10",
+    tanggal_lahir: "1983-07-14",
+    jenis_kelamin: "Laki-laki",
     agama: "Kristen",
-    telepon: "081234567892",
+    telepon: "081234567802",
+    jabatan: "Guru Fisika",
   },
   {
-    nis: "1004",
-    nama_ortu: "Maria Dewi",
-    nama_kelas: "X IPS 2",
+    nuptk: "1234567890123459",
+    nama: "Maria Ulfa",
     alamat: "Jl. Ahmad Yani No. 8, Medan",
-    tanggal_lahir: "2008-07-18",
+    tanggal_lahir: "1988-11-30",
+    jenis_kelamin: "Perempuan",
     agama: "Katolik",
-    telepon: "081234567893",
+    telepon: "081234567803",
+    jabatan: "Guru Biologi",
   },
   {
-    nis: "1005",
-    nama_ortu: "Hendra Wijaya",
-    nama_kelas: "XI IPA 1",
+    nuptk: "1234567890123460",
+    nama: "Hendra Wijaya",
     alamat: "Jl. Gatot Subroto No. 15, Semarang",
-    tanggal_lahir: "2007-09-25",
+    tanggal_lahir: "1984-01-19",
+    jenis_kelamin: "Laki-laki",
     agama: "Buddha",
-    telepon: "081234567894",
+    telepon: "081234567804",
+    jabatan: "Guru Kimia",
   },
   {
-    nis: "1006",
-    nama_ortu: "Dewi Lestari",
-    nama_kelas: "XI IPA 2",
+    nuptk: "1234567890123461",
+    nama: "Dewi Lestari",
     alamat: "Jl. Pemuda No. 3, Yogyakarta",
-    tanggal_lahir: "2007-11-02",
+    tanggal_lahir: "1989-03-08",
+    jenis_kelamin: "Perempuan",
     agama: "Islam",
-    telepon: "081234567895",
+    telepon: "081234567805",
+    jabatan: "Guru Bahasa Inggris",
   },
   {
-    nis: "1007",
-    nama_ortu: "Rudi Hartono",
-    nama_kelas: "XI IPS 1",
+    nuptk: "1234567890123462",
+    nama: "Rudi Hartono",
     alamat: "Jl. Veteran No. 12, Malang",
-    tanggal_lahir: "2007-02-14",
+    tanggal_lahir: "1982-06-25",
+    jenis_kelamin: "Laki-laki",
     agama: "Hindu",
-    telepon: "081234567896",
+    telepon: "081234567806",
+    jabatan: "Guru Sejarah",
   },
   {
-    nis: "1008",
-    nama_ortu: "Linda Sari",
-    nama_kelas: "XI IPS 2",
+    nuptk: "1234567890123463",
+    nama: "Linda Sari",
     alamat: "Jl. Imam Bonjol No. 7, Denpasar",
-    tanggal_lahir: "2007-04-30",
+    tanggal_lahir: "1990-09-17",
+    jenis_kelamin: "Perempuan",
     agama: "Islam",
-    telepon: "081234567897",
+    telepon: "081234567807",
+    jabatan: "Guru Ekonomi",
   },
   {
-    nis: "1009",
-    nama_ortu: "Joko Prasetyo",
-    nama_kelas: "XII IPA 1",
+    nuptk: "1234567890123464",
+    nama: "Joko Prasetyo",
     alamat: "Jl. Teuku Umar No. 9, Makassar",
-    tanggal_lahir: "2006-06-12",
+    tanggal_lahir: "1981-12-05",
+    jenis_kelamin: "Laki-laki",
     agama: "Kristen",
-    telepon: "081234567898",
+    telepon: "081234567808",
+    jabatan: "Guru Geografi",
   },
   {
-    nis: "1010",
-    nama_ortu: "Sri Wahyuni",
-    nama_kelas: "XII IPS 1",
+    nuptk: "1234567890123465",
+    nama: "Sri Wahyuni",
     alamat: "Jl. Asia Afrika No. 11, Bandung",
-    tanggal_lahir: "2006-08-20",
+    tanggal_lahir: "1986-04-21",
+    jenis_kelamin: "Perempuan",
     agama: "Islam",
-    telepon: "081234567899",
+    telepon: "081234567809",
+    jabatan: "Guru Seni Budaya",
   },
 ];
 
-export default function DataSiswa() {
-  // const { findAllDataSiswa, isPendingFindAllSiswa } = useFindAllSiswa();
-
-  // if (isPendingFindAllSiswa) console.warn("loading...");
-  // console.log("data siswa: ", findAllDataSiswa);
-
+export default function DataGuru() {
 
   return (
     <>
@@ -119,7 +135,7 @@ export default function DataSiswa() {
             fontWeight="medium"
             fontSize={{ base: "2xl", md: "3xl" }}
           >
-            Siswa
+            Guru
           </Heading>
           {/* dialog component */}
           <BaseDialog />
@@ -152,13 +168,14 @@ export default function DataSiswa() {
 
               {/* filter siswa berdasarkan kelas */}
               <BaseNativeSelect
-                placeholder="Kelas"
+                placeholder="Jabatan"
                 options={[
-                  { label: "XII RPL 1", value: "xii_rpl_1" },
-                  { label: "XII RPL 2", value: "xii_rpl_2" },
-                  { label: "XII RPL 3", value: "xii_rpl_3" },
-                  { label: "XII RPL 4", value: "xii_rpl_4" },
-                  { label: "XII RPL 5", value: "xii_rpl_5" },
+                  { label: "Guru Matematika", value: "guru_matematika" },
+                  { label: "Guru Bahasa Indonesia", value: "guru_bahasa_indonesia" },
+                  { label: "Guru Fisika", value: "guru_fisika" },
+                  { label: "Guru Biologi", value: "guru_biologi" },
+                  { label: "Guru Bahasa Inggris", value: "guru_bahasa_inggris" },
+                  { label: "Guru Ekonomi", value: "guru_ekonomi" }
                 ]}
               />
 
@@ -229,7 +246,7 @@ export default function DataSiswa() {
                   letterSpacing="1px"
                   color="text.primary"
                 >
-                  Nis
+                  Nuptk
                 </Table.ColumnHeader>
                 <Table.ColumnHeader
                   fontFamily="poppins"
@@ -237,15 +254,7 @@ export default function DataSiswa() {
                   letterSpacing="1px"
                   color="text.primary"
                 >
-                  Nama Ortu
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Kelas
+                  Nama
                 </Table.ColumnHeader>
                 <Table.ColumnHeader
                   fontFamily="poppins"
@@ -269,6 +278,14 @@ export default function DataSiswa() {
                   letterSpacing="1px"
                   color="text.primary"
                 >
+                  Jenis Kelamin
+                </Table.ColumnHeader>
+                <Table.ColumnHeader
+                  fontFamily="poppins"
+                  fontWeight="semibold"
+                  letterSpacing="1px"
+                  color="text.primary"
+                >
                   Agama
                 </Table.ColumnHeader>
                 <Table.ColumnHeader
@@ -279,12 +296,20 @@ export default function DataSiswa() {
                 >
                   No HP
                 </Table.ColumnHeader>
+                <Table.ColumnHeader
+                  fontFamily="poppins"
+                  fontWeight="semibold"
+                  letterSpacing="1px"
+                  color="text.primary"
+                >
+                  Jabatan
+                </Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
 
             {/* table body/content */}
             <Table.Body>
-              {dataSiswa.map((ds, i) => (
+              {dataGuru.map((dg, i) => (
                 <Table.Row
                   key={i}
                   bg={i % 2 === 0 ? "gray.100" : "white"}
@@ -301,7 +326,7 @@ export default function DataSiswa() {
                   </Table.Cell>
                   <Table.Cell fontFamily="poppins">
                     <Stack gap="2">
-                      <Heading unstyled>{ds.nis}</Heading>
+                      <Heading unstyled>{dg.nuptk}</Heading>
 
                       {/* action */}
                       <Stack
@@ -325,12 +350,13 @@ export default function DataSiswa() {
                       </Stack>
                     </Stack>
                   </Table.Cell>
-                  <Table.Cell fontFamily="poppins">{ds.nama_ortu}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{ds.nama_kelas}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{ds.alamat}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{ds.tanggal_lahir}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{ds.agama}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{ds.telepon}</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{dg.nama}</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{dg.alamat}</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{dg.tanggal_lahir}</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{dg.jenis_kelamin}</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{dg.agama}</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{dg.telepon}</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{dg.jabatan}</Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
