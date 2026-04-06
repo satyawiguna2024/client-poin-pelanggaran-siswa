@@ -1,6 +1,6 @@
 import { Avatar, Box, Heading, HStack, Menu } from "@chakra-ui/react";
 
-export default function Profile({ setDrawerOpen, onProfileClick }) {
+export default function Profile() {
   const logout = () => {
     localStorage.removeItem("jwtToken");
     window.location.href = "/";
@@ -21,27 +21,19 @@ export default function Profile({ setDrawerOpen, onProfileClick }) {
 
           {/* avatar profile */}
           <Avatar.Root
+            shape="square"
             size={{ base: "lg", md: "xl" }}
           >
-            <Avatar.Fallback name="Ahmad Subarjo" />
-            <Avatar.Image
+            <Avatar.Fallback name="Cokda" />
+            {/* <Avatar.Image
               src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${1}&backgroundType=gradientLinear&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffeaa7`}
-            />
+            /> */}
           </Avatar.Root>
         </HStack>
       </Menu.Trigger>
 
       <Menu.Positioner>
         <Menu.Content>
-          <Menu.Item
-            _hover={{ bg: {base: "gray.100", _dark: "gray.500"}, rounded: "sm" }}
-            onClick={() => {
-              onProfileClick(); // Buka dialog
-              setDrawerOpen(false); // Tutup drawer di mobile
-            }}
-          >
-            Profil
-          </Menu.Item>
           <Menu.Item 
             onClick={logout} 
             color="red.500" 

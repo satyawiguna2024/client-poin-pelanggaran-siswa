@@ -1,15 +1,39 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router";
-import { Box, Container, Flex, IconButton, Heading, Drawer, List, Image, HStack, Separator, CloseButton, Collapsible } from "@chakra-ui/react";
-import { TextAlignJustify, House, Layers, ClipboardList, Dot, Archive, FileText } from "lucide-react";
+import {
+  Box,
+  Container,
+  Flex,
+  IconButton,
+  Heading,
+  Drawer,
+  List,
+  Image,
+  HStack,
+  Separator,
+  CloseButton,
+  Collapsible,
+} from "@chakra-ui/react";
+import {
+  TextAlignJustify,
+  House,
+  Layers,
+  ClipboardList,
+  Dot,
+  Archive,
+  FileText,
+} from "lucide-react";
 import { LuChevronRight } from "react-icons/lu";
 import { Profile } from "../../pages";
 import IconWeb from "../../assets/icon/illegal.png";
-import DialogProfil from "../../pages/profile/DialogProfil";
 
 const sidebarList = [
   { icon: <House size={27} />, title: "Dashboard", url: "/dashboard" },
-  { icon: <ClipboardList size={27} />, title: "Pelanggaran Siswa", url: "/pelanggaran-siswa" },
+  {
+    icon: <ClipboardList size={27} />,
+    title: "Pelanggaran Siswa",
+    url: "/pelanggaran-siswa",
+  },
 
   // submenu Master Data
   {
@@ -19,7 +43,11 @@ const sidebarList = [
       { icon: <Dot size={27} />, title: "Data Siswa", url: "/siswa" },
       { icon: <Dot size={27} />, title: "Data Guru", url: "/guru" },
       { icon: <Dot size={27} />, title: "Data Kelas", url: "/kelas" },
-      { icon: <Dot size={27} />, title: "Data Jenis Pelanggaran", url: "/jenis-pelanggaran",},
+      {
+        icon: <Dot size={27} />,
+        title: "Data Jenis Pelanggaran",
+        url: "/jenis-pelanggaran",
+      },
     ],
   },
 
@@ -29,9 +57,13 @@ const sidebarList = [
     title: "Laporan",
     submenu: [
       { icon: <Dot size={27} />, title: "Laporan Pelanggaran Siswa", url: "/" },
-      { icon: <Dot size={27} />, title: "Laporan Surat Panggilan Ortu", url: "/" },
+      {
+        icon: <Dot size={27} />,
+        title: "Laporan Surat Panggilan Ortu",
+        url: "/",
+      },
       { icon: <Dot size={27} />, title: "Laporan Surat Perjanjian", url: "/" },
-      { icon: <Dot size={27} />, title: "Laporan Surat Pindah", url: "/",},
+      { icon: <Dot size={27} />, title: "Laporan Surat Pindah", url: "/" },
     ],
   },
 
@@ -41,20 +73,32 @@ const sidebarList = [
     title: "Cetak Surat",
     submenu: [
       { icon: <Dot size={27} />, title: "Cetak Surat Perjanjian", url: "/" },
-      { icon: <Dot size={27} />, title: "Cetak Surat Panggilan Ortu", url: "/" },
-      { icon: <Dot size={27} />, title: "Cetak Surat Perjanjian Ortu", url: "/" },
-      { icon: <Dot size={27} />, title: "Cetak Surat Pindah", url: "/",},
+      {
+        icon: <Dot size={27} />,
+        title: "Cetak Surat Panggilan Ortu",
+        url: "/",
+      },
+      {
+        icon: <Dot size={27} />,
+        title: "Cetak Surat Perjanjian Ortu",
+        url: "/",
+      },
+      { icon: <Dot size={27} />, title: "Cetak Surat Pindah", url: "/" },
     ],
   },
 ];
 
 export default function MainLayout() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
 
   return (
     <>
-      <Box shadow="md" boxShadow="0px 4px 10px var(--chakra-colors-gray-200)" p="5" bg="sidebarColor.primary">
+      <Box
+        shadow="md"
+        boxShadow="0px 4px 10px var(--chakra-colors-gray-200)"
+        p="5"
+        bg="sidebarColor.primary"
+      >
         <Flex justifyContent="space-between" alignItems="center">
           <Box>
             <HStack gap="2" alignItems="center">
@@ -64,7 +108,12 @@ export default function MainLayout() {
                 onOpenChange={(e) => setIsOpen(e.open)}
               >
                 <Drawer.Trigger>
-                  <IconButton size={{ base: "sm", sm: "md" }} color="gray.200" variant="ghost" _hover={{bg: 'gray.700'}}>
+                  <IconButton
+                    size={{ base: "sm", sm: "md" }}
+                    color="gray.200"
+                    variant="ghost"
+                    _hover={{ bg: "gray.700" }}
+                  >
                     <TextAlignJustify />
                   </IconButton>
                 </Drawer.Trigger>
@@ -80,7 +129,15 @@ export default function MainLayout() {
                             alt="Icon Website"
                             width="53px"
                           />
-                          <Heading as="h1" unstyled fontFamily="poppins" fontSize="lg" color="gray.200">Pelanggaran <br/> Siswa</Heading>
+                          <Heading
+                            as="h1"
+                            unstyled
+                            fontFamily="poppins"
+                            fontSize="lg"
+                            color="gray.200"
+                          >
+                            Pelanggaran <br /> Siswa
+                          </Heading>
                         </HStack>
                       </Drawer.Title>
                     </Drawer.Header>
@@ -109,9 +166,12 @@ export default function MainLayout() {
                                   >
                                     {list.icon}
                                     <Box flex="1">{list.title}</Box>
-                                    
+
                                     {/* animasi icon trigger */}
-                                    <Collapsible.Indicator transition="transform 0.2s" _open={{ transform: "rotate(90deg)" }}>
+                                    <Collapsible.Indicator
+                                      transition="transform 0.2s"
+                                      _open={{ transform: "rotate(90deg)" }}
+                                    >
                                       <LuChevronRight />
                                     </Collapsible.Indicator>
                                   </List.Item>
@@ -163,7 +223,11 @@ export default function MainLayout() {
 
                           // Menu regular tanpa submenu
                           return (
-                            <NavLink key={list.url} to={list.url} onClick={() => setIsOpen(false)}>
+                            <NavLink
+                              key={list.url}
+                              to={list.url}
+                              onClick={() => setIsOpen(false)}
+                            >
                               {({ isActive }) => (
                                 <List.Item
                                   unstyled
@@ -195,12 +259,14 @@ export default function MainLayout() {
                         <Profile
                           // getProfileSiswa={getProfileSiswa}
                           setDrawerOpen={setIsOpen}
-                          onProfileClick={() => setIsProfileDialogOpen(true)}
                         />
                       </Box>
                     </Drawer.Body>
                     <Drawer.CloseTrigger>
-                      <CloseButton color="text.primary" _hover={{bg: 'gray.100'}} />
+                      <CloseButton
+                        color="white"
+                        _hover={{ bg: "gray.700" }}
+                      />
                     </Drawer.CloseTrigger>
                   </Drawer.Content>
                 </Drawer.Positioner>
@@ -221,16 +287,10 @@ export default function MainLayout() {
 
           {/* Desktop Profile */}
           <Box display={{ base: "none", md: "block" }}>
-            <Profile
-              // getProfileSiswa={getProfileSiswa}
-              onProfileClick={() => setIsProfileDialogOpen(true)}
-            />
+            <Profile />
           </Box>
         </Flex>
       </Box>
-
-      {/* Dialog di Luar Drawer */}
-      <DialogProfil openDialog={isProfileDialogOpen} onOpenChangeDialog={(e) => setIsProfileDialogOpen(e.open)} />
 
       {/* outlet / content dari file App.jsx */}
       <Container pt="3">
