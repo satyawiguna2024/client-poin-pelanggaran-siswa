@@ -3,10 +3,9 @@ import { NavLink, Outlet } from "react-router";
 import { Box, Container, Flex, IconButton, Heading, Drawer, List, Image, HStack, Separator, CloseButton, Collapsible } from "@chakra-ui/react";
 import { TextAlignJustify, House, Layers, ClipboardList, Dot, Archive, FileText } from "lucide-react";
 import { LuChevronRight } from "react-icons/lu";
-import { useProfileHook } from "../hooks/useProfileHooks";
-import { Profile } from "../pages";
-import IconWeb from "../assets/icon/illegal.png";
-import DialogProfil from "../pages/profile/DialogProfil";
+import { Profile } from "../../pages";
+import IconWeb from "../../assets/icon/illegal.png";
+import DialogProfil from "../../pages/profile/DialogProfil";
 
 const sidebarList = [
   { icon: <House size={27} />, title: "Dashboard", url: "/dashboard" },
@@ -17,10 +16,10 @@ const sidebarList = [
     icon: <Layers size={27} />,
     title: "Master Data",
     submenu: [
-      { icon: <Dot size={27} />, title: "Data Siswa", url: "/" },
-      { icon: <Dot size={27} />, title: "Data Guru", url: "/" },
-      { icon: <Dot size={27} />, title: "Data Kelas", url: "/" },
-      { icon: <Dot size={27} />, title: "Data Jenis Pelanggaran", url: "/",},
+      { icon: <Dot size={27} />, title: "Data Siswa", url: "/siswa" },
+      { icon: <Dot size={27} />, title: "Data Guru", url: "/guru" },
+      { icon: <Dot size={27} />, title: "Data Kelas", url: "/kelas" },
+      { icon: <Dot size={27} />, title: "Data Jenis Pelanggaran", url: "/jenis-pelanggaran",},
     ],
   },
 
@@ -52,11 +51,10 @@ const sidebarList = [
 export default function MainLayout() {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
-  const { getProfileSiswa } = useProfileHook();
 
   return (
     <>
-      <Box shadow="md" boxShadow="0px 4px 10px var(--chakra-colors-gray-200)" p="5" bg="white">
+      <Box shadow="md" boxShadow="0px 4px 10px var(--chakra-colors-gray-200)" p="5" bg="sidebarColor.primary">
         <Flex justifyContent="space-between" alignItems="center">
           <Box>
             <HStack gap="2" alignItems="center">
@@ -66,14 +64,14 @@ export default function MainLayout() {
                 onOpenChange={(e) => setIsOpen(e.open)}
               >
                 <Drawer.Trigger>
-                  <IconButton size={{ base: "sm", sm: "md" }} color="text.primary" variant="ghost" _hover={{bg: 'gray.100'}}>
+                  <IconButton size={{ base: "sm", sm: "md" }} color="gray.200" variant="ghost" _hover={{bg: 'gray.700'}}>
                     <TextAlignJustify />
                   </IconButton>
                 </Drawer.Trigger>
 
                 <Drawer.Backdrop />
                 <Drawer.Positioner>
-                  <Drawer.Content bg="white">
+                  <Drawer.Content bg="sidebarColor.primary">
                     <Drawer.Header>
                       <Drawer.Title>
                         <HStack>
@@ -82,11 +80,11 @@ export default function MainLayout() {
                             alt="Icon Website"
                             width="53px"
                           />
-                          <Heading as="h1" unstyled fontFamily="poppins" fontSize="lg" color="text.primary">Pelanggaran <br/> Siswa</Heading>
+                          <Heading as="h1" unstyled fontFamily="poppins" fontSize="lg" color="gray.200">Pelanggaran <br/> Siswa</Heading>
                         </HStack>
                       </Drawer.Title>
                     </Drawer.Header>
-                    <Separator my="3" borderColor="gray.200" />
+                    <Separator my="3" borderColor="gray.600" />
                     <Drawer.Body>
                       <List.Root variant="none" spaceY="5">
                         {sidebarList.map((list) => {
@@ -105,8 +103,8 @@ export default function MainLayout() {
                                     alignItems="center"
                                     p="2"
                                     rounded="md"
-                                    _hover={{ bg: "gray.100" }}
-                                    color="gray.800"
+                                    _hover={{ bg: "gray.700" }}
+                                    color="gray.200"
                                     cursor="pointer"
                                   >
                                     {list.icon}
@@ -143,13 +141,13 @@ export default function MainLayout() {
                                             alignItems="center"
                                             p="2"
                                             rounded="md"
-                                            _hover={{ bg: "gray.100" }}
+                                            _hover={{ bg: "gray.700" }}
                                             bg={
                                               isActive
-                                                ? "gray.100"
+                                                ? "gray.700"
                                                 : "transparent"
                                             }
-                                            color="gray.800"
+                                            color="gray.200"
                                           >
                                             {subitem.icon}
                                             {subitem.title}
@@ -177,9 +175,9 @@ export default function MainLayout() {
                                   alignItems="center"
                                   p="2"
                                   rounded="md"
-                                  _hover={{ bg: "gray.100" }}
-                                  bg={isActive ? "gray.100" : "transparent"}
-                                  color="gray.800"
+                                  _hover={{ bg: "gray.700" }}
+                                  bg={isActive ? "gray.700" : "transparent"}
+                                  color="gray.200"
                                 >
                                   {list.icon}
                                   {list.title}
@@ -195,7 +193,7 @@ export default function MainLayout() {
                       {/* Mobile Profile */}
                       <Box mt="4" display={{ md: "none" }}>
                         <Profile
-                          getProfileSiswa={getProfileSiswa}
+                          // getProfileSiswa={getProfileSiswa}
                           setDrawerOpen={setIsOpen}
                           onProfileClick={() => setIsProfileDialogOpen(true)}
                         />
@@ -214,7 +212,7 @@ export default function MainLayout() {
                   alt="Icon Website"
                   width={{ base: "53px", sm: "70px" }}
                 />
-                <Heading as="h1" color="text.primary">
+                <Heading as="h1" color="gray.200">
                   Pelanggaran <br /> Siswa
                 </Heading>
               </HStack>
@@ -224,7 +222,7 @@ export default function MainLayout() {
           {/* Desktop Profile */}
           <Box display={{ base: "none", md: "block" }}>
             <Profile
-              getProfileSiswa={getProfileSiswa}
+              // getProfileSiswa={getProfileSiswa}
               onProfileClick={() => setIsProfileDialogOpen(true)}
             />
           </Box>

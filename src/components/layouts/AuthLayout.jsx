@@ -1,6 +1,6 @@
 import { Avatar, Box, Heading, Image, Text, Link } from "@chakra-ui/react";
-import image from "../assets/img/front-school.jpg";
-import icon from "../assets/icon/illegal.png";
+import image from "../../assets/img/front-school.jpg";
+import icon from "../../assets/icon/illegal.png";
 import { Outlet } from "react-router";
 
 export default function AuthLayout() {

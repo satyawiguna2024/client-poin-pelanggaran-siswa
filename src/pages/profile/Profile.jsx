@@ -11,10 +11,10 @@ export default function Profile({ setDrawerOpen, onProfileClick }) {
       <Menu.Trigger>
         <HStack gap="3" flexDir={{base: "row-reverse", md: "row"}}>
           <Box textAlign={{base: "start", md: "end"}}>
-            <Heading unstyled as="h3" color="text.primary">
+            <Heading unstyled as="h3" color="gray.200">
               cokda
             </Heading>
-            <Heading unstyled as="h3" color="text.primary">
+            <Heading unstyled as="h3" color="gray.200">
               cokdaganteng01@gmail.com
             </Heading>
           </Box>

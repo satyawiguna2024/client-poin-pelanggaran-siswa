@@ -19,6 +19,9 @@ const config = defineConfig({
           300: { value: "#99caff" },
           950: { value: "#001a33" },
         },
+        sidebarColor: {
+          primary: {value: "#1d2327"}
+        },
         text: {
           primary: { value: "{colors.gray.800}" },
           secondary: { value: "{colors.gray.700}" },
