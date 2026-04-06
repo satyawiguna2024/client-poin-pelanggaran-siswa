@@ -1,4 +1,16 @@
-import { Box, Heading, Stack, Input, InputGroup, Table, Checkbox, Button, Pagination, IconButton, ButtonGroup } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Stack,
+  Input,
+  InputGroup,
+  Table,
+  Checkbox,
+  Button,
+  Pagination,
+  IconButton,
+  ButtonGroup,
+} from "@chakra-ui/react";
 import BaseDialog from "../../../components/dialogs/BaseDialog";
 import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
 import BaseButton from "../../../components/buttons/BaseButton";
@@ -12,9 +24,103 @@ export default function DataSiswa() {
   // if (isPendingFindAllSiswa) console.warn("loading...");
   // console.log("data siswa: ", findAllDataSiswa);
 
+  // dummy data siswa
+  const dataSiswa = [
+    {
+      nis: "1001",
+      nama_ortu: "Budi Santoso",
+      nama_kelas: "X IPA 1",
+      alamat: "Jl. Merdeka No. 10, Jakarta",
+      tanggal_lahir: "2008-01-15",
+      agama: "Islam",
+      telepon: "081234567890",
+    },
+    {
+      nis: "1002",
+      nama_ortu: "Siti Aminah",
+      nama_kelas: "X IPA 2",
+      alamat: "Jl. Sudirman No. 21, Bandung",
+      tanggal_lahir: "2008-03-22",
+      agama: "Islam",
+      telepon: "081234567891",
+    },
+    {
+      nis: "1003",
+      nama_ortu: "Agus Salim",
+      nama_kelas: "X IPS 1",
+      alamat: "Jl. Diponegoro No. 5, Surabaya",
+      tanggal_lahir: "2008-05-10",
+      agama: "Kristen",
+      telepon: "081234567892",
+    },
+    {
+      nis: "1004",
+      nama_ortu: "Maria Dewi",
+      nama_kelas: "X IPS 2",
+      alamat: "Jl. Ahmad Yani No. 8, Medan",
+      tanggal_lahir: "2008-07-18",
+      agama: "Katolik",
+      telepon: "081234567893",
+    },
+    {
+      nis: "1005",
+      nama_ortu: "Hendra Wijaya",
+      nama_kelas: "XI IPA 1",
+      alamat: "Jl. Gatot Subroto No. 15, Semarang",
+      tanggal_lahir: "2007-09-25",
+      agama: "Buddha",
+      telepon: "081234567894",
+    },
+    {
+      nis: "1006",
+      nama_ortu: "Dewi Lestari",
+      nama_kelas: "XI IPA 2",
+      alamat: "Jl. Pemuda No. 3, Yogyakarta",
+      tanggal_lahir: "2007-11-02",
+      agama: "Islam",
+      telepon: "081234567895",
+    },
+    {
+      nis: "1007",
+      nama_ortu: "Rudi Hartono",
+      nama_kelas: "XI IPS 1",
+      alamat: "Jl. Veteran No. 12, Malang",
+      tanggal_lahir: "2007-02-14",
+      agama: "Hindu",
+      telepon: "081234567896",
+    },
+    {
+      nis: "1008",
+      nama_ortu: "Linda Sari",
+      nama_kelas: "XI IPS 2",
+      alamat: "Jl. Imam Bonjol No. 7, Denpasar",
+      tanggal_lahir: "2007-04-30",
+      agama: "Islam",
+      telepon: "081234567897",
+    },
+    {
+      nis: "1009",
+      nama_ortu: "Joko Prasetyo",
+      nama_kelas: "XII IPA 1",
+      alamat: "Jl. Teuku Umar No. 9, Makassar",
+      tanggal_lahir: "2006-06-12",
+      agama: "Kristen",
+      telepon: "081234567898",
+    },
+    {
+      nis: "1010",
+      nama_ortu: "Sri Wahyuni",
+      nama_kelas: "XII IPS 1",
+      alamat: "Jl. Asia Afrika No. 11, Bandung",
+      tanggal_lahir: "2006-08-20",
+      agama: "Islam",
+      telepon: "081234567899",
+    },
+  ];
+
   return (
     <>
-      <Box mt="5">
+      <Box py="10">
         {/* title & button add new */}
         <Stack direction="row" alignItems="center">
           <Heading
@@ -49,7 +155,11 @@ export default function DataSiswa() {
                 options={[{ label: "Delete", value: "delete" }]}
               />
 
-              <BaseButton mr="8" width={{base: "full", md: "auto"}} label="Terapkan" />
+              <BaseButton
+                mr="8"
+                width={{ base: "full", md: "auto" }}
+                label="Terapkan"
+              />
 
               {/* filter siswa berdasarkan kelas */}
               <BaseNativeSelect
@@ -130,7 +240,7 @@ export default function DataSiswa() {
                   letterSpacing="1px"
                   color="text.primary"
                 >
-                  Product
+                  Nis
                 </Table.ColumnHeader>
                 <Table.ColumnHeader
                   fontFamily="poppins"
@@ -138,7 +248,7 @@ export default function DataSiswa() {
                   letterSpacing="1px"
                   color="text.primary"
                 >
-                  Category
+                  Nama Ortu
                 </Table.ColumnHeader>
                 <Table.ColumnHeader
                   fontFamily="poppins"
@@ -146,7 +256,7 @@ export default function DataSiswa() {
                   letterSpacing="1px"
                   color="text.primary"
                 >
-                  Price
+                  Kelas
                 </Table.ColumnHeader>
                 <Table.ColumnHeader
                   fontFamily="poppins"
@@ -154,15 +264,45 @@ export default function DataSiswa() {
                   letterSpacing="1px"
                   color="text.primary"
                 >
-                  Date
+                  Alamat
+                </Table.ColumnHeader>
+                <Table.ColumnHeader
+                  fontFamily="poppins"
+                  fontWeight="semibold"
+                  letterSpacing="1px"
+                  color="text.primary"
+                >
+                  Tanggal Lahir
+                </Table.ColumnHeader>
+                <Table.ColumnHeader
+                  fontFamily="poppins"
+                  fontWeight="semibold"
+                  letterSpacing="1px"
+                  color="text.primary"
+                >
+                  Agama
+                </Table.ColumnHeader>
+                <Table.ColumnHeader
+                  fontFamily="poppins"
+                  fontWeight="semibold"
+                  letterSpacing="1px"
+                  color="text.primary"
+                >
+                  No HP
                 </Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
 
             {/* table body/content */}
             <Table.Body>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, i) => (
-                <Table.Row key={i} bg={i % 2 === 0 ? "gray.100" : "white"} className="group" color="text.primary" role="group">
+              {dataSiswa.map((ds, i) => (
+                <Table.Row
+                  key={i}
+                  bg={i % 2 === 0 ? "gray.100" : "white"}
+                  className="group"
+                  color="text.primary"
+                  role="group"
+                >
                   <Table.Cell>
                     <Checkbox.Root size="md">
                       {/* aksi checkbox */}
@@ -172,11 +312,22 @@ export default function DataSiswa() {
                   </Table.Cell>
                   <Table.Cell fontFamily="poppins">
                     <Stack gap="2">
-                      <Heading unstyled>Laptop</Heading>
+                      <Heading unstyled>{ds.nis}</Heading>
 
                       {/* action */}
-                      <Stack direction="row" gap="3" opacity={0} _groupHover={{ opacity: 1 }} transition="0.2s">
-                        <Button unstyled size="xs" color="blue" cursor="pointer">
+                      <Stack
+                        direction="row"
+                        gap="3"
+                        opacity={0}
+                        _groupHover={{ opacity: 1 }}
+                        transition="0.2s"
+                      >
+                        <Button
+                          unstyled
+                          size="xs"
+                          color="blue"
+                          cursor="pointer"
+                        >
                           Update
                         </Button>
                         <Button unstyled size="xs" color="red" cursor="pointer">
@@ -185,9 +336,12 @@ export default function DataSiswa() {
                       </Stack>
                     </Stack>
                   </Table.Cell>
-                  <Table.Cell fontFamily="poppins">Electronics</Table.Cell>
-                  <Table.Cell fontFamily="poppins">Rp. 120.000.000</Table.Cell>
-                  <Table.Cell fontFamily="poppins">2026-09-25</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{ds.nama_ortu}</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{ds.nama_kelas}</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{ds.alamat}</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{ds.tanggal_lahir}</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{ds.agama}</Table.Cell>
+                  <Table.Cell fontFamily="poppins">{ds.telepon}</Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
@@ -204,7 +358,9 @@ export default function DataSiswa() {
             <Pagination.Root count={20} pageSize={2} defaultPage={1}>
               <ButtonGroup variant="outline" size="sm">
                 <Pagination.PrevTrigger asChild>
-                  <IconButton _dark={{color: "text.primary", _hover: {bg: "white"}}}>
+                  <IconButton
+                    _dark={{ color: "text.primary", _hover: { bg: "white" } }}
+                  >
                     <LuChevronLeft />
                   </IconButton>
                 </Pagination.PrevTrigger>
@@ -213,7 +369,7 @@ export default function DataSiswa() {
                   render={(page) => (
                     <IconButton
                       variant={{ base: "outline", _selected: "solid" }}
-                      _dark={{color: "text.primary", _hover: {bg: "white"}}}
+                      _dark={{ color: "text.primary", _hover: { bg: "white" } }}
                     >
                       {page.value}
                     </IconButton>
@@ -221,14 +377,18 @@ export default function DataSiswa() {
                 />
 
                 <Pagination.NextTrigger asChild>
-                  <IconButton _dark={{color: "text.primary", _hover: {bg: "white"}}}>
+                  <IconButton
+                    _dark={{ color: "text.primary", _hover: { bg: "white" } }}
+                  >
                     <LuChevronRight />
                   </IconButton>
                 </Pagination.NextTrigger>
               </ButtonGroup>
             </Pagination.Root>
 
-            <Heading unstyled color="text.primary" fontFamily="poppins">10 Items</Heading>
+            <Heading unstyled color="text.primary" fontFamily="poppins">
+              10 Items
+            </Heading>
           </Stack>
         </Box>
       </Box>
