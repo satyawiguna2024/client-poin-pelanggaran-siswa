@@ -206,134 +206,134 @@ export default function DataSiswa() {
         </Box>
 
         {/* table */}
-        <Box mt="5" width="full" bg="blue.300">
+        <Box mt="5" width="full" bg="blue.300" overflowX="auto">
           <Table.Root
-            border="1px solid"
-            borderColor="gray.300"
-            shadow="0px 4px 12px var(--chakra-colors-gray-200)"
-          >
-            <Table.Header>
-              <Table.Row bg="white">
-                <Table.ColumnHeader w="6">
-                  <Checkbox.Root size="md">
-                    {/* aksi checkbox */}
-                    <Checkbox.HiddenInput />
-                    <Checkbox.Control />
-                  </Checkbox.Root>
-                </Table.ColumnHeader>
-
-                {/* table column: Product | Category | Price */}
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Nis
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Nama Ortu
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Kelas
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Alamat
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Tanggal Lahir
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Agama
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  No HP
-                </Table.ColumnHeader>
-              </Table.Row>
-            </Table.Header>
-
-            {/* table body/content */}
-            <Table.Body>
-              {dataSiswa.map((ds, i) => (
-                <Table.Row
-                  key={i}
-                  bg={i % 2 === 0 ? "gray.100" : "white"}
-                  className="group"
-                  color="text.primary"
-                  role="group"
-                >
-                  <Table.Cell>
+              border="1px solid"
+              borderColor="gray.300"
+              shadow="0px 4px 12px var(--chakra-colors-gray-200)"
+            >
+              <Table.Header>
+                <Table.Row bg="white">
+                  <Table.ColumnHeader w="6">
                     <Checkbox.Root size="md">
                       {/* aksi checkbox */}
                       <Checkbox.HiddenInput />
                       <Checkbox.Control />
                     </Checkbox.Root>
-                  </Table.Cell>
-                  <Table.Cell fontFamily="poppins">
-                    <Stack gap="2">
-                      <Heading unstyled>{ds.nis}</Heading>
+                  </Table.ColumnHeader>
 
-                      {/* action */}
-                      <Stack
-                        direction="row"
-                        gap="3"
-                        opacity={0}
-                        _groupHover={{ opacity: 1 }}
-                        transition="0.2s"
-                      >
-                        <Button
-                          unstyled
-                          size="xs"
-                          color="blue"
-                          cursor="pointer"
-                        >
-                          Update
-                        </Button>
-                        <Button unstyled size="xs" color="red" cursor="pointer">
-                          Delete
-                        </Button>
-                      </Stack>
-                    </Stack>
-                  </Table.Cell>
-                  <Table.Cell fontFamily="poppins">{ds.nama_ortu}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{ds.nama_kelas}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{ds.alamat}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{ds.tanggal_lahir}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{ds.agama}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{ds.telepon}</Table.Cell>
+                  {/* table column: Product | Category | Price */}
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Nis
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Nama Ortu
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Kelas
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Alamat
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Tanggal Lahir
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Agama
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    No HP
+                  </Table.ColumnHeader>
                 </Table.Row>
-              ))}
-            </Table.Body>
+              </Table.Header>
+
+              {/* table body/content */}
+              <Table.Body>
+                {dataSiswa.map((ds, i) => (
+                  <Table.Row
+                    key={i}
+                    bg={i % 2 === 0 ? "gray.100" : "white"}
+                    className="group"
+                    color="text.primary"
+                    role="group"
+                  >
+                    <Table.Cell>
+                      <Checkbox.Root size="md">
+                        {/* aksi checkbox */}
+                        <Checkbox.HiddenInput />
+                        <Checkbox.Control />
+                      </Checkbox.Root>
+                    </Table.Cell>
+                    <Table.Cell fontFamily="poppins">
+                      <Stack gap="2">
+                        <Heading unstyled>{ds.nis}</Heading>
+
+                        {/* action */}
+                        <Stack
+                          direction="row"
+                          gap="3"
+                          opacity={0}
+                          _groupHover={{ opacity: 1 }}
+                          transition="0.2s"
+                        >
+                          <Button
+                            unstyled
+                            size="xs"
+                            color="blue"
+                            cursor="pointer"
+                          >
+                            Update
+                          </Button>
+                          <Button unstyled size="xs" color="red" cursor="pointer">
+                            Delete
+                          </Button>
+                        </Stack>
+                      </Stack>
+                    </Table.Cell>
+                    <Table.Cell fontFamily="poppins">{ds.nama_ortu}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{ds.nama_kelas}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{ds.alamat}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{ds.tanggal_lahir}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{ds.agama}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{ds.telepon}</Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
           </Table.Root>
         </Box>
 
@@ -344,7 +344,7 @@ export default function DataSiswa() {
             justifyContent={{ base: "center", sm: "space-between" }}
             alignItems={{ base: "center", md: "center" }}
           >
-            <Pagination.Root count={20} pageSize={2} defaultPage={1}>
+            <Pagination.Root count={8} pageSize={2} defaultPage={1}>
               <ButtonGroup variant="outline" size="sm">
                 <Pagination.PrevTrigger asChild>
                   <IconButton

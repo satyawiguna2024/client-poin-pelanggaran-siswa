@@ -166,7 +166,7 @@ export default function DataGuru() {
                 label="Terapkan"
               />
 
-              {/* filter siswa berdasarkan kelas */}
+              {/* filter guru berdasarkan kelas */}
               <BaseNativeSelect
                 placeholder="Jabatan"
                 options={[
@@ -179,7 +179,7 @@ export default function DataGuru() {
                 ]}
               />
 
-              {/* filter siswa berdasarkan agama */}
+              {/* filter guru berdasarkan agama */}
               <BaseNativeSelect
                 placeholder="Agama"
                 options={[
@@ -192,7 +192,7 @@ export default function DataGuru() {
                 ]}
               />
 
-              {/* filter siswa berdasarkan jenis kelamin */}
+              {/* filter guru berdasarkan jenis kelamin */}
               <BaseNativeSelect
                 placeholder="Jenis Kelamin"
                 options={[
@@ -202,7 +202,7 @@ export default function DataGuru() {
               />
             </Box>
 
-            {/* search siswa */}
+            {/* search guru */}
             <Box>
               <Stack direction="row">
                 <InputGroup startElement={<CiSearch size={22} />}>
@@ -223,143 +223,143 @@ export default function DataGuru() {
         </Box>
 
         {/* table */}
-        <Box mt="5" width="full" bg="blue.300">
+        <Box mt="5" width="full" bg="blue.300" overflowX="auto">
           <Table.Root
-            border="1px solid"
-            borderColor="gray.300"
-            shadow="0px 4px 12px var(--chakra-colors-gray-200)"
-          >
-            <Table.Header>
-              <Table.Row bg="white">
-                <Table.ColumnHeader w="6">
-                  <Checkbox.Root size="md">
-                    {/* aksi checkbox */}
-                    <Checkbox.HiddenInput />
-                    <Checkbox.Control />
-                  </Checkbox.Root>
-                </Table.ColumnHeader>
-
-                {/* table column: Product | Category | Price */}
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Nuptk
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Nama
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Alamat
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Tanggal Lahir
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Jenis Kelamin
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Agama
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  No HP
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Jabatan
-                </Table.ColumnHeader>
-              </Table.Row>
-            </Table.Header>
-
-            {/* table body/content */}
-            <Table.Body>
-              {dataGuru.map((dg, i) => (
-                <Table.Row
-                  key={i}
-                  bg={i % 2 === 0 ? "gray.100" : "white"}
-                  className="group"
-                  color="text.primary"
-                  role="group"
-                >
-                  <Table.Cell>
+              border="1px solid"
+              borderColor="gray.300"
+              shadow="0px 4px 12px var(--chakra-colors-gray-200)"
+            >
+              <Table.Header>
+                <Table.Row bg="white">
+                  <Table.ColumnHeader w="6">
                     <Checkbox.Root size="md">
                       {/* aksi checkbox */}
                       <Checkbox.HiddenInput />
                       <Checkbox.Control />
                     </Checkbox.Root>
-                  </Table.Cell>
-                  <Table.Cell fontFamily="poppins">
-                    <Stack gap="2">
-                      <Heading unstyled>{dg.nuptk}</Heading>
+                  </Table.ColumnHeader>
 
-                      {/* action */}
-                      <Stack
-                        direction="row"
-                        gap="3"
-                        opacity={0}
-                        _groupHover={{ opacity: 1 }}
-                        transition="0.2s"
-                      >
-                        <Button
-                          unstyled
-                          size="xs"
-                          color="blue"
-                          cursor="pointer"
-                        >
-                          Update
-                        </Button>
-                        <Button unstyled size="xs" color="red" cursor="pointer">
-                          Delete
-                        </Button>
-                      </Stack>
-                    </Stack>
-                  </Table.Cell>
-                  <Table.Cell fontFamily="poppins">{dg.nama}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{dg.alamat}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{dg.tanggal_lahir}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{dg.jenis_kelamin}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{dg.agama}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{dg.telepon}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{dg.jabatan}</Table.Cell>
+                  {/* table column: Product | Category | Price */}
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Nuptk
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Nama
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Alamat
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Tanggal Lahir
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Jenis Kelamin
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Agama
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    No HP
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Jabatan
+                  </Table.ColumnHeader>
                 </Table.Row>
-              ))}
-            </Table.Body>
+              </Table.Header>
+
+              {/* table body/content */}
+              <Table.Body>
+                {dataGuru.map((dg, i) => (
+                  <Table.Row
+                    key={i}
+                    bg={i % 2 === 0 ? "gray.100" : "white"}
+                    className="group"
+                    color="text.primary"
+                    role="group"
+                  >
+                    <Table.Cell>
+                      <Checkbox.Root size="md">
+                        {/* aksi checkbox */}
+                        <Checkbox.HiddenInput />
+                        <Checkbox.Control />
+                      </Checkbox.Root>
+                    </Table.Cell>
+                    <Table.Cell fontFamily="poppins">
+                      <Stack gap="2">
+                        <Heading unstyled>{dg.nuptk}</Heading>
+
+                        {/* action */}
+                        <Stack
+                          direction="row"
+                          gap="3"
+                          opacity={0}
+                          _groupHover={{ opacity: 1 }}
+                          transition="0.2s"
+                        >
+                          <Button
+                            unstyled
+                            size="xs"
+                            color="blue"
+                            cursor="pointer"
+                          >
+                            Update
+                          </Button>
+                          <Button unstyled size="xs" color="red" cursor="pointer">
+                            Delete
+                          </Button>
+                        </Stack>
+                      </Stack>
+                    </Table.Cell>
+                    <Table.Cell fontFamily="poppins">{dg.nama}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{dg.alamat}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{dg.tanggal_lahir}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{dg.jenis_kelamin}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{dg.agama}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{dg.telepon}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{dg.jabatan}</Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
           </Table.Root>
         </Box>
 
@@ -370,7 +370,7 @@ export default function DataGuru() {
             justifyContent={{ base: "center", sm: "space-between" }}
             alignItems={{ base: "center", md: "center" }}
           >
-            <Pagination.Root count={20} pageSize={2} defaultPage={1}>
+            <Pagination.Root count={8} pageSize={2} defaultPage={1}>
               <ButtonGroup variant="outline" size="sm">
                 <Pagination.PrevTrigger asChild>
                   <IconButton
