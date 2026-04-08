@@ -1,12 +1,21 @@
-import { NativeSelect } from "@chakra-ui/react";
+import { NativeSelect, Field } from "@chakra-ui/react";
 
 export default function BaseNativeSelect({
   placeholder = "Pilih Aksi",
+  label,
+  required,
+  error,
   options = [],
   ...fieldProps
 }) {
   return (
-    <>
+    <Field.Root invalid={!!error} required={required}>
+      {label && (
+        <Field.Label>
+          {label} <Field.RequiredIndicator />
+        </Field.Label>
+      )}
+
       <NativeSelect.Root unstyled position="relative" width="full">
         <NativeSelect.Field
           placeholder={placeholder}
@@ -30,6 +39,8 @@ export default function BaseNativeSelect({
           ))}
         </NativeSelect.Field>
       </NativeSelect.Root>
-    </>
+
+      {error && <Field.ErrorText>{error}</Field.ErrorText>}
+    </Field.Root>
   );
 }

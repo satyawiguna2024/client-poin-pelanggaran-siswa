@@ -1,9 +1,9 @@
 import { Dialog, Portal, CloseButton, Button } from "@chakra-ui/react";
 
-export default function BaseDialog() {
+export default function BaseDialog({title, footer, open, onOpenChange, children}) {
   return (
     <>
-      <Dialog.Root placement={{ base: "center", md: "top" }}>
+      <Dialog.Root placement={{ base: "center", md: "top" }} open={open} onOpenChange={onOpenChange}>
         <Dialog.Trigger asChild>
           <Button
             unstyled
@@ -30,25 +30,17 @@ export default function BaseDialog() {
             <Dialog.Content>
               {/* header dialog */}
               <Dialog.Header>
-                <Dialog.Title>Title Dialog</Dialog.Title>
+                <Dialog.Title>{title}</Dialog.Title>
               </Dialog.Header>
 
               {/* isi content */}
               <Dialog.Body>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Harum provident similique laborum quis, quod sequi amet
-                  praesentium quo voluptatibus quidem?
-                </p>
+                {children}
               </Dialog.Body>
 
               {/* footer dialog */}
               <Dialog.Footer>
-                <Dialog.ActionTrigger asChild>
-                  <Button>Cancel</Button>
-                </Dialog.ActionTrigger>
-                <Button>Save</Button>
-
+                {footer}
                 {/* dialog close icon */}
                 <Dialog.CloseTrigger asChild>
                   <CloseButton size="sm" />
