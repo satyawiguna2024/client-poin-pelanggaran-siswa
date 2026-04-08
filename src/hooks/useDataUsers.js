@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { findAllSiswa, createDataSiswa } from "../services/dataUsers";
+import { findAllSiswa, createDataSiswa, deleteDataSiswa } from "../services/dataUsers";
 import Swal from "sweetalert2";
 
 //?? crud users role siswa start
@@ -18,18 +18,16 @@ export function useFindAllSiswa() {
 
 // create
 export function useCreateSiswa() {
-  const {
-    register,
-    handleSubmit,
-    trigger,
-    formState: { errors },
-  } = useForm();
+  const queryClient = useQueryClient();
 
-  const { mutate: mutateCreateSiswa, isPending: isPendingCreateSiswa } =
-    useMutation({
+  const { register, handleSubmit, trigger, formState: { errors }} = useForm();
+
+  const { mutate: mutateCreateSiswa, isPending: isPendingCreateSiswa } = useMutation({
       mutationKey: ["create-siswa-account"],
       mutationFn: createDataSiswa,
       onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["get-all-siswa"] });
+
         Swal.fire({
           title: "Membuat Akun Siswa Berhasil 🎉",
           text: "Selamat Atas akun barunya. dan jangan lupa untuk siswa login ya.",
@@ -39,9 +37,7 @@ export function useCreateSiswa() {
           color: "#fff",
           confirmButtonColor: "#3182ce",
           backdrop: `rgba(0,0,0,0.6) left top no-repeat`,
-        }).then((res) => {
-          if (res.isConfirmed) window.location.reload();
-        });
+        })
       },
       onError: (err) => {
         console.error("Error Login: ", err.message);
@@ -64,5 +60,66 @@ export function useCreateSiswa() {
   };
 
   return {register, handleSubmit, onSubmit, errors, trigger, isPendingCreateSiswa};
+}
+
+// delete siswa
+export function useDeleteSiswa() {
+  const queryClient = useQueryClient(); 
+
+  const { mutate: mutateDeleteSiswa, isPending: isPendingDeleteSiswa } = useMutation({
+    mutationKey: ["delete-siswa"],
+    mutationFn: deleteDataSiswa,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["get-all-siswa"] });
+
+      Swal.fire({
+        title: "Menghapus Data Siswa Berhasil 🎉",
+        text: "Data telah dihapus dari sistem",
+        icon: "success",
+        confirmButtonText: "OK",
+        background: "#1A202C",
+        color: "#fff",
+        confirmButtonColor: "#3182ce",
+        backdrop: `rgba(0,0,0,0.6) left top no-repeat`,
+      });
+    },
+    onError: (err) => {
+      console.error("Error Login: ", err.message);
+
+      Swal.fire({
+        title: "Menghapus Data Siswa Gagal 😓",
+        text: "Ada kesalahan server disaat menghapus data siswa",
+        icon: "error",
+        confirmButtonText: "OK",
+        background: "#1A202C",
+        color: "#fff",
+        confirmButtonColor: "#ce3131",
+        backdrop: `rgba(0,0,0,0.6) left top no-repeat`,
+      });
+    },
+  });
+
+  const confirmDeleteSiswa = (id, namaSiswa) => {
+    Swal.fire({
+      title: "Apakah kamu yakin?",
+      text: `Data Siswa atas nama ${namaSiswa} akan dihapus secara permanen!`,
+      icon: "warning",
+      showCancelButton: true,
+      background: "#1A202C",
+      color: "#fff",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Ya, Hapus!",
+      cancelButtonText: "Batal",
+      backdrop: `rgba(0,0,0,0.6) left top no-repeat`,
+    }).then((result) => {
+      // Jika user klik "Ya, Hapus!" maka eksekusi action hit ke API backend
+      if (result.isConfirmed) {
+        mutateDeleteSiswa(id);
+      }
+    });
+  };
+
+  return { confirmDeleteSiswa, isPendingDeleteSiswa };
 }
 //?? crud users role siswa end

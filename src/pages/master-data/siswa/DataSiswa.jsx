@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Heading, Stack, Input, InputGroup, Table, Checkbox, Button, Pagination, IconButton, ButtonGroup, Text } from "@chakra-ui/react";
 import { LuChevronLeft, LuChevronRight, LuSearch } from "react-icons/lu";
-import { useCreateSiswa, useFindAllSiswa } from "../../../hooks/useDataUsers";
+import { useCreateSiswa, useDeleteSiswa, useFindAllSiswa } from "../../../hooks/useDataUsers";
 import { useShowAllKelas } from "../../../hooks/useDataKelas";
 import BaseDialog from "../../../components/dialogs/BaseDialog";
 import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
@@ -15,6 +15,7 @@ export default function DataSiswa() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { findAllDataSiswa, isPendingFindAllSiswa } = useFindAllSiswa();
   const { register, handleSubmit, onSubmit, errors, trigger } = useCreateSiswa();
+  const { confirmDeleteSiswa, isPendingDeleteSiswa } = useDeleteSiswa();
   const { getAllDataKelas } = useShowAllKelas();
 
   // trigger field required sebelum next step
@@ -320,7 +321,11 @@ export default function DataSiswa() {
                         >
                           Update
                         </Button>
-                        <Button unstyled size="xs" color="red" cursor="pointer">
+                        <Button 
+                          unstyled
+                          onClick={() => confirmDeleteSiswa(ds?.user_account?.id, ds?.nama)} 
+                          disabled={isPendingDeleteSiswa} 
+                          size="xs" color="red" cursor="pointer">
                           Delete
                         </Button>
                       </Stack>

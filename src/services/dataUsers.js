@@ -20,4 +20,14 @@ export const createDataSiswa = async(data) => {
     console.log("Error in services create data siswa: ", err.message);
   }
 }
+
+// delete siswa
+export const deleteDataSiswa = async(id) => {
+  try {
+    const response = await api.delete(`/siswa/${id}`);
+    return response.data;
+  } catch (err) {
+    console.log("Error in services delete data siswa: ", err.message);
+  }
+}
 //?? data siswa end
