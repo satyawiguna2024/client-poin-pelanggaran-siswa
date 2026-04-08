@@ -13,6 +13,7 @@ export default function StepKedua({ register, errors, getAllDataKelas }) {
         <BaseInput
           type="number"
           label="Nis"
+          // readOnly={editId ? true : false}
           required
           placeholder="Nis (1234)"
           {...register("nis", {

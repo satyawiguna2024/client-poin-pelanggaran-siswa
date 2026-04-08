@@ -21,6 +21,16 @@ export const createDataSiswa = async(data) => {
   }
 }
 
+// update siswa
+export const updateDataSiswa = async(id, data) => {
+  try {
+    const response = await api.put(`/siswa/${id}`, data);
+    return response.data;
+  } catch(err) {
+    console.log("Error in services update data siswa: ", err.message);
+  }
+}
+
 // delete siswa
 export const deleteDataSiswa = async(id) => {
   try {

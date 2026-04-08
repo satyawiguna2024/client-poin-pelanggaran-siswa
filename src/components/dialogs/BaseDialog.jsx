@@ -1,12 +1,13 @@
 import { Dialog, Portal, CloseButton, Button } from "@chakra-ui/react";
 
-export default function BaseDialog({title, footer, open, onOpenChange, children}) {
+export default function BaseDialog({title, footer, open, onOpenChange, onClickAdd, children}) {
   return (
     <>
       <Dialog.Root placement={{ base: "center", md: "top" }} open={open} onOpenChange={onOpenChange}>
         <Dialog.Trigger asChild>
           <Button
             unstyled
+            onClick={onClickAdd}
             bg="white"
             border='1px solid var(--chakra-colors-gray-300)'
             p={{base: "5px 6px", md:"6px 15px"}}

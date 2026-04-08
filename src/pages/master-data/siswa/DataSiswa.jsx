@@ -1,7 +1,18 @@
-import { useState } from "react";
-import { Box, Heading, Stack, Input, InputGroup, Table, Checkbox, Button, Pagination, IconButton, ButtonGroup, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Stack,
+  Input,
+  InputGroup,
+  Table,
+  Checkbox,
+  Button,
+  Pagination,
+  IconButton,
+  ButtonGroup,
+} from "@chakra-ui/react";
 import { LuChevronLeft, LuChevronRight, LuSearch } from "react-icons/lu";
-import { useCreateSiswa, useDeleteSiswa, useFindAllSiswa } from "../../../hooks/useDataUsers";
+import useSiswaForms, { useCreateSiswa, useDeleteSiswa, useFindAllSiswa, useUpdateSiswa } from "../../../hooks/useDataUsers";
 import { useShowAllKelas } from "../../../hooks/useDataKelas";
 import BaseDialog from "../../../components/dialogs/BaseDialog";
 import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
@@ -11,42 +22,28 @@ import StepKedua from "./steps-siswa/StepKedua";
 import StepKetiga from "./steps-siswa/StepKetiga";
 
 export default function DataSiswa() {
-  const [step, setStep] = useState(1);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { findAllDataSiswa, isPendingFindAllSiswa } = useFindAllSiswa();
-  const { register, handleSubmit, onSubmit, errors, trigger } = useCreateSiswa();
-  const { confirmDeleteSiswa, isPendingDeleteSiswa } = useDeleteSiswa();
   const { getAllDataKelas } = useShowAllKelas();
-
-  // trigger field required sebelum next step
-  const handleNext = async () => {
-    let fields = [];
-
-    if (step === 1) {
-      fields = ["username", "email", "password"];
-    }
-
-    if (step === 2) {
-      fields = [ "nis", "nama", "tanggal_lahir", "agama", "jenis_kelamin", "alamat", "id_kelas", "telepon" ];
-    }
-
-    if (step === 3) {
-      fields = [ "nama_ayah", "nama_ibu", "pekerjaan_ayah", "pekerjaan_ibu", "telepon_ayah", "telepon_ibu" ];
-    }
-
-    const isValid = await trigger(fields);
-
-    if (isValid) {
-      setStep(step + 1);
-    }
-  };
+  const { step, setStep, isDialogOpen, setIsDialogOpen,
+          editId, register, handleSubmit, errors, handleNext, 
+          handleBukaTambahData, handleBukaUpdateData 
+        } = useSiswaForms();
+  const { mutateCreateSiswa } = useCreateSiswa();
+  const { mutateUpdateSiswa } = useUpdateSiswa();
+  const { confirmDeleteSiswa, isPendingDeleteSiswa } = useDeleteSiswa();
 
   // trigger dialog disaat kelar close
   const handleSimpanData = (data) => {
     setIsDialogOpen(false);
     setStep(1);
-    onSubmit(data);
-  }
+
+    // PENGECEKAN (IF UPDATE ATAU IF CREATE)
+    if (editId) {
+      mutateUpdateSiswa({ id: editId, data: data });
+    } else {
+      mutateCreateSiswa(data);
+    }
+  };
 
   if (isPendingFindAllSiswa) return <Heading>Loading...</Heading>;
 
@@ -55,19 +52,26 @@ export default function DataSiswa() {
       <Box py="10">
         {/* title & button add new */}
         <Stack direction="row" alignItems="center">
-          <Heading unstyled color="text.primary" fontFamily="poppins" fontWeight="medium" fontSize={{ base: "2xl", md: "3xl" }}>
+          <Heading
+            unstyled
+            color="text.primary"
+            fontFamily="poppins"
+            fontWeight="medium"
+            fontSize={{ base: "2xl", md: "3xl" }}
+          >
             Siswa
           </Heading>
 
           {/* dialog component */}
           <BaseDialog
-            title="Add Siswa"
+            title={editId ? "Update Siswa" : "Add Siswa"}
             open={isDialogOpen}
             onOpenChange={(e) => setIsDialogOpen(e.open)}
+            onClickAdd={handleBukaTambahData}
             footer={
               <>
                 {/* melakukan aksi form langkah demi langkah -> add users akun(1) -> add data personal siswa(2) -> add data ortu siswa(3) */}
-                {step > 1 && (
+                {step > (editId ? 2 : 1) && (
                   <Button
                     onClick={() => setStep(step - 1)}
                     variant="ghost"
@@ -78,26 +82,39 @@ export default function DataSiswa() {
                 )}
 
                 {step < 3 ? (
-                  <Button onClick={handleNext} variant="ghost" color="orange">
+                  <Button type="button" onClick={handleNext} variant="ghost" color="orange">
                     Next
                   </Button>
-                ):(
-                  <Button form="form-tambah-siswa" type="submit" variant="ghost" color="blue">
+                ) : (
+                  <Button
+                    onClick={handleSubmit(handleSimpanData)}
+                    variant="ghost"
+                    color="blue"
+                  >
                     Save
                   </Button>
                 )}
               </>
             }
           >
-            <form id="form-tambah-siswa" onSubmit={handleSubmit(handleSimpanData)}>
+            <form onSubmit={(e) => e.preventDefault()}>
               {/* step tambah akun user */}
-              {step === 1 && (<StepPertama register={register} errors={errors} />)}
+              {step === 1 && (
+                <StepPertama register={register} errors={errors} />
+              )}
 
               {/* step tambah personal data siswa */}
-              {step === 2 && (<StepKedua register={register} errors={errors} getAllDataKelas={getAllDataKelas} />)}
+              {step === 2 && (
+                <StepKedua
+                  register={register}
+                  errors={errors}
+                  getAllDataKelas={getAllDataKelas}
+                  // editId={editId}
+                />
+              )}
 
               {/* step tambah data ortu siswa */}
-              {step === 3 && (<StepKetiga register={register} errors={errors} />)}
+              {step === 3 && <StepKetiga register={register} errors={errors} />}
             </form>
           </BaseDialog>
         </Stack>
@@ -315,17 +332,23 @@ export default function DataSiswa() {
                       >
                         <Button
                           unstyled
+                          onClick={() => handleBukaUpdateData(ds)}
                           size="xs"
                           color="blue"
                           cursor="pointer"
                         >
                           Update
                         </Button>
-                        <Button 
+                        <Button
                           unstyled
-                          onClick={() => confirmDeleteSiswa(ds?.user_account?.id, ds?.nama)} 
-                          disabled={isPendingDeleteSiswa} 
-                          size="xs" color="red" cursor="pointer">
+                          onClick={() =>
+                            confirmDeleteSiswa(ds?.user_account?.id, ds?.nama)
+                          }
+                          disabled={isPendingDeleteSiswa}
+                          size="xs"
+                          color="red"
+                          cursor="pointer"
+                        >
                           Delete
                         </Button>
                       </Stack>
