@@ -1,18 +1,6 @@
-import {
-  Box,
-  Heading,
-  Stack,
-  Input,
-  InputGroup,
-  Table,
-  Checkbox,
-  Button,
-  Pagination,
-  IconButton,
-  ButtonGroup,
-} from "@chakra-ui/react";
+import { Box, Heading, Stack, Input, InputGroup, Table, Checkbox, Button, Pagination, IconButton, ButtonGroup } from "@chakra-ui/react";
 import { LuChevronLeft, LuChevronRight, LuSearch } from "react-icons/lu";
-import useSiswaForms, { useCreateSiswa, useDeleteSiswa, useFindAllSiswa, useUpdateSiswa } from "../../../hooks/useDataUsers";
+import { useSiswaForms, useCreateSiswa, useDeleteSiswa, useFindAllSiswa, useUpdateSiswa } from "../../../hooks/useDataUsers";
 import { useShowAllKelas } from "../../../hooks/useDataKelas";
 import BaseDialog from "../../../components/dialogs/BaseDialog";
 import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
@@ -109,7 +97,7 @@ export default function DataSiswa() {
                   register={register}
                   errors={errors}
                   getAllDataKelas={getAllDataKelas}
-                  // editId={editId}
+                  editId={editId}
                 />
               )}
 

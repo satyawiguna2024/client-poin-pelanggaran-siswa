@@ -3,7 +3,7 @@ import BaseInput from "../../../../components/forms/BaseInput";
 import BaseNativeSelect from "../../../../components/forms/BaseNativeSelect";
 import BaseTextarea from "../../../../components/forms/BaseTextarea";
 
-export default function StepKedua({ register, errors, getAllDataKelas }) {
+export default function StepKedua({ register, errors, editId, getAllDataKelas }) {
   return (
     <>
       <Text>Data Diri Siswa</Text>
@@ -13,7 +13,7 @@ export default function StepKedua({ register, errors, getAllDataKelas }) {
         <BaseInput
           type="number"
           label="Nis"
-          // readOnly={editId ? true : false}
+          disabled={editId ? true : false}
           required
           placeholder="Nis (1234)"
           {...register("nis", {
@@ -65,15 +65,12 @@ export default function StepKedua({ register, errors, getAllDataKelas }) {
           label="Agama"
           required
           options={[
-            { label: "Islam", value: "islam" },
-            {
-              label: "Kristen Protestan",
-              value: "kristen_protestan",
-            },
-            { label: "Katolik", value: "katolik" },
-            { label: "Hindu", value: "hindu" },
-            { label: "Buddha", value: "buddha" },
-            { label: "Konghucu", value: "konghucu" },
+            { label: "Islam", value: "Islam" },
+            { label: "Kristen Protestan", value: "Kristen Protestan" },
+            { label: "Katolik", value: "Katolik" },
+            { label: "Hindu", value: "Hindu" },
+            { label: "Buddha", value: "Buddha" },
+            { label: "Konghucu", value: "Konghucu" },
           ]}
           {...register("agama", {
             required: "Agama wajib di isi",

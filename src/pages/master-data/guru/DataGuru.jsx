@@ -16,112 +16,33 @@ import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
 import BaseButton from "../../../components/buttons/BaseButton";
 import { CiSearch } from "react-icons/ci";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-
-// dummy data guru
-const dataGuru = [
-  {
-    nuptk: "1234567890123456",
-    nama: "Ahmad Fauzi",
-    alamat: "Jl. Merdeka No. 10, Jakarta",
-    tanggal_lahir: "1985-02-12",
-    jenis_kelamin: "Laki-laki",
-    agama: "Islam",
-    telepon: "081234567800",
-    jabatan: "Guru Matematika",
-  },
-  {
-    nuptk: "1234567890123457",
-    nama: "Siti Rahmawati",
-    alamat: "Jl. Sudirman No. 21, Bandung",
-    tanggal_lahir: "1987-05-23",
-    jenis_kelamin: "Perempuan",
-    agama: "Islam",
-    telepon: "081234567801",
-    jabatan: "Guru Bahasa Indonesia",
-  },
-  {
-    nuptk: "1234567890123458",
-    nama: "Budi Santoso",
-    alamat: "Jl. Diponegoro No. 5, Surabaya",
-    tanggal_lahir: "1983-07-14",
-    jenis_kelamin: "Laki-laki",
-    agama: "Kristen",
-    telepon: "081234567802",
-    jabatan: "Guru Fisika",
-  },
-  {
-    nuptk: "1234567890123459",
-    nama: "Maria Ulfa",
-    alamat: "Jl. Ahmad Yani No. 8, Medan",
-    tanggal_lahir: "1988-11-30",
-    jenis_kelamin: "Perempuan",
-    agama: "Katolik",
-    telepon: "081234567803",
-    jabatan: "Guru Biologi",
-  },
-  {
-    nuptk: "1234567890123460",
-    nama: "Hendra Wijaya",
-    alamat: "Jl. Gatot Subroto No. 15, Semarang",
-    tanggal_lahir: "1984-01-19",
-    jenis_kelamin: "Laki-laki",
-    agama: "Buddha",
-    telepon: "081234567804",
-    jabatan: "Guru Kimia",
-  },
-  {
-    nuptk: "1234567890123461",
-    nama: "Dewi Lestari",
-    alamat: "Jl. Pemuda No. 3, Yogyakarta",
-    tanggal_lahir: "1989-03-08",
-    jenis_kelamin: "Perempuan",
-    agama: "Islam",
-    telepon: "081234567805",
-    jabatan: "Guru Bahasa Inggris",
-  },
-  {
-    nuptk: "1234567890123462",
-    nama: "Rudi Hartono",
-    alamat: "Jl. Veteran No. 12, Malang",
-    tanggal_lahir: "1982-06-25",
-    jenis_kelamin: "Laki-laki",
-    agama: "Hindu",
-    telepon: "081234567806",
-    jabatan: "Guru Sejarah",
-  },
-  {
-    nuptk: "1234567890123463",
-    nama: "Linda Sari",
-    alamat: "Jl. Imam Bonjol No. 7, Denpasar",
-    tanggal_lahir: "1990-09-17",
-    jenis_kelamin: "Perempuan",
-    agama: "Islam",
-    telepon: "081234567807",
-    jabatan: "Guru Ekonomi",
-  },
-  {
-    nuptk: "1234567890123464",
-    nama: "Joko Prasetyo",
-    alamat: "Jl. Teuku Umar No. 9, Makassar",
-    tanggal_lahir: "1981-12-05",
-    jenis_kelamin: "Laki-laki",
-    agama: "Kristen",
-    telepon: "081234567808",
-    jabatan: "Guru Geografi",
-  },
-  {
-    nuptk: "1234567890123465",
-    nama: "Sri Wahyuni",
-    alamat: "Jl. Asia Afrika No. 11, Bandung",
-    tanggal_lahir: "1986-04-21",
-    jenis_kelamin: "Perempuan",
-    agama: "Islam",
-    telepon: "081234567809",
-    jabatan: "Guru Seni Budaya",
-  },
-];
+import { useCreateGuru, useDeleteGuru, useFindAllGuru, useGuruForms, useUpdateGuru } from "../../../hooks/useDataUsers";
+import StepPertama from "./steps-guru/StepPertama";
+import StepKedua from "./steps-guru/StepKedua";
 
 export default function DataGuru() {
+  const {findAllDataGuru, isPendingFindAllGuru} = useFindAllGuru();
+  const { mutateCreateGuru } = useCreateGuru();
+  const { mutateUpdateGuru } = useUpdateGuru();
+  const { confirmDeleteGuru } = useDeleteGuru();
+  const { step, setStep, isDialogOpen, setIsDialogOpen, editId, 
+          register, handleSubmit, errors, handleBukaTambahData, handleNext, handleBukaUpdateData
+        } = useGuruForms();
+
+  // trigger dialog disaat kelar close
+  const handleSimpanData = (data) => {
+    setIsDialogOpen(false);
+    setStep(1);
+
+    // PENGECEKAN (IF UPDATE ATAU IF CREATE)
+    if (editId) {
+      mutateUpdateGuru({ id: editId, data: data });
+    } else {
+      mutateCreateGuru(data);
+    }
+  };
+  
+  if(isPendingFindAllGuru) return <h1>Loading...</h1>;
 
   return (
     <>
@@ -137,8 +58,47 @@ export default function DataGuru() {
           >
             Guru
           </Heading>
+
           {/* dialog component */}
-          <BaseDialog />
+          <BaseDialog
+            title={editId ? "Update Guru" : "Add Guru"}
+            open={isDialogOpen}
+            onOpenChange={(e) => setIsDialogOpen(e.open)}
+            onClickAdd={handleBukaTambahData}
+            footer={
+              <>
+                {/* melakukan aksi form langkah demi langkah -> add users akun(1) -> add data personal siswa(2) -> add data ortu siswa(3) */}
+                {step > (editId ? 2 : 1) && (
+                  <Button
+                    onClick={() => setStep(step - 1)}
+                    variant="ghost"
+                    color="red"
+                  >
+                    Back
+                  </Button>
+                )}
+
+                {step < 2 ? (
+                  <Button type="button" onClick={handleNext} variant="ghost" color="orange">
+                    Next
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleSubmit(handleSimpanData)}
+                    variant="ghost"
+                    color="blue"
+                  >
+                    Save
+                  </Button>
+                )}
+              </>
+            }
+          >
+            <form onSubmit={(e) => e.preventDefault()}>
+              {step === 1 && <StepPertama register={register} errors={errors} />}
+              {step === 2 && <StepKedua register={register} errors={errors} editId={editId} />}
+            </form>
+          </BaseDialog>
         </Stack>
 
         {/* action button*/}
@@ -309,7 +269,7 @@ export default function DataGuru() {
 
               {/* table body/content */}
               <Table.Body>
-                {dataGuru.map((dg, i) => (
+                {findAllDataGuru?.map((dg, i) => (
                   <Table.Row
                     key={i}
                     bg={i % 2 === 0 ? "gray.100" : "white"}
@@ -338,25 +298,30 @@ export default function DataGuru() {
                         >
                           <Button
                             unstyled
+                            onClick={() => handleBukaUpdateData(dg)}
                             size="xs"
                             color="blue"
                             cursor="pointer"
                           >
                             Update
                           </Button>
-                          <Button unstyled size="xs" color="red" cursor="pointer">
+                          <Button 
+                            unstyled
+                            onClick={() => confirmDeleteGuru(dg?.user_account?.id, dg?.nama)}
+                            size="xs" color="red" cursor="pointer"
+                          >
                             Delete
                           </Button>
                         </Stack>
                       </Stack>
                     </Table.Cell>
-                    <Table.Cell fontFamily="poppins">{dg.nama}</Table.Cell>
-                    <Table.Cell fontFamily="poppins">{dg.alamat}</Table.Cell>
-                    <Table.Cell fontFamily="poppins">{dg.tanggal_lahir}</Table.Cell>
-                    <Table.Cell fontFamily="poppins">{dg.jenis_kelamin}</Table.Cell>
-                    <Table.Cell fontFamily="poppins">{dg.agama}</Table.Cell>
-                    <Table.Cell fontFamily="poppins">{dg.telepon}</Table.Cell>
-                    <Table.Cell fontFamily="poppins">{dg.jabatan}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.nama}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.alamat}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.tanggal_lahir}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.jenis_kelamin === "L" ? "Laki Laki" : "Perempuan"}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.agama}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.telepon}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.jabatan}</Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>
