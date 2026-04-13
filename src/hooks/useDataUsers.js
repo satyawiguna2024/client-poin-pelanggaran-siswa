@@ -1,17 +1,9 @@
+import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  findAllSiswa,
-  createDataSiswa,
-  deleteDataSiswa,
-  updateDataSiswa,
-  findAllGuru,
-  createDataGuru,
-  updateDataGuru,
-  deleteDataGuru,
-} from "../services/dataUsers";
+import { findAllSiswa, createDataSiswa, deleteDataSiswa, updateDataSiswa, findAllGuru, createDataGuru, updateDataGuru, deleteDataGuru } from "../services/dataUsers";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { useState } from "react";
+
 
 //?? crud users role siswa start
 // show all

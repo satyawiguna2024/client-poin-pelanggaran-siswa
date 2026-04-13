@@ -315,13 +315,13 @@ export default function DataGuru() {
                         </Stack>
                       </Stack>
                     </Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.nama}</Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.alamat}</Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.tanggal_lahir}</Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.jenis_kelamin === "L" ? "Laki Laki" : "Perempuan"}</Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.agama}</Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.telepon}</Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg.jabatan}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.nama}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.alamat}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.tanggal_lahir}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.jenis_kelamin === "L" ? "Laki Laki" : "Perempuan"}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.agama}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.telepon}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.jabatan}</Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>

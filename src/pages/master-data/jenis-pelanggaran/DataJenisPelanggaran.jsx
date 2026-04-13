@@ -16,22 +16,72 @@ import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
 import BaseButton from "../../../components/buttons/BaseButton";
 import { CiSearch } from "react-icons/ci";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-
-// dummy jenis pelanggaran
-const dataJenisPelanggaran = [
-  { id: 1, nama_pelanggaran: "Bermain di jam pelajaran", poin_pelanggaran: 5, tanggal_dibuat: "2024-07-01", },
-  { id: 2, nama_pelanggaran: "Tidak memakai seragam lengkap", poin_pelanggaran: 10, tanggal_dibuat: "2024-07-01", },
-  { id: 3, nama_pelanggaran: "Datang terlambat", poin_pelanggaran: 8, tanggal_dibuat: "2024-07-01", },
-  { id: 4, nama_pelanggaran: "Tidak mengerjakan tugas", poin_pelanggaran: 7, tanggal_dibuat: "2024-07-01", },
-  { id: 5, nama_pelanggaran: "Membolos", poin_pelanggaran: 15 },
-  { id: 6, nama_pelanggaran: "Mengganggu teman saat belajar", poin_pelanggaran: 6, tanggal_dibuat: "2024-07-01", },
-  { id: 7, nama_pelanggaran: "Membawa HP saat pelajaran tanpa izin", poin_pelanggaran: 12, tanggal_dibuat: "2024-07-01", },
-  { id: 8, nama_pelanggaran: "Berbicara kasar kepada guru", poin_pelanggaran: 20, tanggal_dibuat: "2024-07-01", },
-  { id: 9, nama_pelanggaran: "Merusak fasilitas sekolah", poin_pelanggaran: 25, tanggal_dibuat: "2024-07-01", },
-  { id: 10, nama_pelanggaran: "Berkelahi di lingkungan sekolah", poin_pelanggaran: 30, tanggal_dibuat: "2024-07-01", },
-];
+import {
+  useDjpFrom,
+  useFindAll,
+  useStore,
+  useUpdate,
+  useDelete,
+} from "../../../hooks/useDataJenisPelanggaran";
+import Swal from "sweetalert2";
+import BaseInput from "../../../components/forms/BaseInput";
 
 export default function DataJenisPelanggaran() {
+  const { jenisPelanggaran, isPendingJenisPelanggaran } = useFindAll();
+  const { createData } = useStore();
+  const { updateData } = useUpdate();
+  const { deleteData } = useDelete();
+  const {
+    isDialogOpen,
+    setIsDialogOpen,
+    editId,
+    setEditId,
+    register,
+    handleSubmit,
+    errors,
+    reset,
+  } = useDjpFrom();
+
+  const handleSimpanData = (data) => {
+    setIsDialogOpen(false);
+    if (editId) {
+      updateData({ id: editId, data });
+    } else {
+      createData({
+        nama_pelanggaran: data.nama_pelanggaran,
+        poin: parseInt(data.poin),
+      });
+    }
+  };
+
+  const handleBukaTambahData = () => {
+    setEditId(null);
+    reset({ nama_pelanggaran: "", poin: "" });
+  };
+
+  const handleBukaUpdateData = (djp) => {
+    setEditId(djp.id);
+    reset({ nama_pelanggaran: djp.nama_pelanggaran, poin: djp.poin });
+    setIsDialogOpen(true);
+  };
+
+  const confirmDeleteData = (id, nama) => {
+    Swal.fire({
+      title: `Hapus ${nama}?`,
+      text: "Data yang dihapus tidak bisa dikembalikan!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteData(id);
+      }
+    });
+  };
+
+  if (isPendingJenisPelanggaran) return <h1>Loading...</h1>;
+
   return (
     <>
       <Box py="10">
@@ -47,7 +97,47 @@ export default function DataJenisPelanggaran() {
             Jenis Pelanggaran
           </Heading>
           {/* dialog component */}
-          <BaseDialog />
+          <BaseDialog
+            title={editId ? "Update Jenis Pelanggaran" : "Add Jenis Pelanggaran"}
+            open={isDialogOpen}
+            onOpenChange={(e) => setIsDialogOpen(e.open)}
+            onClickAdd={handleBukaTambahData}
+            footer={
+              <Button
+                onClick={handleSubmit(handleSimpanData)}
+                variant="ghost"
+                color="blue"
+              >
+                Save
+              </Button>
+            }
+          >
+            <form onSubmit={(e) => e.preventDefault()}>
+                <Box my="8">
+                  <BaseInput
+                    label="Nama Pelanggaran"
+                    required
+                    placeholder="Masukan Nama Pelanggaran"
+                    {...register("nama_pelanggaran", {
+                      required: "Wajib Memasukan Nama Pelanggaran!",
+                    })}
+                    error={errors.nama_pelanggaran?.message}
+                  />
+                </Box>
+                <Box my="8">
+                  <BaseInput
+                    type="number"
+                    label="Poin Pelanggaran"
+                    required
+                    placeholder="Masukan Poin Pelanggaran"
+                    {...register("poin", {
+                      required: "Wajib Memasukan Poin Pelanggaran!",
+                    })}
+                    error={errors.poin?.message}
+                  />
+                </Box>
+            </form>
+          </BaseDialog>
         </Stack>
 
         {/* action button*/}
@@ -74,6 +164,24 @@ export default function DataJenisPelanggaran() {
                 mr="8"
                 width={{ base: "full", md: "auto" }}
                 label="Terapkan"
+              />
+
+              {/* filter poin pelanggaran berdasarkan dari terbesar/terkecil */}
+              <BaseNativeSelect
+                placeholder="Filter Poin"
+                options={[
+                  { label: "Terbesar", value: "terbesar" },
+                  { label: "Terkecil", value: "terkecil" },
+                ]}
+              />
+
+              {/* filter date */}
+              <BaseNativeSelect
+                placeholder="Filter Tanggal"
+                options={[
+                  { label: "Terbaru", value: "terbaru" },
+                  { label: "Terlama", value: "terlama" },
+                ]}
               />
             </Box>
 
@@ -144,7 +252,7 @@ export default function DataJenisPelanggaran() {
 
             {/* table body/content */}
             <Table.Body>
-              {dataJenisPelanggaran.map((dk, i) => (
+              {jenisPelanggaran?.map((djp, i) => (
                 <Table.Row
                   key={i}
                   bg={i % 2 === 0 ? "gray.100" : "white"}
@@ -161,7 +269,7 @@ export default function DataJenisPelanggaran() {
                   </Table.Cell>
                   <Table.Cell fontFamily="poppins">
                     <Stack gap="2">
-                      <Heading unstyled>{dk.nama_pelanggaran}</Heading>
+                      <Heading unstyled>{djp?.nama_pelanggaran}</Heading>
 
                       {/* action */}
                       <Stack
@@ -173,22 +281,33 @@ export default function DataJenisPelanggaran() {
                       >
                         <Button
                           unstyled
+                          onClick={() => handleBukaUpdateData(djp)}
                           size="xs"
                           color="blue"
                           cursor="pointer"
                         >
                           Update
                         </Button>
-                        <Button unstyled size="xs" color="red" cursor="pointer">
+                        <Button
+                          unstyled
+                          onClick={() =>
+                            confirmDeleteData(djp.id, djp.nama_pelanggaran)
+                          }
+                          size="xs"
+                          color="red"
+                          cursor="pointer"
+                        >
                           Delete
                         </Button>
                       </Stack>
                     </Stack>
                   </Table.Cell>
-                  <Table.Cell fontFamily="poppins">
-                    {dk.poin_pelanggaran}
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
+                    {djp?.poin}
                   </Table.Cell>
-                  <Table.Cell fontFamily="poppins">{dk.tanggal_dibuat}</Table.Cell>
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
+                    {djp?.created_at}
+                  </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
