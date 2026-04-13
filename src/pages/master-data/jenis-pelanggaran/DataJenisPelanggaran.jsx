@@ -1,46 +1,18 @@
-import {
-  Box,
-  Heading,
-  Stack,
-  Input,
-  InputGroup,
-  Table,
-  Checkbox,
-  Button,
-  Pagination,
-  IconButton,
-  ButtonGroup,
-} from "@chakra-ui/react";
+import { Box, Heading, Stack, Input, InputGroup, Table, Checkbox, Button, Pagination, IconButton, ButtonGroup } from "@chakra-ui/react";
 import BaseDialog from "../../../components/dialogs/BaseDialog";
 import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
 import BaseButton from "../../../components/buttons/BaseButton";
 import { CiSearch } from "react-icons/ci";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import {
-  useDjpFrom,
-  useFindAll,
-  useStore,
-  useUpdate,
-  useDelete,
-} from "../../../hooks/useDataJenisPelanggaran";
-import Swal from "sweetalert2";
+import { useDjpFrom, useFindAll, useStore, useUpdate, useDelete } from "../../../hooks/useDataJenisPelanggaran";
 import BaseInput from "../../../components/forms/BaseInput";
 
 export default function DataJenisPelanggaran() {
   const { jenisPelanggaran, isPendingJenisPelanggaran } = useFindAll();
   const { createData } = useStore();
   const { updateData } = useUpdate();
-  const { deleteData } = useDelete();
-  const {
-    isDialogOpen,
-    setIsDialogOpen,
-    editId,
-    setEditId,
-    register,
-    handleSubmit,
-    errors,
-    reset,
-  } = useDjpFrom();
+  const { confirmDeleteData } = useDelete();
+  const { isDialogOpen, setIsDialogOpen, editId, register, handleSubmit, errors, handleBukaTambahData, handleBukaUpdateData } = useDjpFrom();
 
   const handleSimpanData = (data) => {
     setIsDialogOpen(false);
@@ -52,32 +24,6 @@ export default function DataJenisPelanggaran() {
         poin: parseInt(data.poin),
       });
     }
-  };
-
-  const handleBukaTambahData = () => {
-    setEditId(null);
-    reset({ nama_pelanggaran: "", poin: "" });
-  };
-
-  const handleBukaUpdateData = (djp) => {
-    setEditId(djp.id);
-    reset({ nama_pelanggaran: djp.nama_pelanggaran, poin: djp.poin });
-    setIsDialogOpen(true);
-  };
-
-  const confirmDeleteData = (id, nama) => {
-    Swal.fire({
-      title: `Hapus ${nama}?`,
-      text: "Data yang dihapus tidak bisa dikembalikan!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Ya, hapus!",
-      cancelButtonText: "Batal",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteData(id);
-      }
-    });
   };
 
   if (isPendingJenisPelanggaran) return <h1>Loading...</h1>;

@@ -97,7 +97,22 @@ export function useDelete() {
     }
   });
 
-  return { deleteData, isPendingDelete };
+  const confirmDeleteData = (id, nama) => {
+    Swal.fire({
+      title: `Hapus ${nama}?`,
+      text: "Data yang dihapus tidak bisa dikembalikan!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteData(id);
+      }
+    });
+  };
+
+  return { deleteData, isPendingDelete, confirmDeleteData };
 }
 
 // form
@@ -106,5 +121,16 @@ export function useDjpFrom() {
   const [editId, setEditId] = useState(null);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-  return { isDialogOpen, setIsDialogOpen, editId, setEditId, register, handleSubmit, errors, reset };
+    const handleBukaTambahData = () => {
+    setEditId(null);
+    reset({ nama_pelanggaran: "", poin: "" });
+  };
+
+  const handleBukaUpdateData = (djp) => {
+    setEditId(djp.id);
+    reset({ nama_pelanggaran: djp.nama_pelanggaran, poin: djp.poin });
+    setIsDialogOpen(true);
+  };
+
+  return { isDialogOpen, setIsDialogOpen, editId, setEditId, register, handleSubmit, errors, reset, handleBukaTambahData, handleBukaUpdateData };
 }

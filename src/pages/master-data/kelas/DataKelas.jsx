@@ -5,7 +5,6 @@ import {
   Input,
   InputGroup,
   Table,
-  Checkbox,
   Button,
   Pagination,
   IconButton,
@@ -16,82 +15,33 @@ import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
 import BaseButton from "../../../components/buttons/BaseButton";
 import { CiSearch } from "react-icons/ci";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-
-// dummy data kelas
-const dataKelas = [
-  {
-    id: 1,
-    nama_kelas: "X IPA 1",
-    jumlah_kelas: 30,
-    wali_kelas: "Ahmad Fauzi",
-    tanggal_dibuat: "2024-07-01",
-  },
-  {
-    id: 2,
-    nama_kelas: "X IPA 2",
-    jumlah_kelas: 32,
-    wali_kelas: "Siti Rahmawati",
-    tanggal_dibuat: "2024-07-01",
-  },
-  {
-    id: 3,
-    nama_kelas: "X IPS 1",
-    jumlah_kelas: 28,
-    wali_kelas: "Budi Santoso",
-    tanggal_dibuat: "2024-07-01",
-  },
-  {
-    id: 4,
-    nama_kelas: "X IPS 2",
-    jumlah_kelas: 31,
-    wali_kelas: "Maria Ulfa",
-    tanggal_dibuat: "2024-07-01",
-  },
-  {
-    id: 5,
-    nama_kelas: "XI IPA 1",
-    jumlah_kelas: 29,
-    wali_kelas: "Hendra Wijaya",
-    tanggal_dibuat: "2023-07-01",
-  },
-  {
-    id: 6,
-    nama_kelas: "XI IPA 2",
-    jumlah_kelas: 30,
-    wali_kelas: "Dewi Lestari",
-    tanggal_dibuat: "2023-07-01",
-  },
-  {
-    id: 7,
-    nama_kelas: "XI IPS 1",
-    jumlah_kelas: 27,
-    wali_kelas: "Rudi Hartono",
-    tanggal_dibuat: "2023-07-01",
-  },
-  {
-    id: 8,
-    nama_kelas: "XI IPS 2",
-    jumlah_kelas: 33,
-    wali_kelas: "Linda Sari",
-    tanggal_dibuat: "2023-07-01",
-  },
-  {
-    id: 9,
-    nama_kelas: "XII IPA 1",
-    jumlah_kelas: 28,
-    wali_kelas: "Joko Prasetyo",
-    tanggal_dibuat: "2022-07-01",
-  },
-  {
-    id: 10,
-    nama_kelas: "XII IPS 1",
-    jumlah_kelas: 26,
-    wali_kelas: "Sri Wahyuni",
-    tanggal_dibuat: "2022-07-01",
-  },
-];
+import { useCreate, useFormDataKelas, useShowAllKelas, useUpdate } from "../../../hooks/useDataKelas";
+import { useFindAllGuru } from "../../../hooks/useDataUsers";
+import DetailSiswa from "./DetailSiswa";
+import BaseInput from "../../../components/forms/BaseInput";
 
 export default function DataKelas() {
+  const { getAllDataKelas, isPendingAllDataKelas } = useShowAllKelas();
+  const { createData } = useCreate();
+  const { updateData } = useUpdate();
+  const { findAllDataGuru } = useFindAllGuru()
+  const { isDialogOpen, setIsDialogOpen, editId, register, handleSubmit, errors, handleBukaTambahData, handleBukaUpdateData } = useFormDataKelas();
+
+  const handleSimpanData = (data) => {
+    setIsDialogOpen(false);
+
+    if (editId) {
+      updateData({ id: editId, data });
+    } else {
+      createData({
+        nama_kelas: data.nama_kelas,
+        guru: data.guru,
+      });
+    }
+  };
+
+  if (isPendingAllDataKelas) return <h1>Loading...</h1>;
+
   return (
     <>
       <Box py="10">
@@ -107,7 +57,47 @@ export default function DataKelas() {
             Kelas
           </Heading>
           {/* dialog component */}
-          <BaseDialog />
+          <BaseDialog
+            title={editId ? "Update Kelas" : "Add Kelas"}
+            open={isDialogOpen}
+            onOpenChange={(e) => setIsDialogOpen(e.open)}
+            onClickAdd={handleBukaTambahData}
+            footer={
+              <Button
+                onClick={handleSubmit(handleSimpanData)}
+                variant="ghost"
+                color="blue"
+              >
+                Save
+              </Button>
+            }
+          >
+            <form onSubmit={(e) => e.preventDefault()}>
+              <Box my="8">
+                <BaseInput
+                  label="Nama Kelas"
+                  required
+                  placeholder="Masukan Nama Kelas"
+                  {...register("nama_kelas", {
+                    required: "Wajib Memasukan Nama Kelas!",
+                  })}
+                  error={errors.nama_kelas?.message}
+                />
+              </Box>
+              <Box my="8">
+                <BaseNativeSelect
+                  placeholder="Guru Wali"
+                  label="Guru Wali"
+                  options={findAllDataGuru?.map((dg) => ({
+                    label: dg?.nama,
+                    value: dg?.nuptk
+                  }))}
+                  {...register("guru")}
+                  error={errors.guru?.message}
+                />
+              </Box>
+            </form>
+          </BaseDialog>
         </Stack>
 
         {/* action button*/}
@@ -123,24 +113,12 @@ export default function DataKelas() {
               gap="2"
               width={{ base: "auto", md: "800px" }}
             >
-              {/* bulk action: delete all dengan cara di select -> apply */}
-              <BaseNativeSelect
-                placeholder="Aksi"
-                options={[{ label: "Delete", value: "delete" }]}
-              />
-
-              <BaseButton
-                mr="8"
-                width={{ base: "full", md: "auto" }}
-                label="Terapkan"
-              />
-
               {/* filter guru berdasarkan kelas */}
               <BaseNativeSelect
                 placeholder="Tanggal"
                 options={[
                   { label: "Terbaru", value: "terbaru" },
-                  { label: "Terlama", value: "terlama" }
+                  { label: "Terlama", value: "terlama" },
                 ]}
               />
 
@@ -148,7 +126,7 @@ export default function DataKelas() {
                 placeholder="Jumlah Siswa"
                 options={[
                   { label: "Terbanyak", value: "terbanyak" },
-                  { label: "Terendah", value: "terendah" }
+                  { label: "Terendah", value: "terendah" },
                 ]}
               />
             </Box>
@@ -174,7 +152,14 @@ export default function DataKelas() {
         </Box>
 
         {/* table */}
-        <Box position="relative" mt="5" width="full" rounded="xl" shadow="sm" bg="white">
+        <Box
+          position="relative"
+          mt="5"
+          width="full"
+          rounded="xl"
+          shadow="sm"
+          bg="white"
+        >
           <Box overflowX="auto" p={{ base: "0", md: "4" }}>
             <Table.Root
               whiteSpace="nowrap"
@@ -185,15 +170,15 @@ export default function DataKelas() {
             >
               <Table.Header>
                 <Table.Row bg="white">
-                  <Table.ColumnHeader w="6">
-                    <Checkbox.Root size="md">
-                      {/* aksi checkbox */}
-                      <Checkbox.HiddenInput />
-                      <Checkbox.Control />
-                    </Checkbox.Root>
-                  </Table.ColumnHeader>
-
                   {/* table column: Product | Category | Price */}
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    No
+                  </Table.ColumnHeader>
                   <Table.ColumnHeader
                     fontFamily="poppins"
                     fontWeight="semibold"
@@ -231,7 +216,7 @@ export default function DataKelas() {
 
               {/* table body/content */}
               <Table.Body>
-                {dataKelas.map((dk, i) => (
+                {getAllDataKelas.map((dk, i) => (
                   <Table.Row
                     key={i}
                     bg={i % 2 === 0 ? "gray.100" : "white"}
@@ -239,50 +224,62 @@ export default function DataKelas() {
                     color="text.primary"
                     role="group"
                   >
-                    <Table.Cell>
-                      <Checkbox.Root size="md">
-                        {/* aksi checkbox */}
-                        <Checkbox.HiddenInput />
-                        <Checkbox.Control />
-                      </Checkbox.Root>
-                    </Table.Cell>
+                    <Table.Cell>{i + 1}</Table.Cell>
                     <Table.Cell fontFamily="poppins">
                       <Stack gap="2">
-                        <Heading unstyled>{dk.nama_kelas}</Heading>
+                        <Heading unstyled>{dk?.nama_kelas}</Heading>
 
                         {/* action */}
                         <Stack
                           direction="row"
-                          gap="3"
                           opacity={0}
                           _groupHover={{ opacity: 1 }}
                           transition="0.2s"
                         >
+                          <DetailSiswa id={dk?.id} namaKelas={dk?.nama_kelas} />
                           <Button
                             unstyled
+                            onClick={() => handleBukaUpdateData(dk)}
                             size="xs"
                             color="blue"
                             cursor="pointer"
                           >
                             Update
                           </Button>
-                          <Button unstyled size="xs" color="red" cursor="pointer">
-                            Delete
-                          </Button>
                         </Stack>
                       </Stack>
                     </Table.Cell>
-                    <Table.Cell fontFamily="poppins">{dk.jumlah_kelas}</Table.Cell>
-                    <Table.Cell fontFamily="poppins">{dk.wali_kelas}</Table.Cell>
-                    <Table.Cell fontFamily="poppins">{dk.tanggal_dibuat}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">
+                      {dk?.jumlah_siswa}
+                    </Table.Cell>
+                    <Table.Cell
+                      pt="3"
+                      pb="10"
+                      fontFamily="poppins"
+                      color={dk?.guru?.nama ? "text.primary" : "red"}
+                    >
+                      {dk?.guru?.nama || "Belum ada wali kelas"}
+                    </Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">
+                      {dk?.created_at}
+                    </Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>
             </Table.Root>
           </Box>
-          
+
           {/* Shadow Overlay untuk indikator scroll horizontal */}
-          <Box position="absolute" top="0" right="0" bottom="0" width={{ base: "20px", md: "35px" }} bg="linear-gradient(to left, rgba(0,0,0,0.1), transparent)" pointerEvents="none" borderRightRadius={{ base: "none", md: "xl"}} />
+          <Box
+            position="absolute"
+            top="0"
+            right="0"
+            bottom="0"
+            width={{ base: "20px", md: "35px" }}
+            bg="linear-gradient(to left, rgba(0,0,0,0.1), transparent)"
+            pointerEvents="none"
+            borderRightRadius={{ base: "none", md: "xl" }}
+          />
         </Box>
 
         {/* pagination | total items */}
