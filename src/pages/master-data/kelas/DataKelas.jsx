@@ -174,108 +174,115 @@ export default function DataKelas() {
         </Box>
 
         {/* table */}
-        <Box mt="5" width="full" bg="blue.300" overflowX="auto">
-          <Table.Root
-            border="1px solid"
-            borderColor="gray.300"
-            shadow="0px 4px 12px var(--chakra-colors-gray-200)"
-          >
-            <Table.Header>
-              <Table.Row bg="white">
-                <Table.ColumnHeader w="6">
-                  <Checkbox.Root size="md">
-                    {/* aksi checkbox */}
-                    <Checkbox.HiddenInput />
-                    <Checkbox.Control />
-                  </Checkbox.Root>
-                </Table.ColumnHeader>
-
-                {/* table column: Product | Category | Price */}
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Nama Kelas
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Jumlah Kelas
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Wali Kelas
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
-                  Tanggal Dibuat
-                </Table.ColumnHeader>
-              </Table.Row>
-            </Table.Header>
-
-            {/* table body/content */}
-            <Table.Body>
-              {dataKelas.map((dk, i) => (
-                <Table.Row
-                  key={i}
-                  bg={i % 2 === 0 ? "gray.100" : "white"}
-                  className="group"
-                  color="text.primary"
-                  role="group"
-                >
-                  <Table.Cell>
+        <Box position="relative" mt="5" width="full" rounded="xl" shadow="sm" bg="white">
+          <Box overflowX="auto" p={{ base: "0", md: "4" }}>
+            <Table.Root
+              whiteSpace="nowrap"
+              variant="line"
+              border="1px solid"
+              borderColor="gray.200"
+              rounded="lg"
+            >
+              <Table.Header>
+                <Table.Row bg="white">
+                  <Table.ColumnHeader w="6">
                     <Checkbox.Root size="md">
                       {/* aksi checkbox */}
                       <Checkbox.HiddenInput />
                       <Checkbox.Control />
                     </Checkbox.Root>
-                  </Table.Cell>
-                  <Table.Cell fontFamily="poppins">
-                    <Stack gap="2">
-                      <Heading unstyled>{dk.nama_kelas}</Heading>
+                  </Table.ColumnHeader>
 
-                      {/* action */}
-                      <Stack
-                        direction="row"
-                        gap="3"
-                        opacity={0}
-                        _groupHover={{ opacity: 1 }}
-                        transition="0.2s"
-                      >
-                        <Button
-                          unstyled
-                          size="xs"
-                          color="blue"
-                          cursor="pointer"
-                        >
-                          Update
-                        </Button>
-                        <Button unstyled size="xs" color="red" cursor="pointer">
-                          Delete
-                        </Button>
-                      </Stack>
-                    </Stack>
-                  </Table.Cell>
-                  <Table.Cell fontFamily="poppins">{dk.jumlah_kelas}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{dk.wali_kelas}</Table.Cell>
-                  <Table.Cell fontFamily="poppins">{dk.tanggal_dibuat}</Table.Cell>
+                  {/* table column: Product | Category | Price */}
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Nama Kelas
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Jumlah Kelas
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Wali Kelas
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    fontFamily="poppins"
+                    fontWeight="semibold"
+                    letterSpacing="1px"
+                    color="text.primary"
+                  >
+                    Tanggal Dibuat
+                  </Table.ColumnHeader>
                 </Table.Row>
-              ))}
-            </Table.Body>
-          </Table.Root>
+              </Table.Header>
+
+              {/* table body/content */}
+              <Table.Body>
+                {dataKelas.map((dk, i) => (
+                  <Table.Row
+                    key={i}
+                    bg={i % 2 === 0 ? "gray.100" : "white"}
+                    className="group"
+                    color="text.primary"
+                    role="group"
+                  >
+                    <Table.Cell>
+                      <Checkbox.Root size="md">
+                        {/* aksi checkbox */}
+                        <Checkbox.HiddenInput />
+                        <Checkbox.Control />
+                      </Checkbox.Root>
+                    </Table.Cell>
+                    <Table.Cell fontFamily="poppins">
+                      <Stack gap="2">
+                        <Heading unstyled>{dk.nama_kelas}</Heading>
+
+                        {/* action */}
+                        <Stack
+                          direction="row"
+                          gap="3"
+                          opacity={0}
+                          _groupHover={{ opacity: 1 }}
+                          transition="0.2s"
+                        >
+                          <Button
+                            unstyled
+                            size="xs"
+                            color="blue"
+                            cursor="pointer"
+                          >
+                            Update
+                          </Button>
+                          <Button unstyled size="xs" color="red" cursor="pointer">
+                            Delete
+                          </Button>
+                        </Stack>
+                      </Stack>
+                    </Table.Cell>
+                    <Table.Cell fontFamily="poppins">{dk.jumlah_kelas}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{dk.wali_kelas}</Table.Cell>
+                    <Table.Cell fontFamily="poppins">{dk.tanggal_dibuat}</Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table.Root>
+          </Box>
+          
+          {/* Shadow Overlay untuk indikator scroll horizontal */}
+          <Box position="absolute" top="0" right="0" bottom="0" width={{ base: "20px", md: "35px" }} bg="linear-gradient(to left, rgba(0,0,0,0.1), transparent)" pointerEvents="none" borderRightRadius={{ base: "none", md: "xl"}} />
         </Box>
 
         {/* pagination | total items */}

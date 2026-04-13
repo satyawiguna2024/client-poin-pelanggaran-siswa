@@ -182,150 +182,167 @@ export default function DataGuru() {
           </Stack>
         </Box>
 
-        {/* table */}
-        <Box mt="5" width="full" bg="blue.300" overflowX="auto">
-          <Table.Root
-              border="1px solid"
-              borderColor="gray.300"
-              shadow="0px 4px 12px var(--chakra-colors-gray-200)"
-            >
-              <Table.Header>
-                <Table.Row bg="white">
-                  <Table.ColumnHeader w="6">
-                    <Checkbox.Root size="md">
-                      {/* aksi checkbox */}
-                      <Checkbox.HiddenInput />
-                      <Checkbox.Control />
-                    </Checkbox.Root>
-                  </Table.ColumnHeader>
-
-                  {/* table column: Product | Category | Price */}
-                  <Table.ColumnHeader
-                    fontFamily="poppins"
-                    fontWeight="semibold"
-                    letterSpacing="1px"
-                    color="text.primary"
-                  >
-                    Nuptk
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    fontFamily="poppins"
-                    fontWeight="semibold"
-                    letterSpacing="1px"
-                    color="text.primary"
-                  >
-                    Nama
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    fontFamily="poppins"
-                    fontWeight="semibold"
-                    letterSpacing="1px"
-                    color="text.primary"
-                  >
-                    Alamat
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    fontFamily="poppins"
-                    fontWeight="semibold"
-                    letterSpacing="1px"
-                    color="text.primary"
-                  >
-                    Tanggal Lahir
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    fontFamily="poppins"
-                    fontWeight="semibold"
-                    letterSpacing="1px"
-                    color="text.primary"
-                  >
-                    Jenis Kelamin
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    fontFamily="poppins"
-                    fontWeight="semibold"
-                    letterSpacing="1px"
-                    color="text.primary"
-                  >
-                    Agama
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    fontFamily="poppins"
-                    fontWeight="semibold"
-                    letterSpacing="1px"
-                    color="text.primary"
-                  >
-                    No HP
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    fontFamily="poppins"
-                    fontWeight="semibold"
-                    letterSpacing="1px"
-                    color="text.primary"
-                  >
-                    Jabatan
-                  </Table.ColumnHeader>
-                </Table.Row>
-              </Table.Header>
-
-              {/* table body/content */}
-              <Table.Body>
-                {findAllDataGuru?.map((dg, i) => (
-                  <Table.Row
-                    key={i}
-                    bg={i % 2 === 0 ? "gray.100" : "white"}
-                    className="group"
-                    color="text.primary"
-                    role="group"
-                  >
-                    <Table.Cell>
+        {/* table | Box root table */}
+        <Box position="relative" mt="5" width="full" rounded="xl" shadow="sm" bg="white">
+          {/* Box table */}
+          <Box overflowX="auto" p={{ base: "0", md: "4" }}>
+            <Table.Root
+                whiteSpace="nowrap"
+                variant="line"
+                border="1px solid"
+                borderColor="gray.200"
+                rounded="lg"
+              >
+                <Table.Header>
+                  <Table.Row bg="white">
+                    <Table.ColumnHeader w="6">
                       <Checkbox.Root size="md">
                         {/* aksi checkbox */}
                         <Checkbox.HiddenInput />
                         <Checkbox.Control />
                       </Checkbox.Root>
-                    </Table.Cell>
-                    <Table.Cell fontFamily="poppins">
-                      <Stack gap="2">
-                        <Heading unstyled>{dg.nuptk}</Heading>
+                    </Table.ColumnHeader>
 
-                        {/* action */}
-                        <Stack
-                          direction="row"
-                          gap="3"
-                          opacity={0}
-                          _groupHover={{ opacity: 1 }}
-                          transition="0.2s"
-                        >
-                          <Button
-                            unstyled
-                            onClick={() => handleBukaUpdateData(dg)}
-                            size="xs"
-                            color="blue"
-                            cursor="pointer"
-                          >
-                            Update
-                          </Button>
-                          <Button 
-                            unstyled
-                            onClick={() => confirmDeleteGuru(dg?.user_account?.id, dg?.nama)}
-                            size="xs" color="red" cursor="pointer"
-                          >
-                            Delete
-                          </Button>
-                        </Stack>
-                      </Stack>
-                    </Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.nama}</Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.alamat}</Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.tanggal_lahir}</Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.jenis_kelamin === "L" ? "Laki Laki" : "Perempuan"}</Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.agama}</Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.telepon}</Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.jabatan}</Table.Cell>
+                    {/* table column: Product | Category | Price */}
+                    <Table.ColumnHeader
+                      fontFamily="poppins"
+                      fontWeight="semibold"
+                      letterSpacing="1px"
+                      color="text.primary"
+                    >
+                      Nuptk
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      fontFamily="poppins"
+                      fontWeight="semibold"
+                      letterSpacing="1px"
+                      color="text.primary"
+                    >
+                      Nama
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      fontFamily="poppins"
+                      fontWeight="semibold"
+                      letterSpacing="1px"
+                      color="text.primary"
+                    >
+                      Alamat
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      fontFamily="poppins"
+                      fontWeight="semibold"
+                      letterSpacing="1px"
+                      color="text.primary"
+                    >
+                      Tanggal Lahir
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      fontFamily="poppins"
+                      fontWeight="semibold"
+                      letterSpacing="1px"
+                      color="text.primary"
+                    >
+                      Jenis Kelamin
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      fontFamily="poppins"
+                      fontWeight="semibold"
+                      letterSpacing="1px"
+                      color="text.primary"
+                    >
+                      Agama
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      fontFamily="poppins"
+                      fontWeight="semibold"
+                      letterSpacing="1px"
+                      color="text.primary"
+                    >
+                      No HP
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      fontFamily="poppins"
+                      fontWeight="semibold"
+                      letterSpacing="1px"
+                      color="text.primary"
+                    >
+                      Jabatan
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      fontFamily="poppins"
+                      fontWeight="semibold"
+                      letterSpacing="1px"
+                      color="text.primary"
+                    >
+                      Tanggal Dibuat
+                    </Table.ColumnHeader>
                   </Table.Row>
-                ))}
-              </Table.Body>
-          </Table.Root>
+                </Table.Header>
+
+                {/* table body/content */}
+                <Table.Body>
+                  {findAllDataGuru?.map((dg, i) => (
+                    <Table.Row
+                      key={i}
+                      bg={i % 2 === 0 ? "gray.100" : "white"}
+                      className="group"
+                      color="text.primary"
+                      role="group"
+                    >
+                      <Table.Cell>
+                        <Checkbox.Root size="md">
+                          {/* aksi checkbox */}
+                          <Checkbox.HiddenInput />
+                          <Checkbox.Control />
+                        </Checkbox.Root>
+                      </Table.Cell>
+                      <Table.Cell fontFamily="poppins">
+                        <Stack gap="2">
+                          <Heading unstyled>{dg.nuptk}</Heading>
+
+                          {/* action */}
+                          <Stack
+                            direction="row"
+                            gap="3"
+                            opacity={0}
+                            _groupHover={{ opacity: 1 }}
+                            transition="0.2s"
+                          >
+                            <Button
+                              unstyled
+                              onClick={() => handleBukaUpdateData(dg)}
+                              size="xs"
+                              color="blue"
+                              cursor="pointer"
+                            >
+                              Update
+                            </Button>
+                            <Button 
+                              unstyled
+                              onClick={() => confirmDeleteGuru(dg?.user_account?.id, dg?.nama)}
+                              size="xs" color="red" cursor="pointer"
+                            >
+                              Delete
+                            </Button>
+                          </Stack>
+                        </Stack>
+                      </Table.Cell>
+                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.nama}</Table.Cell>
+                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.alamat}</Table.Cell>
+                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.tanggal_lahir}</Table.Cell>
+                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.jenis_kelamin === "L" ? "Laki Laki" : "Perempuan"}</Table.Cell>
+                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.agama}</Table.Cell>
+                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.telepon}</Table.Cell>
+                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.jabatan}</Table.Cell>
+                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{dg?.created_at}</Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+            </Table.Root>
+          </Box>
+
+          {/* Shadow Overlay untuk indikator scroll horizontal */}
+          <Box position="absolute" top="0" right="0" bottom="0" width={{ base: "20px", md: "35px" }} bg="linear-gradient(to left, rgba(0,0,0,0.1), transparent)" pointerEvents="none" borderRightRadius={{ base: "none", md: "xl"}} />
         </Box>
 
         {/* pagination | total items */}

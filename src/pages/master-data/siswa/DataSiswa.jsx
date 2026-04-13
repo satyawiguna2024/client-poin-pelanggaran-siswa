@@ -188,16 +188,20 @@ export default function DataSiswa() {
           </Stack>
         </Box>
 
-        {/* table */}
-        <Box mt="5" width="full" bg="blue.300" overflowX="auto">
-          <Table.Root
-            border="1px solid"
-            borderColor="gray.300"
-            shadow="0px 4px 12px var(--chakra-colors-gray-200)"
-          >
+        {/* table | box root table */}
+        <Box position="relative" mt="5" width="full" rounded="xl" shadow="sm" bg="white">
+          {/* box table */}
+          <Box overflowX="auto" p={{ base: "0", md: "4" }}>
+            <Table.Root
+              whiteSpace="nowrap"
+              variant="line"
+              border="1px solid"
+              borderColor="gray.200"
+              rounded="lg"
+            >
             <Table.Header>
               <Table.Row bg="white">
-                <Table.ColumnHeader w="6">
+                <Table.ColumnHeader>
                   <Checkbox.Root size="md">
                     {/* aksi checkbox */}
                     <Checkbox.HiddenInput />
@@ -286,6 +290,15 @@ export default function DataSiswa() {
                 >
                   Alamat
                 </Table.ColumnHeader>
+                <Table.ColumnHeader
+                  textAlign="center"
+                  fontFamily="poppins"
+                  fontWeight="semibold"
+                  letterSpacing="1px"
+                  color="text.primary"
+                >
+                  Tanggal Dibuat
+                </Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
 
@@ -369,10 +382,18 @@ export default function DataSiswa() {
                   <Table.Cell pt="3" pb="10" fontFamily="poppins">
                     {ds?.alamat}
                   </Table.Cell>
+                  {/* tanggal dibuat | diperbarui */}
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
+                    {ds?.created_at}
+                  </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
           </Table.Root>
+          </Box>
+
+          {/* Shadow Overlay untuk indikator scroll horizontal */}
+          <Box position="absolute" top="0" right="0" bottom="0" width={{ base: "20px", md: "35px" }} bg="linear-gradient(to left, rgba(0,0,0,0.1), transparent)" pointerEvents="none" borderRightRadius={{ base: "none", md: "xl"}} />
         </Box>
 
         {/* pagination | total items */}
