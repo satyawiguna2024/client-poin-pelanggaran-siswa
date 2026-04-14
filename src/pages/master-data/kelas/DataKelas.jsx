@@ -159,14 +159,7 @@ export default function DataKelas() {
         </Box>
 
         {/* table */}
-        <Box
-          position="relative"
-          mt="5"
-          width="full"
-          rounded="xl"
-          shadow="sm"
-          bg="white"
-        >
+        <Box position="relative" mt="5" width="full" rounded="xl" shadow="sm" bg="white">
           <Box overflowX="auto" p={{ base: "0", md: "4" }}>
             <Table.Root
               whiteSpace="nowrap"
@@ -277,16 +270,7 @@ export default function DataKelas() {
           </Box>
 
           {/* Shadow Overlay untuk indikator scroll horizontal */}
-          <Box
-            position="absolute"
-            top="0"
-            right="0"
-            bottom="0"
-            width={{ base: "20px", md: "35px" }}
-            bg="linear-gradient(to left, rgba(0,0,0,0.1), transparent)"
-            pointerEvents="none"
-            borderRightRadius={{ base: "none", md: "xl" }}
-          />
+          <Box position="absolute" top="0" right="0" bottom="0" width={{ base: "20px", md: "35px" }} bg="linear-gradient(to left, rgba(0,0,0,0.1), transparent)" pointerEvents="none" borderRightRadius={{ base: "none", md: "xl" }} />
         </Box>
 
         {/* pagination | total items */}
