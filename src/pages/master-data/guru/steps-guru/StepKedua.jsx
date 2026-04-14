@@ -3,7 +3,7 @@ import BaseInput from "../../../../components/forms/BaseInput";
 import BaseNativeSelect from "../../../../components/forms/BaseNativeSelect";
 import BaseTextarea from "../../../../components/forms/BaseTextarea";
 
-export default function StepKedua({register, errors, editId}) {
+export default function StepKedua({ register, errors, editId }) {
   return (
     <>
       <Text>Data Diri Guru</Text>
@@ -82,10 +82,10 @@ export default function StepKedua({register, errors, editId}) {
           label="Agama"
           required
           options={[
-            { label: "Islam", value: "Islam" },
-            { label: "Kristen Protestan", value: "Kristen Protestan" },
-            { label: "Katolik", value: "Katolik" },
             { label: "Hindu", value: "Hindu" },
+            { label: "Islam", value: "Islam" },
+            { label: "Kristen", value: "Kristen" },
+            { label: "Kristen Katolik", value: "Kristen Katolik" },
             { label: "Buddha", value: "Buddha" },
             { label: "Konghucu", value: "Konghucu" },
           ]}
@@ -141,10 +141,19 @@ export default function StepKedua({register, errors, editId}) {
             { label: "Guru Matematika", value: "Guru Matematika" },
             { label: "Guru Bahasa Indonesia", value: "Guru Bahasa Indonesia" },
             { label: "Guru Bahasa Inggris", value: "Guru Bahasa Inggris" },
-            { label: "Guru Ilmu Pengetahuan Alam (IPA)", value: "Guru Ilmu Pengetahuan Alam" },
-            { label: "Guru Ilmu Pengetahuan Sosial (IPS)", value: "Guru Ilmu Pengetahuan Sosial" },
+            {
+              label: "Guru Ilmu Pengetahuan Alam (IPA)",
+              value: "Guru Ilmu Pengetahuan Alam",
+            },
+            {
+              label: "Guru Ilmu Pengetahuan Sosial (IPS)",
+              value: "Guru Ilmu Pengetahuan Sosial",
+            },
             { label: "Guru Pendidikan Agama", value: "Guru Pendidikan Agama" },
-            { label: "Guru Pendidikan Jasmani (PJOK)", value: "Guru Pendidikan Jasmani" },
+            {
+              label: "Guru Pendidikan Jasmani (PJOK)",
+              value: "Guru Pendidikan Jasmani",
+            },
             { label: "Guru Seni Budaya", value: "Guru Seni Budaya" },
             { label: "Guru Informatika (TIK)", value: "Guru Informatika" },
           ]}
@@ -155,5 +164,5 @@ export default function StepKedua({register, errors, editId}) {
         />
       </Box>
     </>
-  )
+  );
 }

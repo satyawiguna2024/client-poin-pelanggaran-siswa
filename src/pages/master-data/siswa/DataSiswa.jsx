@@ -8,6 +8,7 @@ import BaseButton from "../../../components/buttons/BaseButton";
 import StepPertama from "./steps-siswa/StepPertama";
 import StepKedua from "./steps-siswa/StepKedua";
 import StepKetiga from "./steps-siswa/StepKetiga";
+import useFilterSiswas from "../../../hooks/filters/useFilterSiswa";
 
 export default function DataSiswa() {
   const { findAllDataSiswa, isPendingFindAllSiswa } = useFindAllSiswa();
@@ -19,6 +20,7 @@ export default function DataSiswa() {
   const { mutateCreateSiswa } = useCreateSiswa();
   const { mutateUpdateSiswa } = useUpdateSiswa();
   const { confirmDeleteSiswa, isPendingDeleteSiswa } = useDeleteSiswa();
+  const { filters, handleChangeFilter, filteredData } = useFilterSiswas(findAllDataSiswa);
 
   // trigger dialog disaat kelar close
   const handleSimpanData = (data) => {
@@ -136,26 +138,27 @@ export default function DataSiswa() {
               {/* filter siswa berdasarkan kelas */}
               <BaseNativeSelect
                 placeholder="Kelas"
-                options={[
-                  { label: "XII RPL 1", value: "xii_rpl_1" },
-                  { label: "XII RPL 2", value: "xii_rpl_2" },
-                  { label: "XII RPL 3", value: "xii_rpl_3" },
-                  { label: "XII RPL 4", value: "xii_rpl_4" },
-                  { label: "XII RPL 5", value: "xii_rpl_5" },
-                ]}
+                options={findAllDataSiswa?.map((item) => ({
+                  label: item?.kelas?.nama_kelas,
+                  value: item?.kelas?.nama_kelas,
+                }))}
+                value={filters.kelas}
+                onChange={(e) => handleChangeFilter("kelas", e.target.value)}
               />
 
               {/* filter siswa berdasarkan agama */}
               <BaseNativeSelect
                 placeholder="Agama"
                 options={[
-                  { label: "Islam", value: "islam" },
-                  { label: "Kristen Protestan", value: "kristen_protestan" },
-                  { label: "Katolik", value: "katolik" },
-                  { label: "Hindu", value: "hindu" },
-                  { label: "Buddha", value: "buddha" },
-                  { label: "Konghucu", value: "konghucu" },
+                  { label: "Hindu", value: "Hindu" },
+                  { label: "Islam", value: "Islam" },
+                  { label: "Kristen", value: "Kristen" },
+                  { label: "Kristen Katolik", value: "Kristen Katolik" },
+                  { label: "Buddha", value: "Buddha" },
+                  { label: "Konghucu", value: "Konghucu" },
                 ]}
+                value={filters.agama}
+                onChange={(e) => handleChangeFilter("agama", e.target.value)}
               />
 
               {/* filter siswa berdasarkan jenis kelamin */}
@@ -165,6 +168,8 @@ export default function DataSiswa() {
                   { label: "Laki Laki", value: "laki_laki" },
                   { label: "Perempuan", value: "perempuan" },
                 ]}
+                value={filters.jenis_kelamin}
+                onChange={(e) => handleChangeFilter("jenis_kelamin", e.target.value)}
               />
             </Box>
 
@@ -180,9 +185,10 @@ export default function DataSiswa() {
                     color="text.primary"
                     fontFamily="poppins"
                     _placeholder={{ color: { _dark: "gray.400" } }}
+                    value={filters.search}
+                    onChange={(e) => handleChangeFilter("search", e.target.value)}
                   />
                 </InputGroup>
-                <BaseButton label="Search" width="auto" />
               </Stack>
             </Box>
           </Stack>
@@ -304,7 +310,7 @@ export default function DataSiswa() {
 
             {/* table body/content */}
             <Table.Body>
-              {findAllDataSiswa?.map((ds, i) => (
+              {filteredData?.map((ds, i) => (
                 <Table.Row
                   key={i}
                   bg={i % 2 === 0 ? "gray.100" : "white"}
@@ -435,7 +441,7 @@ export default function DataSiswa() {
             </Pagination.Root>
 
             <Heading unstyled color="text.primary" fontFamily="poppins">
-              10 Items
+              {filteredData?.length} Items
             </Heading>
           </Stack>
         </Box>

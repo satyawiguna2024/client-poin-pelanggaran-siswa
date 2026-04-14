@@ -19,12 +19,14 @@ import { useCreate, useFormDataKelas, useShowAllKelas, useUpdate } from "../../.
 import { useFindAllGuru } from "../../../hooks/useDataUsers";
 import DetailSiswa from "./DetailSiswa";
 import BaseInput from "../../../components/forms/BaseInput";
+import useFilterKelas from "../../../hooks/filters/useFilterKelas";
 
 export default function DataKelas() {
   const { getAllDataKelas, isPendingAllDataKelas } = useShowAllKelas();
   const { createData } = useCreate();
   const { updateData } = useUpdate();
   const { findAllDataGuru } = useFindAllGuru()
+  const { filters, handleChangeFilter, filteredData } = useFilterKelas(getAllDataKelas);
   const { isDialogOpen, setIsDialogOpen, editId, register, handleSubmit, errors, handleBukaTambahData, handleBukaUpdateData } = useFormDataKelas();
 
   const handleSimpanData = (data) => {
@@ -120,6 +122,8 @@ export default function DataKelas() {
                   { label: "Terbaru", value: "terbaru" },
                   { label: "Terlama", value: "terlama" },
                 ]}
+                value={filters.tanggal}
+                onChange={(e) => handleChangeFilter("tanggal", e.target.value)}
               />
 
               <BaseNativeSelect
@@ -128,6 +132,8 @@ export default function DataKelas() {
                   { label: "Terbanyak", value: "terbanyak" },
                   { label: "Terendah", value: "terendah" },
                 ]}
+                value={filters.jumlah_siswa}
+                onChange={(e) => handleChangeFilter("jumlah_siswa", e.target.value)}
               />
             </Box>
 
@@ -143,9 +149,10 @@ export default function DataKelas() {
                     color="text.primary"
                     fontFamily="poppins"
                     _placeholder={{ color: { _dark: "gray.400" } }}
+                    value={filters.search}
+                    onChange={(e) => handleChangeFilter("search", e.target.value)}
                   />
                 </InputGroup>
-                <BaseButton label="Search" width="auto" />
               </Stack>
             </Box>
           </Stack>
@@ -216,7 +223,7 @@ export default function DataKelas() {
 
               {/* table body/content */}
               <Table.Body>
-                {getAllDataKelas.map((dk, i) => (
+                {filteredData?.map((dk, i) => (
                   <Table.Row
                     key={i}
                     bg={i % 2 === 0 ? "gray.100" : "white"}
@@ -321,7 +328,7 @@ export default function DataKelas() {
             </Pagination.Root>
 
             <Heading unstyled color="text.primary" fontFamily="poppins">
-              10 Items
+              {filteredData?.length} Items
             </Heading>
           </Stack>
         </Box>

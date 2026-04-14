@@ -6,12 +6,14 @@ import { CiSearch } from "react-icons/ci";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { useDjpFrom, useFindAll, useStore, useUpdate, useDelete } from "../../../hooks/useDataJenisPelanggaran";
 import BaseInput from "../../../components/forms/BaseInput";
+import useFilterJenisPelanggaran from "../../../hooks/filters/useFilterJenisPelanggaran";
 
 export default function DataJenisPelanggaran() {
   const { jenisPelanggaran, isPendingJenisPelanggaran } = useFindAll();
   const { createData } = useStore();
   const { updateData } = useUpdate();
   const { confirmDeleteData } = useDelete();
+  const { filters, handleChangeFilter, filteredData } = useFilterJenisPelanggaran(jenisPelanggaran);
   const { isDialogOpen, setIsDialogOpen, editId, register, handleSubmit, errors, handleBukaTambahData, handleBukaUpdateData } = useDjpFrom();
 
   const handleSimpanData = (data) => {
@@ -119,6 +121,8 @@ export default function DataJenisPelanggaran() {
                   { label: "Terbesar", value: "terbesar" },
                   { label: "Terkecil", value: "terkecil" },
                 ]}
+                value={filters.poin}
+                onChange={(e) => handleChangeFilter("poin", e.target.value)}
               />
 
               {/* filter date */}
@@ -128,6 +132,8 @@ export default function DataJenisPelanggaran() {
                   { label: "Terbaru", value: "terbaru" },
                   { label: "Terlama", value: "terlama" },
                 ]}
+                value={filters.tanggal}
+                onChange={(e) => handleChangeFilter("tanggal", e.target.value)}
               />
             </Box>
 
@@ -143,9 +149,10 @@ export default function DataJenisPelanggaran() {
                     color="text.primary"
                     fontFamily="poppins"
                     _placeholder={{ color: { _dark: "gray.400" } }}
+                    value={filters.search}
+                    onChange={(e) => handleChangeFilter("search", e.target.value)}
                   />
                 </InputGroup>
-                <BaseButton label="Search" width="auto" />
               </Stack>
             </Box>
           </Stack>
@@ -201,7 +208,7 @@ export default function DataJenisPelanggaran() {
 
               {/* table body/content */}
               <Table.Body>
-                {jenisPelanggaran?.map((djp, i) => (
+                {filteredData?.map((djp, i) => (
                   <Table.Row
                     key={i}
                     bg={i % 2 === 0 ? "gray.100" : "white"}
@@ -306,7 +313,7 @@ export default function DataJenisPelanggaran() {
             </Pagination.Root>
 
             <Heading unstyled color="text.primary" fontFamily="poppins">
-              10 Items
+              {filteredData?.length} Items
             </Heading>
           </Stack>
         </Box>

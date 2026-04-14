@@ -19,12 +19,14 @@ import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { useCreateGuru, useDeleteGuru, useFindAllGuru, useGuruForms, useUpdateGuru } from "../../../hooks/useDataUsers";
 import StepPertama from "./steps-guru/StepPertama";
 import StepKedua from "./steps-guru/StepKedua";
+import useFilterGuru from "../../../hooks/filters/useFilterGuru";
 
 export default function DataGuru() {
   const {findAllDataGuru, isPendingFindAllGuru} = useFindAllGuru();
   const { mutateCreateGuru } = useCreateGuru();
   const { mutateUpdateGuru } = useUpdateGuru();
   const { confirmDeleteGuru } = useDeleteGuru();
+  const {filters, handleChangeFilter, filteredData} = useFilterGuru(findAllDataGuru);
   const { step, setStep, isDialogOpen, setIsDialogOpen, editId, 
           register, handleSubmit, errors, handleBukaTambahData, handleNext, handleBukaUpdateData
         } = useGuruForms();
@@ -130,26 +132,33 @@ export default function DataGuru() {
               <BaseNativeSelect
                 placeholder="Jabatan"
                 options={[
-                  { label: "Guru Matematika", value: "guru_matematika" },
-                  { label: "Guru Bahasa Indonesia", value: "guru_bahasa_indonesia" },
-                  { label: "Guru Fisika", value: "guru_fisika" },
-                  { label: "Guru Biologi", value: "guru_biologi" },
-                  { label: "Guru Bahasa Inggris", value: "guru_bahasa_inggris" },
-                  { label: "Guru Ekonomi", value: "guru_ekonomi" }
+                  { label: "Guru Matematika", value: "Guru Matematika" },
+                  { label: "Guru Bahasa Indonesia", value: "Guru Bahasa Indonesia" },
+                  { label: "Guru Bahasa Inggris", value: "Guru Bahasa Inggris" },
+                  { label: "Guru Ilmu Pengetahuan Alam (IPA)", value: "Guru Ilmu Pengetahuan Alam" },
+                  { label: "Guru Ilmu Pengetahuan Sosial (IPS)", value: "Guru Ilmu Pengetahuan Sosial" },
+                  { label: "Guru Pendidikan Agama", value: "Guru Pendidikan Agama" },
+                  { label: "Guru Pendidikan Jasmani (PJOK)", value: "Guru Pendidikan Jasmani" },
+                  { label: "Guru Seni Budaya", value: "Guru Seni Budaya" },
+                  { label: "Guru Informatika (TIK)", value: "Guru Informatika" },
                 ]}
+                value={filters.jabatan}
+                onChange={(e) => handleChangeFilter("jabatan", e.target.value)}
               />
 
               {/* filter guru berdasarkan agama */}
               <BaseNativeSelect
                 placeholder="Agama"
                 options={[
-                  { label: "Hindu", value: "hindu" },
-                  { label: "Islam", value: "islam" },
-                  { label: "Kristen", value: "kristen" },
-                  { label: "Kristen Katolik", value: "kristen katolik" },
-                  { label: "Buddha", value: "buddha" },
-                  { label: "Konghucu", value: "konghucu" },
+                  { label: "Hindu", value: "Hindu" },
+                  { label: "Islam", value: "Islam" },
+                  { label: "Kristen", value: "Kristen" },
+                  { label: "Kristen Katolik", value: "Kristen Katolik" },
+                  { label: "Buddha", value: "Buddha" },
+                  { label: "Konghucu", value: "Konghucu" },
                 ]}
+                value={filters.agama}
+                onChange={(e) => handleChangeFilter("agama", e.target.value)}
               />
 
               {/* filter guru berdasarkan jenis kelamin */}
@@ -159,6 +168,8 @@ export default function DataGuru() {
                   { label: "Laki Laki", value: "laki_laki" },
                   { label: "Perempuan", value: "perempuan" },
                 ]}
+                value={filters.jenis_kelamin}
+                onChange={(e) => handleChangeFilter("jenis_kelamin", e.target.value)}
               />
             </Box>
 
@@ -174,9 +185,10 @@ export default function DataGuru() {
                     color="text.primary"
                     fontFamily="poppins"
                     _placeholder={{ color: { _dark: "gray.400" } }}
+                    value={filters.search}
+                    onChange={(e) => handleChangeFilter("search", e.target.value)}
                   />
                 </InputGroup>
-                <BaseButton label="Search" width="auto" />
               </Stack>
             </Box>
           </Stack>
@@ -281,7 +293,7 @@ export default function DataGuru() {
 
                 {/* table body/content */}
                 <Table.Body>
-                  {findAllDataGuru?.map((dg, i) => (
+                  {filteredData?.map((dg, i) => (
                     <Table.Row
                       key={i}
                       bg={i % 2 === 0 ? "gray.100" : "white"}
@@ -384,7 +396,7 @@ export default function DataGuru() {
             </Pagination.Root>
 
             <Heading unstyled color="text.primary" fontFamily="poppins">
-              10 Items
+              {filteredData?.length} Items
             </Heading>
           </Stack>
         </Box>

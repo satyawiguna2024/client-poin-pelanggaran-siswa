@@ -3,7 +3,12 @@ import BaseInput from "../../../../components/forms/BaseInput";
 import BaseNativeSelect from "../../../../components/forms/BaseNativeSelect";
 import BaseTextarea from "../../../../components/forms/BaseTextarea";
 
-export default function StepKedua({ register, errors, editId, getAllDataKelas }) {
+export default function StepKedua({
+  register,
+  errors,
+  editId,
+  getAllDataKelas,
+}) {
   return (
     <>
       <Text>Data Diri Siswa</Text>
@@ -65,10 +70,10 @@ export default function StepKedua({ register, errors, editId, getAllDataKelas })
           label="Agama"
           required
           options={[
-            { label: "Islam", value: "Islam" },
-            { label: "Kristen Protestan", value: "Kristen Protestan" },
-            { label: "Katolik", value: "Katolik" },
             { label: "Hindu", value: "Hindu" },
+            { label: "Islam", value: "Islam" },
+            { label: "Kristen", value: "Kristen" },
+            { label: "Kristen Katolik", value: "Kristen Katolik" },
             { label: "Buddha", value: "Buddha" },
             { label: "Konghucu", value: "Konghucu" },
           ]}
