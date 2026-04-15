@@ -1,22 +1,9 @@
-import {
-  Box,
-  Heading,
-  Stack,
-  Input,
-  InputGroup,
-  Table,
-  Checkbox,
-  Button,
-  Pagination,
-  IconButton,
-  ButtonGroup,
-} from "@chakra-ui/react";
+import { Box, Heading, Stack, Input, InputGroup, Table, Button, Pagination, IconButton, ButtonGroup } from "@chakra-ui/react";
+import { useCreateGuru, useDeleteGuru, useFindAllGuru, useGuruForms, useUpdateGuru } from "../../../hooks/useDataUsers";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import { CiSearch } from "react-icons/ci";
 import BaseDialog from "../../../components/dialogs/BaseDialog";
 import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
-import BaseButton from "../../../components/buttons/BaseButton";
-import { CiSearch } from "react-icons/ci";
-import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import { useCreateGuru, useDeleteGuru, useFindAllGuru, useGuruForms, useUpdateGuru } from "../../../hooks/useDataUsers";
 import StepPertama from "./steps-guru/StepPertama";
 import StepKedua from "./steps-guru/StepKedua";
 import useFilterGuru from "../../../hooks/filters/useFilterGuru";
@@ -116,18 +103,6 @@ export default function DataGuru() {
               gap="2"
               width={{ base: "auto", md: "800px" }}
             >
-              {/* bulk action: delete all dengan cara di select -> apply */}
-              <BaseNativeSelect
-                placeholder="Aksi"
-                options={[{ label: "Delete", value: "delete" }]}
-              />
-
-              <BaseButton
-                mr="8"
-                width={{ base: "full", md: "auto" }}
-                label="Terapkan"
-              />
-
               {/* filter guru berdasarkan kelas */}
               <BaseNativeSelect
                 placeholder="Jabatan"
@@ -198,94 +173,38 @@ export default function DataGuru() {
         <Box position="relative" mt="5" width="full" rounded="xl" shadow="sm" bg="white">
           {/* Box table */}
           <Box overflowX="auto" p={{ base: "0", md: "4" }}>
-            <Table.Root
-                whiteSpace="nowrap"
-                variant="line"
-                border="1px solid"
-                borderColor="gray.200"
-                rounded="lg"
-              >
+            <Table.Root whiteSpace="nowrap" variant="line" border="1px solid" borderColor="gray.200" rounded="lg">
                 <Table.Header>
                   <Table.Row bg="white">
-                    <Table.ColumnHeader w="6">
-                      <Checkbox.Root size="md">
-                        {/* aksi checkbox */}
-                        <Checkbox.HiddenInput />
-                        <Checkbox.Control />
-                      </Checkbox.Root>
-                    </Table.ColumnHeader>
-
                     {/* table column: Product | Category | Price */}
-                    <Table.ColumnHeader
-                      fontFamily="poppins"
-                      fontWeight="semibold"
-                      letterSpacing="1px"
-                      color="text.primary"
-                    >
+                    <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
+                      No
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                       Nuptk
                     </Table.ColumnHeader>
-                    <Table.ColumnHeader
-                      fontFamily="poppins"
-                      fontWeight="semibold"
-                      letterSpacing="1px"
-                      color="text.primary"
-                    >
+                    <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                       Nama
                     </Table.ColumnHeader>
-                    <Table.ColumnHeader
-                      fontFamily="poppins"
-                      fontWeight="semibold"
-                      letterSpacing="1px"
-                      color="text.primary"
-                    >
+                    <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                       Alamat
                     </Table.ColumnHeader>
-                    <Table.ColumnHeader
-                      fontFamily="poppins"
-                      fontWeight="semibold"
-                      letterSpacing="1px"
-                      color="text.primary"
-                    >
+                    <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                       Tanggal Lahir
                     </Table.ColumnHeader>
-                    <Table.ColumnHeader
-                      fontFamily="poppins"
-                      fontWeight="semibold"
-                      letterSpacing="1px"
-                      color="text.primary"
-                    >
+                    <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                       Jenis Kelamin
                     </Table.ColumnHeader>
-                    <Table.ColumnHeader
-                      fontFamily="poppins"
-                      fontWeight="semibold"
-                      letterSpacing="1px"
-                      color="text.primary"
-                    >
+                    <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                       Agama
                     </Table.ColumnHeader>
-                    <Table.ColumnHeader
-                      fontFamily="poppins"
-                      fontWeight="semibold"
-                      letterSpacing="1px"
-                      color="text.primary"
-                    >
+                    <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                       No HP
                     </Table.ColumnHeader>
-                    <Table.ColumnHeader
-                      fontFamily="poppins"
-                      fontWeight="semibold"
-                      letterSpacing="1px"
-                      color="text.primary"
-                    >
+                    <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                       Jabatan
                     </Table.ColumnHeader>
-                    <Table.ColumnHeader
-                      fontFamily="poppins"
-                      fontWeight="semibold"
-                      letterSpacing="1px"
-                      color="text.primary"
-                    >
+                    <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                       Tanggal Dibuat
                     </Table.ColumnHeader>
                   </Table.Row>
@@ -294,46 +213,18 @@ export default function DataGuru() {
                 {/* table body/content */}
                 <Table.Body>
                   {filteredData?.map((dg, i) => (
-                    <Table.Row
-                      key={i}
-                      bg={i % 2 === 0 ? "gray.100" : "white"}
-                      className="group"
-                      color="text.primary"
-                      role="group"
-                    >
-                      <Table.Cell>
-                        <Checkbox.Root size="md">
-                          {/* aksi checkbox */}
-                          <Checkbox.HiddenInput />
-                          <Checkbox.Control />
-                        </Checkbox.Root>
-                      </Table.Cell>
+                    <Table.Row key={i} bg={i % 2 === 0 ? "gray.100" : "white"} className="group" color="text.primary" role="group">
+                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{i+1}</Table.Cell>
                       <Table.Cell fontFamily="poppins">
                         <Stack gap="2">
                           <Heading unstyled>{dg.nuptk}</Heading>
 
                           {/* action */}
-                          <Stack
-                            direction="row"
-                            gap="3"
-                            opacity={0}
-                            _groupHover={{ opacity: 1 }}
-                            transition="0.2s"
-                          >
-                            <Button
-                              unstyled
-                              onClick={() => handleBukaUpdateData(dg)}
-                              size="xs"
-                              color="blue"
-                              cursor="pointer"
-                            >
+                          <Stack direction="row" gap="3" opacity={0} _groupHover={{ opacity: 1 }} transition="0.2s">
+                            <Button unstyled onClick={() => handleBukaUpdateData(dg)} size="xs" color="blue" cursor="pointer">
                               Update
                             </Button>
-                            <Button 
-                              unstyled
-                              onClick={() => confirmDeleteGuru(dg?.user_account?.id, dg?.nama)}
-                              size="xs" color="red" cursor="pointer"
-                            >
+                            <Button  unstyled onClick={() => confirmDeleteGuru(dg?.user_account?.id, dg?.nama)} size="xs" color="red" cursor="pointer">
                               Delete
                             </Button>
                           </Stack>

@@ -1,10 +1,9 @@
-import { Box, Heading, Stack, Input, InputGroup, Table, Checkbox, Button, Pagination, IconButton, ButtonGroup } from "@chakra-ui/react";
-import BaseDialog from "../../../components/dialogs/BaseDialog";
-import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
-import BaseButton from "../../../components/buttons/BaseButton";
+import { Box, Heading, Stack, Input, InputGroup, Table, Button, Pagination, IconButton, ButtonGroup } from "@chakra-ui/react";
+import { useDjpFrom, useFindAll, useStore, useUpdate, useDelete } from "../../../hooks/useDataJenisPelanggaran";
 import { CiSearch } from "react-icons/ci";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import { useDjpFrom, useFindAll, useStore, useUpdate, useDelete } from "../../../hooks/useDataJenisPelanggaran";
+import BaseDialog from "../../../components/dialogs/BaseDialog";
+import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
 import BaseInput from "../../../components/forms/BaseInput";
 import useFilterJenisPelanggaran from "../../../hooks/filters/useFilterJenisPelanggaran";
 
@@ -35,13 +34,7 @@ export default function DataJenisPelanggaran() {
       <Box py="10">
         {/* title & button add new */}
         <Stack direction="row" alignItems="center">
-          <Heading
-            unstyled
-            color="text.primary"
-            fontFamily="poppins"
-            fontWeight="medium"
-            fontSize={{ base: "2xl", md: "3xl" }}
-          >
+          <Heading unstyled color="text.primary" fontFamily="poppins" fontWeight="medium" fontSize={{ base: "2xl", md: "3xl" }}>
             Jenis Pelanggaran
           </Heading>
           {/* dialog component */}
@@ -90,30 +83,8 @@ export default function DataJenisPelanggaran() {
 
         {/* action button*/}
         <Box mt="16">
-          <Stack
-            direction={{ base: "column", md: "row" }}
-            justifyContent="space-between"
-          >
-            <Box
-              display="flex"
-              flexDir={{ base: "column", md: "row" }}
-              alignItems={{ base: "start", md: "center" }}
-              gap="2"
-              width={{ base: "auto", md: "800px" }}
-            >
-              {/* bulk action: delete all dengan cara di select -> apply */}
-              <BaseNativeSelect
-                placeholder="Aksi"
-                options={[{ label: "Delete", value: "delete" }]}
-                width="10"
-              />
-
-              <BaseButton
-                mr="8"
-                width={{ base: "full", md: "auto" }}
-                label="Terapkan"
-              />
-
+          <Stack direction={{ base: "column", md: "row" }} justifyContent="space-between">
+            <Box display="flex" flexDir={{ base: "column", md: "row" }} alignItems={{ base: "start", md: "center" }} gap="2" width={{ base: "auto", md: "800px" }}>
               {/* filter poin pelanggaran berdasarkan dari terbesar/terkecil */}
               <BaseNativeSelect
                 placeholder="Filter Poin"
@@ -143,14 +114,9 @@ export default function DataJenisPelanggaran() {
                 <InputGroup startElement={<CiSearch size={22} />}>
                   <Input
                     placeholder="Search"
-                    w="full"
-                    bg="white"
-                    borderColor="gray.300"
-                    color="text.primary"
-                    fontFamily="poppins"
-                    _placeholder={{ color: { _dark: "gray.400" } }}
                     value={filters.search}
                     onChange={(e) => handleChangeFilter("search", e.target.value)}
+                    w="full" bg="white" borderColor="gray.300" color="text.primary" fontFamily="poppins" _placeholder={{ color: { _dark: "gray.400" } }}
                   />
                 </InputGroup>
               </Stack>
@@ -161,46 +127,20 @@ export default function DataJenisPelanggaran() {
         {/* table */}
         <Box position="relative" mt="5" width="full" rounded="xl" shadow="sm" bg="white">
           <Box overflowX="auto" p={{ base: "0", md: "4" }}>
-            <Table.Root
-              whiteSpace="nowrap"
-              variant="line"
-              border="1px solid"
-              borderColor="gray.200"
-              rounded="lg"
-            >
+            <Table.Root whiteSpace="nowrap" variant="line" border="1px solid" borderColor="gray.200" rounded="lg">
               <Table.Header>
+                {/* table column: Product | Category | Price */}
                 <Table.Row bg="white">
-                  <Table.ColumnHeader w="6">
-                    <Checkbox.Root size="md">
-                      {/* aksi checkbox */}
-                      <Checkbox.HiddenInput />
-                      <Checkbox.Control />
-                    </Checkbox.Root>
+                  <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
+                    No
                   </Table.ColumnHeader>
-
-                  {/* table column: Product | Category | Price */}
-                  <Table.ColumnHeader
-                    fontFamily="poppins"
-                    fontWeight="semibold"
-                    letterSpacing="1px"
-                    color="text.primary"
-                  >
+                  <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                     Nama Pelanggaran
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    fontFamily="poppins"
-                    fontWeight="semibold"
-                    letterSpacing="1px"
-                    color="text.primary"
-                  >
+                  <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                     Poin Pelanggaran
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    fontFamily="poppins"
-                    fontWeight="semibold"
-                    letterSpacing="1px"
-                    color="text.primary"
-                  >
+                  <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                     Tanggal Dibuat
                   </Table.ColumnHeader>
                 </Table.Row>
@@ -209,61 +149,33 @@ export default function DataJenisPelanggaran() {
               {/* table body/content */}
               <Table.Body>
                 {filteredData?.map((djp, i) => (
-                  <Table.Row
-                    key={i}
-                    bg={i % 2 === 0 ? "gray.100" : "white"}
-                    className="group"
-                    color="text.primary"
-                    role="group"
-                  >
-                    <Table.Cell>
-                      <Checkbox.Root size="md">
-                        {/* aksi checkbox */}
-                        <Checkbox.HiddenInput />
-                        <Checkbox.Control />
-                      </Checkbox.Root>
-                    </Table.Cell>
+                  <Table.Row key={i} bg={i % 2 === 0 ? "gray.100" : "white"} className="group" color="text.primary" role="group">
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{i+1}</Table.Cell>
                     <Table.Cell fontFamily="poppins">
                       <Stack gap="2">
                         <Heading unstyled>{djp?.nama_pelanggaran}</Heading>
 
                         {/* action */}
-                        <Stack
-                          direction="row"
-                          gap="3"
-                          opacity={0}
-                          _groupHover={{ opacity: 1 }}
-                          transition="0.2s"
-                        >
+                        <Stack direction="row" gap="3" opacity={0} _groupHover={{ opacity: 1 }} transition="0.2s">
                           <Button
                             unstyled
                             onClick={() => handleBukaUpdateData(djp)}
-                            size="xs"
-                            color="blue"
-                            cursor="pointer"
+                            size="xs" color="blue" cursor="pointer"
                           >
                             Update
                           </Button>
                           <Button
                             unstyled
-                            onClick={() =>
-                              confirmDeleteData(djp.id, djp.nama_pelanggaran)
-                            }
-                            size="xs"
-                            color="red"
-                            cursor="pointer"
+                            onClick={() => confirmDeleteData(djp.id, djp.nama_pelanggaran)}
+                            size="xs" color="red" cursor="pointer"
                           >
                             Delete
                           </Button>
                         </Stack>
                       </Stack>
                     </Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">
-                      {djp?.poin}
-                    </Table.Cell>
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">
-                      {djp?.created_at}
-                    </Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{djp?.poin}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{djp?.created_at}</Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>

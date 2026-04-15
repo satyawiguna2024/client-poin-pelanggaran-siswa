@@ -1,51 +1,20 @@
-import {
-  Box,
-  Heading,
-  Stack,
-  Input,
-  InputGroup,
-  Table,
-  Button,
-  Pagination,
-  IconButton,
-  ButtonGroup,
-  Spinner
-} from "@chakra-ui/react";
-import BaseDialog from "../../components/dialogs/BaseDialog";
-import BaseNativeSelect from "../../components/forms/BaseNativeSelect";
+import { Box, Heading, Stack, Input, InputGroup, Table, Button, Pagination, IconButton, ButtonGroup, Spinner } from "@chakra-ui/react";
+import { useFormPelanggaranSiswa, useFindAll, useStore, useUpdate } from "../../hooks/usePelanggaranSiswa";
 import { CiSearch } from "react-icons/ci";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import {
-  useFormPelanggaranSiswa,
-  useFindAll,
-  useStore,
-  useUpdate,
-} from "../../hooks/usePelanggaranSiswa";
+import BaseDialog from "../../components/dialogs/BaseDialog";
+import BaseNativeSelect from "../../components/forms/BaseNativeSelect";
 import StepPertama from "./steps-pelanggaran/StepPertama";
 import StepKedua from "./steps-pelanggaran/StepKedua";
 
 export default function PelanggaranSiswa() {
-  const {
-    step,
-    setStep,
-    isDialogOpen,
-    setIsDialogOpen,
-    editId,
-    handleNext,
-    handleBukaTambahData,
-    handleBukaUpdateData,
-    register,
-    handleSubmit,
-    errors,
-    reset,
-    setValue,
-    selectedNis,
-    setSelectedNis,
-  } = useFormPelanggaranSiswa();
-
   const { pelanggaranSiswa, isPendingPelanggaranSiswa } = useFindAll();
   const { createData, isPendingCreate } = useStore();
   const { updateData, isPendingUpdate } = useUpdate();
+  const { step, setStep, isDialogOpen, setIsDialogOpen, editId, 
+          handleNext, handleBukaTambahData, handleBukaUpdateData, 
+          register, handleSubmit, errors, reset, setValue, selectedNis, setSelectedNis
+        } = useFormPelanggaranSiswa();
 
   const isSaving = isPendingCreate || isPendingUpdate;
 
@@ -83,13 +52,7 @@ export default function PelanggaranSiswa() {
       <Box py="10">
         {/* title & button add new */}
         <Stack direction="row" alignItems="center">
-          <Heading
-            unstyled
-            color="text.primary"
-            fontFamily="poppins"
-            fontWeight="medium"
-            fontSize={{ base: "2xl", md: "3xl" }}
-          >
+          <Heading unstyled color="text.primary" fontFamily="poppins" fontWeight="medium" fontSize={{ base: "2xl", md: "3xl" }}>
             Pelanggaran Siswa
           </Heading>
 
@@ -103,12 +66,7 @@ export default function PelanggaranSiswa() {
             footer={
               <>
                 {step > (editId ? 2 : 1) && (
-                  <Button
-                    onClick={() => setStep(step - 1)}
-                    variant="ghost"
-                    color="red"
-                    disabled={isSaving}
-                  >
+                  <Button onClick={() => setStep(step - 1)} variant="ghost" color="red" disabled={isSaving}>
                     Back
                   </Button>
                 )}
@@ -118,12 +76,7 @@ export default function PelanggaranSiswa() {
                     Next
                   </Button>
                 ) : (
-                  <Button
-                    onClick={handleSubmit(handleSimpanData)}
-                    variant="ghost"
-                    color="blue"
-                    loading={isSaving}
-                  >
+                  <Button onClick={handleSubmit(handleSimpanData)} variant="ghost" color="blue" loading={isSaving}>
                     Save
                   </Button>
                 )}
@@ -131,15 +84,7 @@ export default function PelanggaranSiswa() {
             }
           >
             <form onSubmit={(e) => e.preventDefault()}>
-              {step === 1 && (
-                <StepPertama
-                  register={register}
-                  errors={errors}
-                  setValue={setValue}
-                  selectedNis={selectedNis}
-                  setSelectedNis={setSelectedNis}
-                />
-              )}
+              {step === 1 && <StepPertama register={register} errors={errors} setValue={setValue} selectedNis={selectedNis} setSelectedNis={setSelectedNis} />}
               {step === 2 && <StepKedua register={register} errors={errors} />}
             </form>
           </BaseDialog>
@@ -214,15 +159,12 @@ export default function PelanggaranSiswa() {
         {/* table */}
         <Box position="relative" mt="5" width="full" rounded="xl" shadow="sm" bg="white">
           <Box overflowX="auto" p={{ base: "0", md: "4" }}>
-            <Table.Root
-              whiteSpace="nowrap"
-              variant="line"
-              border="1px solid"
-              borderColor="gray.200"
-              rounded="lg"
-            >
+            <Table.Root whiteSpace="nowrap" variant="line" border="1px solid" borderColor="gray.200" rounded="lg">
               <Table.Header>
                 <Table.Row bg="white">
+                  <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
+                    No
+                  </Table.ColumnHeader>
                   <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                     Tanggal Pelanggaran
                   </Table.ColumnHeader>
@@ -263,31 +205,18 @@ export default function PelanggaranSiswa() {
                   </Table.Row>
                 ) : (
                   pelanggaranSiswa?.map((item, i) => (
-                    <Table.Row
-                      key={item.id}
-                      bg={i % 2 === 0 ? "gray.100" : "white"}
-                      className="group"
-                      color="text.primary"
-                      role="group"
-                    >
+                    <Table.Row key={item.id} bg={i % 2 === 0 ? "gray.100" : "white"} className="group" color="text.primary" role="group">
+                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{i + 1}</Table.Cell>
                       <Table.Cell fontFamily="poppins">
                         <Stack gap="2">
                           <Heading unstyled>{item.tanggal}</Heading>
 
                           {/* inline actions */}
-                          <Stack
-                            direction="row"
-                            gap="3"
-                            opacity={0}
-                            _groupHover={{ opacity: 1 }}
-                            transition="0.2s"
-                          >
+                          <Stack direction="row" gap="3" opacity={0} _groupHover={{ opacity: 1 }} transition="0.2s">
                             <Button
                               unstyled
-                              size="xs"
-                              color="blue"
-                              cursor="pointer"
                               onClick={() => handleBukaUpdateData(item)}
+                              size="xs" color="blue" cursor="pointer"
                             >
                               Update
                             </Button>

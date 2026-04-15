@@ -1,10 +1,9 @@
-import { Box, Heading, Stack, Input, InputGroup, Table, Checkbox, Button, Pagination, IconButton, ButtonGroup } from "@chakra-ui/react";
-import { LuChevronLeft, LuChevronRight, LuSearch } from "react-icons/lu";
+import { Box, Heading, Stack, Input, InputGroup, Table, Button, Pagination, IconButton, ButtonGroup } from "@chakra-ui/react";
 import { useSiswaForms, useCreateSiswa, useDeleteSiswa, useFindAllSiswa, useUpdateSiswa } from "../../../hooks/useDataUsers";
 import { useShowAllKelas } from "../../../hooks/useDataKelas";
+import { LuChevronLeft, LuChevronRight, LuSearch } from "react-icons/lu";
 import BaseDialog from "../../../components/dialogs/BaseDialog";
 import BaseNativeSelect from "../../../components/forms/BaseNativeSelect";
-import BaseButton from "../../../components/buttons/BaseButton";
 import StepPertama from "./steps-siswa/StepPertama";
 import StepKedua from "./steps-siswa/StepKedua";
 import StepKetiga from "./steps-siswa/StepKetiga";
@@ -42,13 +41,7 @@ export default function DataSiswa() {
       <Box py="10">
         {/* title & button add new */}
         <Stack direction="row" alignItems="center">
-          <Heading
-            unstyled
-            color="text.primary"
-            fontFamily="poppins"
-            fontWeight="medium"
-            fontSize={{ base: "2xl", md: "3xl" }}
-          >
+          <Heading unstyled color="text.primary" fontFamily="poppins" fontWeight="medium" fontSize={{ base: "2xl", md: "3xl" }}>
             Siswa
           </Heading>
 
@@ -89,20 +82,9 @@ export default function DataSiswa() {
           >
             <form onSubmit={(e) => e.preventDefault()}>
               {/* step tambah akun user */}
-              {step === 1 && (
-                <StepPertama register={register} errors={errors} />
-              )}
-
+              {step === 1 && (<StepPertama register={register} errors={errors} />)}
               {/* step tambah personal data siswa */}
-              {step === 2 && (
-                <StepKedua
-                  register={register}
-                  errors={errors}
-                  getAllDataKelas={getAllDataKelas}
-                  editId={editId}
-                />
-              )}
-
+              {step === 2 && (<StepKedua register={register} errors={errors} getAllDataKelas={getAllDataKelas} editId={editId}/>)}
               {/* step tambah data ortu siswa */}
               {step === 3 && <StepKetiga register={register} errors={errors} />}
             </form>
@@ -122,19 +104,6 @@ export default function DataSiswa() {
               gap="2"
               width={{ base: "auto", md: "800px" }}
             >
-              {/* bulk action: delete all dengan cara di select -> apply */}
-              <BaseNativeSelect
-                placeholder="Aksi"
-                options={[{ label: "Delete", value: "delete" }]}
-              />
-
-              {/* Button aksi menerapkan dari select all */}
-              <BaseButton
-                mr="8"
-                width={{ base: "full", md: "auto" }}
-                label="Terapkan"
-              />
-
               {/* filter siswa berdasarkan kelas */}
               <BaseNativeSelect
                 placeholder="Kelas"
@@ -198,111 +167,44 @@ export default function DataSiswa() {
         <Box position="relative" mt="5" width="full" rounded="xl" shadow="sm" bg="white">
           {/* box table */}
           <Box overflowX="auto" p={{ base: "0", md: "4" }}>
-            <Table.Root
-              whiteSpace="nowrap"
-              variant="line"
-              border="1px solid"
-              borderColor="gray.200"
-              rounded="lg"
-            >
+            <Table.Root whiteSpace="nowrap" variant="line" border="1px solid" borderColor="gray.200" rounded="lg">
             <Table.Header>
               <Table.Row bg="white">
-                <Table.ColumnHeader>
-                  <Checkbox.Root size="md">
-                    {/* aksi checkbox */}
-                    <Checkbox.HiddenInput />
-                    <Checkbox.Control />
-                  </Checkbox.Root>
-                </Table.ColumnHeader>
-
                 {/* table column: Product | Category | Price */}
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
+                <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
+                  No
+                </Table.ColumnHeader>
+                <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                   Nis
                 </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
+                <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                   Nama
                 </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
+                <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                   Kelas
                 </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
+                <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                   Tanggal Lahir
                 </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
+                <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                   Agama
                 </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
+                <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                   No HP
                 </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
+                <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                   Jenis Kelamin
                 </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
+                <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                   Nama Bapak
                 </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
+                <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                   Nama Ibu
                 </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
+                <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                   Alamat
                 </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  textAlign="center"
-                  fontFamily="poppins"
-                  fontWeight="semibold"
-                  letterSpacing="1px"
-                  color="text.primary"
-                >
+                <Table.ColumnHeader textAlign="center" fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                   Tanggal Dibuat
                 </Table.ColumnHeader>
               </Table.Row>
@@ -311,87 +213,34 @@ export default function DataSiswa() {
             {/* table body/content */}
             <Table.Body>
               {filteredData?.map((ds, i) => (
-                <Table.Row
-                  key={i}
-                  bg={i % 2 === 0 ? "gray.100" : "white"}
-                  className="group"
-                  color="text.primary"
-                  role="group"
-                >
-                  <Table.Cell>
-                    <Checkbox.Root size="md">
-                      {/* aksi checkbox */}
-                      <Checkbox.HiddenInput />
-                      <Checkbox.Control />
-                    </Checkbox.Root>
-                  </Table.Cell>
+                <Table.Row key={i} bg={i % 2 === 0 ? "gray.100" : "white"} className="group" color="text.primary" role="group">
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">{i+1}</Table.Cell>
                   <Table.Cell fontFamily="poppins">
                     <Stack gap="2">
                       <Heading unstyled>{ds?.nis}</Heading>
 
                       {/* action */}
-                      <Stack
-                        direction="row"
-                        gap="3"
-                        opacity={0}
-                        _groupHover={{ opacity: 1 }}
-                        transition="0.2s"
-                      >
-                        <Button
-                          unstyled
-                          onClick={() => handleBukaUpdateData(ds)}
-                          size="xs"
-                          color="blue"
-                          cursor="pointer"
-                        >
+                      <Stack direction="row" gap="3" opacity={0} _groupHover={{ opacity: 1 }} transition="0.2s">
+                        <Button unstyled onClick={() => handleBukaUpdateData(ds)} size="xs" color="blue" cursor="pointer">
                           Update
                         </Button>
-                        <Button
-                          unstyled
-                          onClick={() =>
-                            confirmDeleteSiswa(ds?.user_account?.id, ds?.nama)
-                          }
-                          disabled={isPendingDeleteSiswa}
-                          size="xs"
-                          color="red"
-                          cursor="pointer"
-                        >
+                        <Button unstyled onClick={() => confirmDeleteSiswa(ds?.user_account?.id, ds?.nama)} disabled={isPendingDeleteSiswa} size="xs" color="red" cursor="pointer">
                           Delete
                         </Button>
                       </Stack>
                     </Stack>
                   </Table.Cell>
-                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
-                    {ds?.nama}
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">{ds?.nama}</Table.Cell>
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">{ds?.kelas?.nama_kelas}
                   </Table.Cell>
-                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
-                    {ds?.kelas?.nama_kelas}
-                  </Table.Cell>
-                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
-                    {ds?.tanggal_lahir}
-                  </Table.Cell>
-                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
-                    {ds?.agama}
-                  </Table.Cell>
-                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
-                    {ds?.telepon}
-                  </Table.Cell>
-                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
-                    {ds?.jenis_kelamin == "L" ? "Laki-Laki" : "Perempuan"}
-                  </Table.Cell>
-                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
-                    {ds?.data_ortu?.nama_ayah}
-                  </Table.Cell>
-                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
-                    {ds?.data_ortu?.nama_ibu}
-                  </Table.Cell>
-                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
-                    {ds?.alamat}
-                  </Table.Cell>
-                  {/* tanggal dibuat | diperbarui */}
-                  <Table.Cell pt="3" pb="10" fontFamily="poppins">
-                    {ds?.created_at}
-                  </Table.Cell>
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">{ds?.tanggal_lahir}</Table.Cell>
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">{ds?.agama}</Table.Cell>
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">{ds?.telepon}</Table.Cell>
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">{ds?.jenis_kelamin == "L" ? "Laki-Laki" : "Perempuan"}</Table.Cell>
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">{ds?.data_ortu?.nama_ayah}</Table.Cell>
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">{ds?.data_ortu?.nama_ibu}</Table.Cell>
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">{ds?.alamat}</Table.Cell>
+                  <Table.Cell pt="3" pb="10" fontFamily="poppins">{ds?.created_at}</Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
