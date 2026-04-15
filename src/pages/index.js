@@ -9,6 +9,16 @@ import DataKelas from "./master-data/kelas/DataKelas";
 import DataJenisPelanggaran from "./master-data/jenis-pelanggaran/DataJenisPelanggaran";
 import PelanggaranSiswa from "./pelanggaran-siswa/PelanggaranSiswa";
 
-export  {   Dashboard, Profile, PelanggaranSiswa, Login,
-            DataSiswa, DataGuru, DataKelas, DataJenisPelanggaran,
-        };
+// laporan
+import LaporanDataSiswa from "./laporan/LaporanDataSiswa";
+import LaporanDataPelanggaran from "./laporan/LaporanDataPelanggaran";
+import LaporanPerSiswa from "./laporan/LaporanPerSiswa";
+import LaporanDataGuru from "./laporan/LaporanDataGuru";
+import LaporanOrtuSiswa from "./laporan/LaporanOrtuSiswa";
+import LaporanRekapPoinPelanggaran from "./laporan/LaporanRekapPoinPelanggaran";
+
+export {
+  Dashboard, Profile, PelanggaranSiswa, Login,
+  DataSiswa, DataGuru, DataKelas, DataJenisPelanggaran,
+  LaporanDataSiswa, LaporanDataPelanggaran, LaporanPerSiswa, LaporanDataGuru, LaporanOrtuSiswa, LaporanRekapPoinPelanggaran,
+};

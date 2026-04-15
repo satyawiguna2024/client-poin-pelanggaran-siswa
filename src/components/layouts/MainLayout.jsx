@@ -56,34 +56,12 @@ const sidebarList = [
     icon: <FileText size={27} />,
     title: "Laporan",
     submenu: [
-      { icon: <Dot size={27} />, title: "Laporan Pelanggaran Siswa", url: "/" },
-      {
-        icon: <Dot size={27} />,
-        title: "Laporan Surat Panggilan Ortu",
-        url: "/",
-      },
-      { icon: <Dot size={27} />, title: "Laporan Surat Perjanjian", url: "/" },
-      { icon: <Dot size={27} />, title: "Laporan Surat Pindah", url: "/" },
-    ],
-  },
-
-  // submenu cetak surat
-  {
-    icon: <Archive size={27} />,
-    title: "Cetak Surat",
-    submenu: [
-      { icon: <Dot size={27} />, title: "Cetak Surat Perjanjian", url: "/" },
-      {
-        icon: <Dot size={27} />,
-        title: "Cetak Surat Panggilan Ortu",
-        url: "/",
-      },
-      {
-        icon: <Dot size={27} />,
-        title: "Cetak Surat Perjanjian Ortu",
-        url: "/",
-      },
-      { icon: <Dot size={27} />, title: "Cetak Surat Pindah", url: "/" },
+      { icon: <Dot size={27} />, title: "Data Siswa",                         url: "/laporan/data-siswa" },
+      { icon: <Dot size={27} />, title: "Data Guru",                          url: "/laporan/data-guru" },
+      { icon: <Dot size={27} />, title: "Data Orangtua Siswa",                url: "/laporan/data-orangtua" },
+      { icon: <Dot size={27} />, title: "Data Pelanggaran Siswa",             url: "/laporan/data-pelanggaran" },
+      { icon: <Dot size={27} />, title: "Rekap Poin Pelanggaran Siswa",       url: "/laporan/rekap-poin" },
+      { icon: <Dot size={27} />, title: "Laporan Poin Pelanggaran Per Siswa", url: "/laporan/per-siswa" },
     ],
   },
 ];
@@ -186,7 +164,7 @@ export default function MainLayout() {
                                     {/* list menu yang berisi submenu */}
                                     {list.submenu.map((subitem) => (
                                       <NavLink
-                                        key={subitem.url}
+                                        key={subitem.title}
                                         to={subitem.url}
                                         onClick={() => setIsOpen(false)}
                                       >
