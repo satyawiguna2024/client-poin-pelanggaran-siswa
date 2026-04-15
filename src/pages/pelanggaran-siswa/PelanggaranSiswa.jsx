@@ -1,16 +1,22 @@
 import { Box, Heading, Stack, Input, InputGroup, Table, Button, Pagination, IconButton, ButtonGroup, Spinner } from "@chakra-ui/react";
 import { useFormPelanggaranSiswa, useFindAll, useStore, useUpdate } from "../../hooks/usePelanggaranSiswa";
+import { useShowAllKelas } from "../../hooks/useDataKelas";
+import { useFindAll as useFindAllJenisPelanggaran } from "../../hooks/useDataJenisPelanggaran";
 import { CiSearch } from "react-icons/ci";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import BaseDialog from "../../components/dialogs/BaseDialog";
 import BaseNativeSelect from "../../components/forms/BaseNativeSelect";
 import StepPertama from "./steps-pelanggaran/StepPertama";
 import StepKedua from "./steps-pelanggaran/StepKedua";
+import useFilterPelanggaranSiswa from "../../hooks/filters/useFilterPelanggaranSiswa";
 
 export default function PelanggaranSiswa() {
   const { pelanggaranSiswa, isPendingPelanggaranSiswa } = useFindAll();
+  const { getAllDataKelas } = useShowAllKelas();
+  const { jenisPelanggaran } = useFindAllJenisPelanggaran()
   const { createData, isPendingCreate } = useStore();
   const { updateData, isPendingUpdate } = useUpdate();
+  const { filters, handleChangeFilter, paginatedData, totalItems, totalPages, currentPage, setCurrentPage, pageSize } = useFilterPelanggaranSiswa(pelanggaranSiswa);
   const { step, setStep, isDialogOpen, setIsDialogOpen, editId, 
           handleNext, handleBukaTambahData, handleBukaUpdateData, 
           register, handleSubmit, errors, reset, setValue, selectedNis, setSelectedNis
@@ -92,39 +98,28 @@ export default function PelanggaranSiswa() {
 
         {/* action button*/}
         <Box mt="16">
-          <Stack
-            direction={{ base: "column", md: "row" }}
-            justifyContent="space-between"
-          >
-            <Box
-              display="flex"
-              flexDir={{ base: "column", md: "row" }}
-              alignItems={{ base: "start", md: "center" }}
-              gap="2"
-              width={{ base: "auto", md: "800px" }}
-            >
+          <Stack direction={{ base: "column", md: "row" }} justifyContent="space-between">
+            <Box display="flex" flexDir={{ base: "column", md: "row" }} alignItems={{ base: "start", md: "center" }} gap="2" width={{ base: "auto", md: "800px" }}>
               {/* filter siswa berdasarkan kelas */}
               <BaseNativeSelect
-                placeholder="Semua Kelas"
-                options={[
-                  { label: "XII RPL 1", value: "xii_rpl_1" },
-                  { label: "XII RPL 2", value: "xii_rpl_2" },
-                  { label: "XII RPL 3", value: "xii_rpl_3" },
-                  { label: "XII RPL 4", value: "xii_rpl_4" },
-                  { label: "XII RPL 5", value: "xii_rpl_5" },
-                ]}
+                placeholder="Kelas"
+                options={getAllDataKelas?.map((item) => ({
+                  label: item?.nama_kelas,
+                  value: item?.nama_kelas,
+                }))}
+                value={filters.kelas}
+                onChange={(e) => handleChangeFilter("kelas", e.target.value)}
               />
 
               {/* filter siswa berdasarkan jenis pelanggaran */}
               <BaseNativeSelect
                 placeholder="Semua Jenis Pelanggaran"
-                options={[
-                  { label: "Mabuk", value: "Mabuk" },
-                  { label: "Makan", value: "Makan" },
-                  { label: "Merokok", value: "Merokok" },
-                  { label: "Membolos", value: "Membolos" },
-                  { label: "Berpakaian Tidak Rapi", value: "Berpakaian Tidak Rapi" },
-                ]}
+                options={jenisPelanggaran?.map((item) => ({
+                  label: item?.nama_pelanggaran,
+                  value: item?.nama_pelanggaran,
+                }))}
+                value={filters.jenis_pelanggaran}
+                onChange={(e) => handleChangeFilter("jenis_pelanggaran", e.target.value)}
               />
 
               {/* filter tanggal pelanggaran */}
@@ -134,6 +129,8 @@ export default function PelanggaranSiswa() {
                   { label: "Terbaru", value: "terbaru" },
                   { label: "Terlama", value: "terlama" },
                 ]}
+                value={filters.tanggal}
+                onChange={(e) => handleChangeFilter("tanggal", e.target.value)}
               />
             </Box>
 
@@ -142,13 +139,15 @@ export default function PelanggaranSiswa() {
               <Stack direction="row">
                 <InputGroup startElement={<CiSearch size={22} />}>
                   <Input
-                    placeholder="Search"
+                    placeholder="Cari Nama atau Nis"
                     w="full"
                     bg="white"
                     borderColor="gray.300"
                     color="text.primary"
                     fontFamily="poppins"
                     _placeholder={{ color: { _dark: "gray.400" } }}
+                    value={filters.search}
+                    onChange={(e) => handleChangeFilter("search", e.target.value)}
                   />
                 </InputGroup>
               </Stack>
@@ -204,9 +203,9 @@ export default function PelanggaranSiswa() {
                     </Table.Cell>
                   </Table.Row>
                 ) : (
-                  pelanggaranSiswa?.map((item, i) => (
+                  paginatedData?.map((item, i) => (
                     <Table.Row key={item.id} bg={i % 2 === 0 ? "gray.100" : "white"} className="group" color="text.primary" role="group">
-                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{i + 1}</Table.Cell>
+                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{i + 1 + (currentPage - 1) * pageSize}</Table.Cell>
                       <Table.Cell fontFamily="poppins">
                         <Stack gap="2">
                           <Heading unstyled>{item.tanggal}</Heading>
@@ -252,43 +251,45 @@ export default function PelanggaranSiswa() {
 
         {/* pagination | total items */}
         <Box mt="5">
-          <Stack
-            direction={{ base: "column-reverse", sm: "row" }}
-            justifyContent={{ base: "center", sm: "space-between" }}
-            alignItems={{ base: "center", md: "center" }}
-          >
-            <Pagination.Root count={pelanggaranSiswa?.length ?? 0} pageSize={10} defaultPage={1}>
-              <ButtonGroup variant="outline" size="sm">
-                <Pagination.PrevTrigger asChild>
-                  <IconButton _dark={{ color: "text.primary", _hover: { bg: "white" } }}>
-                    <LuChevronLeft />
-                  </IconButton>
-                </Pagination.PrevTrigger>
+            <Stack
+              direction={{ base: "column-reverse", sm: "row" }}
+              justifyContent={{ base: "center", sm: "space-between" }}
+              alignItems={{ base: "center", md: "center" }}
+            >
+              {totalItems > pageSize && (
+                <Pagination.Root page={currentPage} onPageChange={(e) => setCurrentPage(e.page)} count={totalItems} pageSize={pageSize}>
+                  <ButtonGroup variant="outline" size="sm">
+                    <Pagination.PrevTrigger asChild>
+                      <IconButton disabled={currentPage === 1} _dark={{ color: "text.primary", _hover: { bg: "white" } }}>
+                        <LuChevronLeft />
+                      </IconButton>
+                    </Pagination.PrevTrigger>
 
-                <Pagination.Items
-                  render={(page) => (
-                    <IconButton
-                      variant={{ base: "outline", _selected: "solid" }}
-                      _dark={{ color: "text.primary", _hover: { bg: "white" } }}
-                    >
-                      {page.value}
-                    </IconButton>
-                  )}
-                />
+                    <Pagination.Items
+                      render={(page) => (
+                        <IconButton
+                          variant={{ base: "outline", _selected: "solid" }}
+                          _dark={{ color: "text.primary", _hover: { bg: "white" } }}
+                        >
+                          {page.value}
+                        </IconButton>
+                      )}
+                    />
 
-                <Pagination.NextTrigger asChild>
-                  <IconButton _dark={{ color: "text.primary", _hover: { bg: "white" } }}>
-                    <LuChevronRight />
-                  </IconButton>
-                </Pagination.NextTrigger>
-              </ButtonGroup>
-            </Pagination.Root>
+                    <Pagination.NextTrigger asChild>
+                      <IconButton disabled={currentPage === totalPages} _dark={{ color: "text.primary", _hover: { bg: "white" } }}>
+                        <LuChevronRight />
+                      </IconButton>
+                    </Pagination.NextTrigger>
+                  </ButtonGroup>
+                </Pagination.Root>
+              )}
 
-            <Heading unstyled color="text.primary" fontFamily="poppins">
-              {pelanggaranSiswa?.length ?? 0} Items
-            </Heading>
-          </Stack>
-        </Box>
+              <Heading unstyled color="text.primary" fontFamily="poppins">
+                {totalItems} Items
+              </Heading>
+            </Stack>
+          </Box>
       </Box>
     </>
   );
