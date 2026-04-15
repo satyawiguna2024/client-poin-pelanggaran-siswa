@@ -1,11 +1,7 @@
 import { useState } from "react";
 
 export default function useFilterKelas(data = []) {
-  const [filters, setFilters] = useState({
-    tanggal: "", // terbaru / terlama
-    jumlah_siswa: "", // terbanyak / terendah
-    search: "",
-  });
+  const [filters, setFilters] = useState({tanggal: "", jumlah_siswa: "", search: "" });
 
   const handleChangeFilter = (name, value) => {
     setFilters((prev) => ({

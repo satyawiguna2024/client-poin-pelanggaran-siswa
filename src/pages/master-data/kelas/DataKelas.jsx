@@ -161,13 +161,7 @@ export default function DataKelas() {
         {/* table */}
         <Box position="relative" mt="5" width="full" rounded="xl" shadow="sm" bg="white">
           <Box overflowX="auto" p={{ base: "0", md: "4" }}>
-            <Table.Root
-              whiteSpace="nowrap"
-              variant="line"
-              border="1px solid"
-              borderColor="gray.200"
-              rounded="lg"
-            >
+            <Table.Root whiteSpace="nowrap" variant="line" border="1px solid" borderColor="gray.200" rounded="lg">
               <Table.Header>
                 <Table.Row bg="white">
                   {/* table column: Product | Category | Price */}
@@ -273,49 +267,9 @@ export default function DataKelas() {
           <Box position="absolute" top="0" right="0" bottom="0" width={{ base: "20px", md: "35px" }} bg="linear-gradient(to left, rgba(0,0,0,0.1), transparent)" pointerEvents="none" borderRightRadius={{ base: "none", md: "xl" }} />
         </Box>
 
-        {/* pagination | total items */}
-        <Box mt="5">
-          <Stack
-            direction={{ base: "column-reverse", sm: "row" }}
-            justifyContent={{ base: "center", sm: "space-between" }}
-            alignItems={{ base: "center", md: "center" }}
-          >
-            <Pagination.Root count={8} pageSize={2} defaultPage={1}>
-              <ButtonGroup variant="outline" size="sm">
-                <Pagination.PrevTrigger asChild>
-                  <IconButton
-                    _dark={{ color: "text.primary", _hover: { bg: "white" } }}
-                  >
-                    <LuChevronLeft />
-                  </IconButton>
-                </Pagination.PrevTrigger>
-
-                <Pagination.Items
-                  render={(page) => (
-                    <IconButton
-                      variant={{ base: "outline", _selected: "solid" }}
-                      _dark={{ color: "text.primary", _hover: { bg: "white" } }}
-                    >
-                      {page.value}
-                    </IconButton>
-                  )}
-                />
-
-                <Pagination.NextTrigger asChild>
-                  <IconButton
-                    _dark={{ color: "text.primary", _hover: { bg: "white" } }}
-                  >
-                    <LuChevronRight />
-                  </IconButton>
-                </Pagination.NextTrigger>
-              </ButtonGroup>
-            </Pagination.Root>
-
-            <Heading unstyled color="text.primary" fontFamily="poppins">
-              {filteredData?.length} Items
-            </Heading>
-          </Stack>
-        </Box>
+        <Heading unstyled color="text.primary" fontFamily="poppins" my="7" mx="2">
+          {filteredData?.length} Items
+        </Heading>
       </Box>
     </>
   );

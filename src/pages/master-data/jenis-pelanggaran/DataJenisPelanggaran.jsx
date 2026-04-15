@@ -12,7 +12,7 @@ export default function DataJenisPelanggaran() {
   const { createData } = useStore();
   const { updateData } = useUpdate();
   const { confirmDeleteData } = useDelete();
-  const { filters, handleChangeFilter, filteredData } = useFilterJenisPelanggaran(jenisPelanggaran);
+  const { filters, handleChangeFilter, totalItems, pageSize, totalPages, paginatedData, currentPage, setCurrentPage } = useFilterJenisPelanggaran(jenisPelanggaran);
   const { isDialogOpen, setIsDialogOpen, editId, register, handleSubmit, errors, handleBukaTambahData, handleBukaUpdateData } = useDjpFrom();
 
   const handleSimpanData = (data) => {
@@ -148,9 +148,9 @@ export default function DataJenisPelanggaran() {
 
               {/* table body/content */}
               <Table.Body>
-                {filteredData?.map((djp, i) => (
+                {paginatedData?.map((djp, i) => (
                   <Table.Row key={i} bg={i % 2 === 0 ? "gray.100" : "white"} className="group" color="text.primary" role="group">
-                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{i+1}</Table.Cell>
+                    <Table.Cell pt="3" pb="10" fontFamily="poppins">{i + 1 + (currentPage - 1) * pageSize}</Table.Cell>
                     <Table.Cell fontFamily="poppins">
                       <Stack gap="2">
                         <Heading unstyled>{djp?.nama_pelanggaran}</Heading>
@@ -188,46 +188,44 @@ export default function DataJenisPelanggaran() {
 
         {/* pagination | total items */}
         <Box mt="5">
-          <Stack
-            direction={{ base: "column-reverse", sm: "row" }}
-            justifyContent={{ base: "center", sm: "space-between" }}
-            alignItems={{ base: "center", md: "center" }}
-          >
-            <Pagination.Root count={8} pageSize={2} defaultPage={1}>
-              <ButtonGroup variant="outline" size="sm">
-                <Pagination.PrevTrigger asChild>
-                  <IconButton
-                    _dark={{ color: "text.primary", _hover: { bg: "white" } }}
-                  >
-                    <LuChevronLeft />
-                  </IconButton>
-                </Pagination.PrevTrigger>
+            <Stack
+              direction={{ base: "column-reverse", sm: "row" }}
+              justifyContent={{ base: "center", sm: "space-between" }}
+              alignItems={{ base: "center", md: "center" }}
+            >
+              {totalItems > pageSize && (
+                <Pagination.Root page={currentPage} onPageChange={(e) => setCurrentPage(e.page)} count={totalItems} pageSize={pageSize}>
+                  <ButtonGroup variant="outline" size="sm">
+                    <Pagination.PrevTrigger asChild>
+                      <IconButton disabled={currentPage === 1} _dark={{ color: "text.primary", _hover: { bg: "white" } }}>
+                        <LuChevronLeft />
+                      </IconButton>
+                    </Pagination.PrevTrigger>
 
-                <Pagination.Items
-                  render={(page) => (
-                    <IconButton
-                      variant={{ base: "outline", _selected: "solid" }}
-                      _dark={{ color: "text.primary", _hover: { bg: "white" } }}
-                    >
-                      {page.value}
-                    </IconButton>
-                  )}
-                />
+                    <Pagination.Items
+                      render={(page) => (
+                        <IconButton
+                          variant={{ base: "outline", _selected: "solid" }}
+                          _dark={{ color: "text.primary", _hover: { bg: "white" } }}
+                        >
+                          {page.value}
+                        </IconButton>
+                      )}
+                    />
 
-                <Pagination.NextTrigger asChild>
-                  <IconButton
-                    _dark={{ color: "text.primary", _hover: { bg: "white" } }}
-                  >
-                    <LuChevronRight />
-                  </IconButton>
-                </Pagination.NextTrigger>
-              </ButtonGroup>
-            </Pagination.Root>
+                    <Pagination.NextTrigger asChild>
+                      <IconButton disabled={currentPage === totalPages} _dark={{ color: "text.primary", _hover: { bg: "white" } }}>
+                        <LuChevronRight />
+                      </IconButton>
+                    </Pagination.NextTrigger>
+                  </ButtonGroup>
+                </Pagination.Root>
+              )}
 
-            <Heading unstyled color="text.primary" fontFamily="poppins">
-              {filteredData?.length} Items
-            </Heading>
-          </Stack>
+              <Heading unstyled color="text.primary" fontFamily="poppins">
+                {jenisPelanggaran.length} Items
+              </Heading>
+            </Stack>
         </Box>
       </Box>
     </>
