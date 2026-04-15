@@ -1,4 +1,5 @@
 import { Avatar, Box, Heading, HStack, Menu } from "@chakra-ui/react";
+import { useLoginHook } from "../../hooks/useAuthenticationHook";
 
 export default function Profile() {
   const logout = () => {
@@ -6,16 +7,18 @@ export default function Profile() {
     window.location.href = "/";
   }
 
+  const {users} = useLoginHook();
+
   return (
     <Menu.Root>
       <Menu.Trigger>
         <HStack gap="3" flexDir={{base: "row-reverse", md: "row"}}>
           <Box textAlign={{base: "start", md: "end"}}>
             <Heading unstyled as="h3" color="gray.200">
-              cokda
+              {users?.username}
             </Heading>
             <Heading unstyled as="h3" color="gray.200">
-              cokdaganteng01@gmail.com
+              {users?.email}
             </Heading>
           </Box>
 

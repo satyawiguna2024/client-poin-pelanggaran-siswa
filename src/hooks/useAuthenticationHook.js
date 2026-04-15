@@ -9,14 +9,21 @@ export function useLoginHook() {
   const navigate = useNavigate();
 
   // form dengan react-form-hooks
-  const {register, handleSubmit, formState: {errors}} = useForm({mode: "onChange"});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
 
-  const {mutate, isPending} = useMutation({
-    mutationKey: ['login'],
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["login"],
     mutationFn: loginApi,
     onSuccess: (response) => {
-      localStorage.setItem('jwtToken', response.token);
-      
+      localStorage.setItem("jwtToken", response.token);
+
+      // simpen data users login saat ini
+      localStorage.setItem("user", JSON.stringify(response.user));
+
       Swal.fire({
         title: "Login Berhasil 🎉",
         text: "Selamat datang kembali!",
@@ -27,7 +34,7 @@ export function useLoginHook() {
         confirmButtonColor: "#3182ce",
         backdrop: `rgba(0,0,0,0.6) left top no-repeat`,
       }).then((res) => {
-        if(res.isConfirmed) navigate("/dashboard")
+        if (res.isConfirmed) navigate("/dashboard");
       });
     },
     onError: (err) => {
@@ -42,13 +49,21 @@ export function useLoginHook() {
         color: "#fff",
         confirmButtonColor: "#ce3131",
         backdrop: `rgba(0,0,0,0.6) left top no-repeat`,
-      })
-    }
+      });
+    },
   });
 
   const onSubmit = (formData) => {
     mutate(formData);
-  }
+  };
 
-  return {register, handleSubmit, errors, onSubmit, isPending};
+  // get data user
+  const getUser = () => {
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
+  };
+
+  const users = getUser();
+
+  return { users, register, handleSubmit, errors, onSubmit, isPending };
 }

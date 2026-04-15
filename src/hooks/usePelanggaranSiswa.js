@@ -1,9 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  findAll,
-  createDataJenisPelanggaran,
-  updateDataJenisPelanggaran,
-} from "../services/dataPelanggaranSiswa";
+import { findAll, createDataJenisPelanggaran, updateDataJenisPelanggaran } from "../services/dataPelanggaranSiswa";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

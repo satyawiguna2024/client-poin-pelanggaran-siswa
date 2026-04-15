@@ -1,31 +1,11 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router";
-import {
-  Box,
-  Container,
-  Flex,
-  IconButton,
-  Heading,
-  Drawer,
-  List,
-  Image,
-  HStack,
-  Separator,
-  CloseButton,
-  Collapsible,
-} from "@chakra-ui/react";
-import {
-  TextAlignJustify,
-  House,
-  Layers,
-  ClipboardList,
-  Dot,
-  Archive,
-  FileText,
-} from "lucide-react";
+import { Box, Container, Flex, IconButton, Heading, Drawer, List, Image, HStack, Separator, CloseButton, Collapsible } from "@chakra-ui/react";
+import { TextAlignJustify, House, Layers, ClipboardList, Dot, FileText } from "lucide-react";
 import { LuChevronRight } from "react-icons/lu";
 import { Profile } from "../../pages";
 import IconWeb from "../../assets/icon/illegal.png";
+import { useLoginHook } from "../../hooks/useAuthenticationHook";
 
 const sidebarList = [
   { icon: <House size={27} />, title: "Dashboard", url: "/dashboard" },
@@ -39,6 +19,7 @@ const sidebarList = [
   {
     icon: <Layers size={27} />,
     title: "Master Data",
+    role: ["admin"],
     submenu: [
       { icon: <Dot size={27} />, title: "Data Siswa", url: "/siswa" },
       { icon: <Dot size={27} />, title: "Data Guru", url: "/guru" },
@@ -55,6 +36,7 @@ const sidebarList = [
   {
     icon: <FileText size={27} />,
     title: "Laporan",
+    role: ["admin", "guru"],
     submenu: [
       { icon: <Dot size={27} />, title: "Data Siswa",                         url: "/laporan/data-siswa" },
       { icon: <Dot size={27} />, title: "Data Guru",                          url: "/laporan/data-guru" },
@@ -68,6 +50,16 @@ const sidebarList = [
 
 export default function MainLayout() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const {users} = useLoginHook()
+
+  const filteredSidebar = sidebarList.filter((item) => {
+  // kalau tidak ada roles → tampilkan ke semua
+  if (!item.role) return true;
+
+  // kalau ada roles → cek user role
+  return item.role.includes(users?.role);
+});
 
   return (
     <>
@@ -122,7 +114,7 @@ export default function MainLayout() {
                     <Separator my="3" borderColor="gray.600" />
                     <Drawer.Body>
                       <List.Root variant="none" spaceY="5">
-                        {sidebarList.map((list) => {
+                        {filteredSidebar.map((list) => {
                           // Menu dengan submenu (Master Data)
                           if (list.submenu) {
                             return (

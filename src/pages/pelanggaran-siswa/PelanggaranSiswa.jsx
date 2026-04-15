@@ -9,9 +9,11 @@ import BaseNativeSelect from "../../components/forms/BaseNativeSelect";
 import StepPertama from "./steps-pelanggaran/StepPertama";
 import StepKedua from "./steps-pelanggaran/StepKedua";
 import useFilterPelanggaranSiswa from "../../hooks/filters/useFilterPelanggaranSiswa";
+import { useLoginHook } from "../../hooks/useAuthenticationHook";
 
 export default function PelanggaranSiswa() {
   const { pelanggaranSiswa, isPendingPelanggaranSiswa } = useFindAll();
+  const { users } = useLoginHook();
   const { getAllDataKelas } = useShowAllKelas();
   const { jenisPelanggaran } = useFindAllJenisPelanggaran()
   const { createData, isPendingCreate } = useStore();
@@ -63,37 +65,39 @@ export default function PelanggaranSiswa() {
           </Heading>
 
           {/* dialog component */}
-          <BaseDialog
-            title={editId ? "Update Pelanggaran Siswa" : "Add Pelanggaran Siswa"}
-            open={isDialogOpen}
-            onOpenChange={(e) => setIsDialogOpen(e.open)}
-            size="xl"
-            onClickAdd={handleBukaTambahData}
-            footer={
-              <>
-                {step > (editId ? 2 : 1) && (
-                  <Button onClick={() => setStep(step - 1)} variant="ghost" color="red" disabled={isSaving}>
-                    Back
-                  </Button>
-                )}
+          {(users?.role === "admin" || users?.role === "guru") && (
+            <BaseDialog
+              title={editId ? "Update Pelanggaran Siswa" : "Add Pelanggaran Siswa"}
+              open={isDialogOpen}
+              onOpenChange={(e) => setIsDialogOpen(e.open)}
+              size="xl"
+              onClickAdd={handleBukaTambahData}
+              footer={
+                <>
+                  {step > (editId ? 2 : 1) && (
+                    <Button onClick={() => setStep(step - 1)} variant="ghost" color="red" disabled={isSaving}>
+                      Back
+                    </Button>
+                  )}
 
-                {step < 2 ? (
-                  <Button type="button" onClick={handleNext} variant="ghost" color="orange">
-                    Next
-                  </Button>
-                ) : (
-                  <Button onClick={handleSubmit(handleSimpanData)} variant="ghost" color="blue" loading={isSaving}>
-                    Save
-                  </Button>
-                )}
-              </>
-            }
-          >
-            <form onSubmit={(e) => e.preventDefault()}>
-              {step === 1 && <StepPertama register={register} errors={errors} setValue={setValue} selectedNis={selectedNis} setSelectedNis={setSelectedNis} />}
-              {step === 2 && <StepKedua register={register} errors={errors} />}
-            </form>
-          </BaseDialog>
+                  {step < 2 ? (
+                    <Button type="button" onClick={handleNext} variant="ghost" color="orange">
+                      Next
+                    </Button>
+                  ) : (
+                    <Button onClick={handleSubmit(handleSimpanData)} variant="ghost" color="blue" loading={isSaving}>
+                      Save
+                    </Button>
+                  )}
+                </>
+              }
+            >
+              <form onSubmit={(e) => e.preventDefault()}>
+                {step === 1 && <StepPertama register={register} errors={errors} setValue={setValue} selectedNis={selectedNis} setSelectedNis={setSelectedNis} />}
+                {step === 2 && <StepKedua register={register} errors={errors} />}
+              </form>
+            </BaseDialog>
+          )}
         </Stack>
 
         {/* action button*/}
@@ -182,9 +186,6 @@ export default function PelanggaranSiswa() {
                   <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
                     Poin
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader fontFamily="poppins" fontWeight="semibold" letterSpacing="1px" color="text.primary">
-                    Dibuat Oleh
-                  </Table.ColumnHeader>
                 </Table.Row>
               </Table.Header>
 
@@ -228,7 +229,6 @@ export default function PelanggaranSiswa() {
                       <Table.Cell pt="3" pb="10" fontFamily="poppins">{item.siswa?.kelas?.nama_kelas}</Table.Cell>
                       <Table.Cell pt="3" pb="10" fontFamily="poppins">{item.jenis_pelanggaran?.nama_pelanggaran}</Table.Cell>
                       <Table.Cell pt="3" pb="10" fontFamily="poppins">{item.jenis_pelanggaran?.poin}</Table.Cell>
-                      <Table.Cell pt="3" pb="10" fontFamily="poppins">{item.siswa?.users?.username}</Table.Cell>
                     </Table.Row>
                   ))
                 )}
@@ -289,7 +289,7 @@ export default function PelanggaranSiswa() {
                 {totalItems} Items
               </Heading>
             </Stack>
-          </Box>
+        </Box>
       </Box>
     </>
   );
