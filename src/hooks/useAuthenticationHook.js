@@ -13,6 +13,7 @@ export function useLoginHook() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({ mode: "onChange" });
 
   const { mutate, isPending } = useMutation({
@@ -65,5 +66,5 @@ export function useLoginHook() {
 
   const users = getUser();
 
-  return { users, register, handleSubmit, errors, onSubmit, isPending };
+  return { users, register, handleSubmit, errors, watch, onSubmit, isPending };
 }

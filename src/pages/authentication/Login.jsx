@@ -3,7 +3,7 @@ import { useLoginHook } from "../../hooks/useAuthenticationHook";
 import { Lock, User } from "lucide-react";
 
 export default function Login() {
-  const { register, handleSubmit, errors, onSubmit, isPending } = useLoginHook();
+  const { register, handleSubmit, errors, watch, onSubmit, isPending } = useLoginHook();
 
   return (
     <>
@@ -61,6 +61,26 @@ export default function Login() {
               <Field.ErrorText width="full">
                 <Field.ErrorIcon width="3" />
                 {errors.password?.message}
+              </Field.ErrorText>
+            </Field.Root>
+
+            <Field.Root invalid={!!errors.confirm_password}>
+              <Field.Label color="text.primary">Konfirmasi Password</Field.Label>
+              <InputGroup startElement={<Lock size={15} />}>
+                <Input
+                  type="password"
+                  placeholder="Masukan Ulang Password"
+                  variant="outline"
+                  borderColor="gray.200" color="text.primary"
+                  {...register("confirm_password", {
+                    required: "Wajib Mengkonfirmasi Password!",
+                    validate: (value) => value === watch("password") || "Konfirmasi Password tidak cocok",
+                  })}
+                />
+              </InputGroup>
+              <Field.ErrorText width="full">
+                <Field.ErrorIcon width="3" />
+                {errors.confirm_password?.message}
               </Field.ErrorText>
             </Field.Root>
 

@@ -3,7 +3,7 @@ import { LuUser, LuLock } from "react-icons/lu";
 import { CgMail } from "react-icons/cg";
 import BaseInput from "../../../../components/forms/BaseInput";
 
-export default function StepPertama({ register, errors }) {
+export default function StepPertama({ register, errors, watch }) {
   return (
     <>
       <Text>Data User</Text>
@@ -70,6 +70,22 @@ export default function StepPertama({ register, errors }) {
             },
           })}
           error={errors.password?.message}
+        />
+      </Box>
+
+      {/* Input Confirm Password */}
+      <Box my="8">
+        <BaseInput
+          type="password"
+          label="Konfirmasi Password"
+          required
+          placeholder="*********"
+          icon={<LuLock size={16} />}
+          {...register("confirm_password", {
+            required: "Wajib Mengkonfirmasi Password!",
+            validate: (value) => value === watch("password") || "Konfirmasi Password tidak cocok",
+          })}
+          error={errors.confirm_password?.message}
         />
       </Box>
     </>

@@ -15,7 +15,7 @@ export default function DataGuru() {
   const { confirmDeleteGuru } = useDeleteGuru();
   const {filters, handleChangeFilter, totalItems, pageSize, totalPages, paginatedData, currentPage, setCurrentPage} = useFilterGuru(findAllDataGuru);
   const { step, setStep, isDialogOpen, setIsDialogOpen, editId, 
-          register, handleSubmit, errors, handleBukaTambahData, handleNext, handleBukaUpdateData
+          register, handleSubmit, errors, handleBukaTambahData, handleNext, handleBukaUpdateData, watch
         } = useGuruForms();
 
   // trigger dialog disaat kelar close
@@ -84,7 +84,7 @@ export default function DataGuru() {
             }
           >
             <form onSubmit={(e) => e.preventDefault()}>
-              {step === 1 && <StepPertama register={register} errors={errors} />}
+              {step === 1 && <StepPertama register={register} errors={errors} watch={watch} />}
               {step === 2 && <StepKedua register={register} errors={errors} editId={editId} />}
             </form>
           </BaseDialog>

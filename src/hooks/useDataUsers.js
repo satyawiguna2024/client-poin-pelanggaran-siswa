@@ -154,6 +154,7 @@ export function useSiswaForms() {
     formState: { errors },
     trigger,
     reset,
+    watch,
   } = useForm();
 
   // trigger field required sebelum next step
@@ -161,7 +162,7 @@ export function useSiswaForms() {
     let fields = [];
 
     if (step === 1) {
-      fields = ["username", "email", "password"];
+      fields = ["username", "email", "password", "confirm_password"];
     }
 
     if (step === 2) {
@@ -243,6 +244,7 @@ export function useSiswaForms() {
     errors,
     trigger,
     reset,
+    watch,
     handleNext,
     handleBukaTambahData,
     handleBukaUpdateData,
@@ -410,6 +412,7 @@ export function useGuruForms() {
     formState: { errors },
     trigger,
     reset,
+    watch,
   } = useForm();
 
   // trigger field required sebelum next step
@@ -417,7 +420,7 @@ export function useGuruForms() {
     let fields = [];
 
     if (step === 1) {
-      fields = ["username", "email", "password"];
+      fields = ["username", "email", "password", "confirm_password"];
     }
 
     if (step === 2) {
@@ -484,6 +487,7 @@ export function useGuruForms() {
     errors,
     trigger,
     reset,
+    watch,
     handleBukaUpdateData,
   };
 }

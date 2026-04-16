@@ -14,7 +14,7 @@ export default function DataSiswa() {
   const { getAllDataKelas } = useShowAllKelas();
   const { step, setStep, isDialogOpen, setIsDialogOpen,
           editId, register, handleSubmit, errors, handleNext, 
-          handleBukaTambahData, handleBukaUpdateData 
+          handleBukaTambahData, handleBukaUpdateData, watch 
         } = useSiswaForms();
   const { mutateCreateSiswa } = useCreateSiswa();
   const { mutateUpdateSiswa } = useUpdateSiswa();
@@ -82,7 +82,7 @@ export default function DataSiswa() {
           >
             <form onSubmit={(e) => e.preventDefault()}>
               {/* step tambah akun user */}
-              {step === 1 && (<StepPertama register={register} errors={errors} />)}
+              {step === 1 && (<StepPertama register={register} errors={errors} watch={watch} />)}
               {/* step tambah personal data siswa */}
               {step === 2 && (<StepKedua register={register} errors={errors} getAllDataKelas={getAllDataKelas} editId={editId}/>)}
               {/* step tambah data ortu siswa */}
