@@ -223,7 +223,7 @@ export default function DataJenisPelanggaran() {
               )}
 
               <Heading unstyled color="text.primary" fontFamily="poppins">
-                {jenisPelanggaran.length} Items
+                {totalItems} Items
               </Heading>
             </Stack>
         </Box>

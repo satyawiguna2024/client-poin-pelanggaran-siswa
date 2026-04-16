@@ -27,7 +27,7 @@ export default function Profile() {
             shape="square"
             size={{ base: "lg", md: "xl" }}
           >
-            <Avatar.Fallback name="Cokda" />
+            <Avatar.Fallback name={users?.username} />
             {/* <Avatar.Image
               src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${1}&backgroundType=gradientLinear&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffeaa7`}
             /> */}
